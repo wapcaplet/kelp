@@ -75,6 +75,7 @@ Check out the comments in the source code for more about what's possible.
 Future plans
 ------------
 
+* Add spec tests
 * Support other stuff besides Caypbara
 * Turn the project into a proper Rails plugin, with generators
 
