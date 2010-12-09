@@ -83,7 +83,7 @@ Future plans
 Copyright
 ---------
 
-Copyright (c) 2010 Eric Pierce
+Copyright (c) 2010 Eric Pierce.
 Released under the MIT license.
 See LICENSE for details.
 
