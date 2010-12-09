@@ -1,17 +1,20 @@
-= Kelp
+Kelp
+====
 
 This project aims to package a collection of useful helper methods for
 Cucumber. Currently, the provided methods depend on Capybara, though support
 may eventually be added for Webrat, email-spec, or related tools.
 
 
-== Installation
+Installation
+------------
 
 Just copy files from `lib` into your `features/step_definitions` folder as you
 need them.
 
 
-== Usage
+Usage
+-----
 
 The provided helpers are designed to make it easier to do things you might
 normally do with nested step definitions. For example, if you need to verify
@@ -66,13 +69,15 @@ Or to press the "Ludicrous" button under the "Speed" heading:
 Check out the comments in the source code for more about what's possible.
 
 
-== Future plans
+Future plans
+------------
 
 * Support other stuff besides Caypbara
 * Turn the project into a proper Rails plugin, with generators
 
 
-== Copyright
+Copyright
+---------
 
 Copyright (c) 2010 Eric Pierce
 Released under the MIT license.
