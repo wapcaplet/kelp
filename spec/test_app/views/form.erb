@@ -5,9 +5,23 @@
 
   <div id="fields">
     <form action="/thanks" method="get">
-      <label for="first_name">First name</label> <input type="text" id="first_name" />
-      <label for="last_name">Last name</label> <input type="text" id="last_name" />
-      <input type="submit" value="Submit" />
+      <p>
+        <label for="first_name">First name</label>
+        <input id="first_name" type="text" />
+      </p>
+      <p>
+        <label for="last_name">Last name</label>
+        <input id="last_name" type="text" />
+      </p>
+      <p>
+        <label for="height">Height</label>
+        <select id="height">
+          <option>Short</option>
+          <option selected="selected">Average</option>
+          <option>Tall</option>
+        </select>
+      </p>
+      <p><input type="submit" value="Submit" /></p>
     </form>
   </div>
 
