@@ -1,35 +1,35 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
-describe FormHelper, "#dropdown_should_contain" do
+describe FormHelper, "#dropdown_should_equal" do
   before(:each) do
     visit('/form')
   end
 
   context "passes when" do
     it "the option has the selected attribute" do
-      dropdown_should_contain "Height", "Average"
+      dropdown_should_equal "Height", "Average"
     end
 
     it "the option is chosen programmatically" do
       select "Short", :from => "Height"
-      dropdown_should_contain "Height", "Short"
+      dropdown_should_equal "Height", "Short"
 
       select "Tall", :from => "Height"
-      dropdown_should_contain "Height", "Tall"
+      dropdown_should_equal "Height", "Tall"
     end
   end
 
   context "fails when" do
     it "the option does not have the selected attribute" do
       lambda do
-        dropdown_should_contain "Height", "Tall"
+        dropdown_should_equal "Height", "Tall"
       end.should raise_error
     end
 
     it "the option was not the one chosen programmatically" do
       select "Tall", :from => "Height"
       lambda do
-        dropdown_should_contain "Height", "Average"
+        dropdown_should_equal "Height", "Average"
       end.should raise_error
     end
   end
