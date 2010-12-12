@@ -15,13 +15,7 @@ module WebHelper
   #   :before => 'text'     preceding-siblings of 'text'
   #
   def in_scope(scope)
-    if scope[:after]
-      within(:xpath, xpath_after(scope[:after])) do
-        with_scope(scope[:within]) do
-          yield
-        end
-      end
-    else
+    within(:xpath, xpath_after(scope[:after])) do
       within(:xpath, xpath_before(scope[:before])) do
         with_scope(scope[:within]) do
           yield
@@ -130,9 +124,9 @@ module WebHelper
       end
     elsif text_or_regexp.class == Regexp
       if page.respond_to? :should
-        page.should have_xpath('.//*', :text => text_or_regexp)
+        page.should have_xpath('//*', :text => text_or_regexp)
       else
-        assert page.has_xpath?('.//*', :text => text_or_regexp)
+        assert page.has_xpath?('//*', :text => text_or_regexp)
       end
     else
       raise "Expected String or Regexp, got #{text_or_regexp.class}"

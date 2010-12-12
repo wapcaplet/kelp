@@ -1,7 +1,7 @@
-
 require 'capybara'
 require 'capybara/dsl'
 require File.expand_path(File.dirname(__FILE__) + '/../test_app/test_app')
+require File.expand_path(File.dirname(__FILE__) + '/../../lib/capybara/web_helper')
 
 RSpec.configure do |config|
   config.include Capybara
