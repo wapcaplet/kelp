@@ -1,21 +1,3 @@
-# Generic helper methods for website navigation and testing
-
-
-module CapybaraHelper
-  # A slightly friendlier version of Capybara's +find_field+, which actually
-  # tells you which locator failed to match (instead of giving a useless
-  # Unable to find '#<XPath::Union:0xXXXXXXX>' message).
-  def nice_find_field(locator)
-    begin
-      field = find_field(locator)
-    rescue Capybara::ElementNotFound
-      raise "Could not find field with locator: '#{locator}'"
-    end
-  end
-
-end
-
-
 module FormHelper
   # Fill in multiple fields according to values in a Hash.
   # Scope may be defined per the #in_scope method.
@@ -143,9 +125,18 @@ module FormHelper
       editor.send_keys(text)
     end
   end
-end
 
-# Add all helpers to Cucumber's world
-World(CapybaraHelper)
-World(FormHelper)
+  private
+
+  # A slightly friendlier version of Capybara's +find_field+, which actually
+  # tells you which locator failed to match (instead of giving a useless
+  # Unable to find '#<XPath::Union:0xXXXXXXX>' message).
+  def nice_find_field(locator)
+    begin
+      field = find_field(locator)
+    rescue Capybara::ElementNotFound
+      raise "Could not find field with locator: '#{locator}'"
+    end
+  end
+end
 

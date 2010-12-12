@@ -1,3 +1,4 @@
+require 'rspec'
 require 'capybara'
 require 'capybara/dsl'
 require File.expand_path(File.dirname(__FILE__) + '/../test_app/test_app')

@@ -8,4 +8,5 @@ group :test do
   gem 'sinatra'
   gem 'rspec'
   gem 'rspec-rails'
+  gem 'rcov'
 end
