@@ -78,3 +78,35 @@ describe FormHelper, "#dropdown_should_include" do
 
 end
 
+describe FormHelper, "#dropdown_value_should_equal" do
+  before(:each) do
+    visit('/form')
+  end
+
+  context "passes when" do
+    it "the selected option has the given value" do
+      dropdown_value_should_equal "Height", "2"
+    end
+
+    it "the programmatically chosen option has the given value" do
+      select "Tall", :from => "Height"
+      dropdown_value_should_equal "Height", "3"
+    end
+  end
+
+  context "fails when" do
+    it "the selected option has a different value" do
+      lambda do
+        dropdown_value_should_equal "Height", "99"
+      end.should raise_error
+    end
+
+    it "the programmatically chosen option has a different value" do
+      select "Tall", :from => "Height"
+      lambda do
+        dropdown_value_should_equal "Height", "2"
+      end.should raise_error
+    end
+  end
+end
+

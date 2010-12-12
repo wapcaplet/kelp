@@ -100,7 +100,7 @@ module FormHelper
           field_should_be_empty(field)
         # If field is a dropdown
         elsif _field.tag_name == 'select'
-          dropdown_should_contain(field, value)
+          dropdown_should_equal(field, value)
         # Otherwise treat as a text field
         else
           field_should_contain(field, value)
