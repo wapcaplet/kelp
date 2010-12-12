@@ -18,14 +18,18 @@ module FormHelper
   # Verify that the given field is empty or nil.
   def field_should_be_empty(field)
     _field = nice_find_field(field)
-    _field.nil? || _field.value.nil?
+    if _field.nil? || _field.value.nil?
+      return true
+    else
+      raise "Expected field '#{field}' to be empty, but it has a value '#{_field.value}'"
+    end
   end
 
   # Verify that the selected option in a dropdown has the given
   # value. Note that this is the *visible* content of the dropdown
   # (the content of the <option> element), rather than the
   # 'value' attribute of the option.
-  def dropdown_should_contain(dropdown, value)
+  def dropdown_should_equal(dropdown, value)
     field = nice_find_field(dropdown)
     # See if there's a 'selected' option
     begin
@@ -61,7 +65,7 @@ module FormHelper
   # Verify that the given <select> element has a given value selected. Works
   # with single- or multi-select elements. This verifies the 'value' attribute
   # of the selected option, rather than its visible content.
-  def dropdown_value_should_contain(dropdown, value)
+  def dropdown_value_should_equal(dropdown, value)
     # FIXME: When this returns False, does that fail the step?
     field = find_field(dropdown)
     field.value.should include(value)
@@ -109,21 +113,6 @@ module FormHelper
   # Syntactic sugar for #fields_should_contain.
   def fields_should_contain_within(selector, field_values)
     fields_should_contain field_values, :within => selector
-  end
-
-  # Verify that the given field contains a given day's date in the given format.
-  def field_should_contain_date(field, day, format='%Y-%m-%d')
-    date_string = parse_date(day).strftime(format)
-    field_should_contain(field, date_string)
-  end
-
-  # Enter text in a tinymce editor widget. +iframe_id+ is the
-  # HTML id of the +iframe+ element containing the editor.
-  def fill_in_tinymce(iframe_id, text)
-    within_frame(iframe_id) do
-      editor = page.find_by_id('tinymce').native
-      editor.send_keys(text)
-    end
   end
 
   private
