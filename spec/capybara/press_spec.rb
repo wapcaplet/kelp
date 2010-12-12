@@ -5,24 +5,24 @@ describe WebHelper, "#press" do
     visit('/home')
   end
 
-  context "should pass" do
-    it "when the button exists" do
+  context "passes when" do
+    it "button exists" do
       press "Submit"
     end
 
-    it "when the button exists within the scope" do
+    it "button exists within the scope" do
       press "Submit", :within => "#fields"
     end
   end
 
-  context "should fail" do
-    it "when the button does not exist" do
+  context "fails when" do
+    it "button does not exist" do
       lambda do
         press "Poke"
       end.should raise_error
     end
 
-    it "when the button exists but is not within the scope" do
+    it "button exists but is not within the scope" do
       lambda do
         press "Submit", :within => "#greeting"
       end.should raise_error
