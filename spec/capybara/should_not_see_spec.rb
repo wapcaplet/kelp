@@ -11,6 +11,13 @@ describe WebHelper, "#should_not_see" do
         should_not_see "Goodbye cruel world"
       end
 
+      it "none of several strings exist" do
+        should_not_see [
+          "Hello nurse",
+          "Goodbye cruel world"
+        ]
+      end
+
       it "exists but is not within the scope" do
         should_not_see "Goodbye world", :within => "#greeting"
       end
@@ -19,6 +26,13 @@ describe WebHelper, "#should_not_see" do
     context "Regexp" do
       it "does not match" do
         should_not_see /(Yo|Wazzup) world/
+      end
+
+      it "none of several regexps match" do
+        should_not_see [
+          /(Yo|Wazzup) world/,
+          /(Ciao|Later) world/
+        ]
       end
 
       it "matches but is not within the scope" do
@@ -36,6 +50,16 @@ describe WebHelper, "#should_not_see" do
         end.should raise_error
       end
 
+      it "any of several exist" do
+        lambda do
+          should_not_see [
+            "Hello nurse",
+            "Goodbye cruel world",
+            "Goodbye world"
+          ]
+        end.should raise_error
+      end
+
       it "exists within the scope" do
         lambda do
           should_not_see "Hello world", :within => "#greeting"
@@ -47,6 +71,16 @@ describe WebHelper, "#should_not_see" do
       it "matches" do
         lambda do
           should_not_see /(Hello|Goodbye) world/
+        end.should raise_error
+      end
+
+      it "any of several regexps match" do
+        lambda do
+          should_not_see [
+            /(Yo|Wazzup) world/,
+            /(Ciao|Later) world/,
+            /(Hello|Goodbye) world/
+          ]
         end.should raise_error
       end
 

@@ -17,13 +17,17 @@ describe FormHelper, "#fill_in_fields" do
     end
 
     it "filling multiple fields by id" do
-      fill_in_fields "first_name" => "Mel", "last_name" => "Brooks"
+      fill_in_fields \
+        "first_name" => "Mel",
+        "last_name" => "Brooks"
       field_should_contain "first_name", "Mel"
       field_should_contain "last_name", "Brooks"
     end
 
     it "filling multiple fields by label" do
-      fill_in_fields "First name" => "Mel", "Last name" => "Brooks"
+      fill_in_fields \
+        "First name" => "Mel",
+        "Last name" => "Brooks"
       field_should_contain "First name", "Mel"
       field_should_contain "Last name", "Brooks"
     end

@@ -17,6 +17,7 @@ generator), just copy files from `lib` into your `features/step_definitions`
 folder as you need them, and add them to Cucumber's world, i.e.
 
     World(WebHelper)
+    World(FormHelper)
 
 
 Usage
@@ -45,8 +46,8 @@ Or even this:
       "Login"
     ]
 
-Other methods are similar to their counterparts in Capybara's generated step
-definitions. Instead of this:
+Many of the provided methods are similar to their counterparts in the
+Cucumber-Rails generated step definitions. Instead of this:
 
     When %{I follow "Login"}
       And %{I fill in "Username" with "skroob"}
@@ -56,23 +57,20 @@ definitions. Instead of this:
 Try this:
 
     follow "Login"
-    fill_in_fields {
-        "Username" => "skroob",
-        "Password" => "12345",
-    }
+    fill_in_fields \
+      "Username" => "skroob",
+      "Password" => "12345"
     press "Log me in"
 
-Many of the provided methods also accept keywords to define the scope of an
-action. For instance, if you want to look within an element with
-`id="greeting"`, you could do:
+Several methods also accept keywords to define the scope of an action. For
+instance, if you want to look within an element with `id="greeting"`, do:
 
     should_see "Welcome", :within => "#greeting"
 
-Or to press the "Ludicrous" button under the "Speed" heading:
-
-    press "Ludicrous", :after => "Speed"
-
-Check out the comments in the source code for more about what's possible.
+At the moment, the `:within` keyword is the only accepted scope; the locator
+you pass to this should be in whatever format your `Capybara.default_selector`
+is set to. Other keywords like `:before` or `:after` may be supported in future
+revisions.
 
 
 Development
