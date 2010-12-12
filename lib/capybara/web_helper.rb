@@ -3,8 +3,40 @@ module WebHelper
   # Execute a block of code within a given scope.
   # +locator+ may be in css or xpath form, depending on what type
   # is set in Capybara.default_locator.
-  def with_scope(locator)
-    locator ? within(locator) { yield } : yield
+  def scope_within(locator)
+    if locator
+      within(locator) do
+        yield
+      end
+    else
+      yield
+    end
+  end
+
+  # Execute a block within the scope of sibling elements following the
+  # element with the given +content+. If +content+ is empty or nil,
+  # keep the current scope.
+  def scope_after(content)
+    if content
+      within(:xpath, ".//*[contains(.,'#{content}')]/following::*") do
+        yield
+      end
+    else
+      yield
+    end
+  end
+
+  # Execute a block within the scope of sibling elements preceding the
+  # element with the given +content+. If +content+ is empty or nil,
+  # keep the current scope.
+  def scope_before(content)
+    if content
+      within(:xpath, ".//*[contains(.,'#{content}')]/preceding::*") do
+        yield
+      end
+    else
+      yield
+    end
   end
 
   # Execute a block of code inside a given scope. The +scope+ Hash
@@ -15,9 +47,9 @@ module WebHelper
   #   :before => 'text'     preceding-siblings of 'text'
   #
   def in_scope(scope)
-    within(:xpath, xpath_after(scope[:after])) do
-      within(:xpath, xpath_before(scope[:before])) do
-        with_scope(scope[:within]) do
+    scope_within(scope[:within]) do
+      scope_before(scope[:before]) do
+        scope_after(scope[:after]) do
           yield
         end
       end
@@ -102,18 +134,6 @@ module WebHelper
     return "//table//tr[#{conditions}]"
   end
 
-  # Return an XPath scope restricted to following siblings of elements
-  # containing +text+. If +text+ is empty or nil, keep the current context.
-  def xpath_after(text)
-    text ? "//*[contains(.,'#{text}')]/following-sibling::*" : "//*"
-  end
-
-  # Return an XPath scope restricted to preceding siblings of elements
-  # containing +text+. If +text+ is empty or nil, keep the current context.
-  def xpath_before(text)
-    text ? "//*[contains(.,'#{text}')]/preceding-sibling::*" : "//*"
-  end
-
   # Ensure that the current page content includes a String or Regexp.
   def page_should_have(text_or_regexp)
     if text_or_regexp.class == String
@@ -124,9 +144,9 @@ module WebHelper
       end
     elsif text_or_regexp.class == Regexp
       if page.respond_to? :should
-        page.should have_xpath('//*', :text => text_or_regexp)
+        page.should have_xpath('.//*', :text => text_or_regexp)
       else
-        assert page.has_xpath?('//*', :text => text_or_regexp)
+        assert page.has_xpath?('.//*', :text => text_or_regexp)
       end
     else
       raise "Expected String or Regexp, got #{text_or_regexp.class}"
@@ -143,9 +163,9 @@ module WebHelper
       end
     elsif text_or_regexp.class == Regexp
       if page.respond_to? :should
-        page.should have_no_xpath('//*', :text => text_or_regexp)
+        page.should have_no_xpath('.//*', :text => text_or_regexp)
       else
-        assert page.has_no_xpath?('//*', :text => text_or_regexp)
+        assert page.has_no_xpath?('.//*', :text => text_or_regexp)
       end
     else
       raise "Expected String or Regexp, got #{text_or_regexp.class}"

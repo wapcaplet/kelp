@@ -64,24 +64,24 @@ describe WebHelper, "#should_see" do
 
   context "with Regexp" do
     context "should pass" do
-      it "when the regexp exists" do
+      it "when the regexp matches" do
         should_see /(Hello|Goodbye) world/
       end
 
-      it "when the regexp is within the scope" do
+      it "when the regexp matches within the scope" do
         should_see /(Hello|Goodbye) world/, :within => "#greeting"
         should_see /(Hello|Goodbye) world/, :within => "#farewell"
       end
     end
 
     context "should fail" do
-      it "when the regexp does not exist" do
+      it "when the regexp does not match" do
         lambda do
           should_see /(Yo|Wazzup) world/
         end.should raise_error
       end
 
-      it "when the regexp is not within the scope" do
+      it "when the regexp matches but is not within the scope" do
         lambda do
           should_see /Goodbye world/, :within => "#greeting"
         end.should raise_error
