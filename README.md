@@ -86,8 +86,8 @@ And then install Kelp's dependencies (specified in `Gemfile`):
     $ cd /path/to/kelp
     $ bundle install
 
-I recommend using [RVM](http://rvm.beginrescueend.com/) with a new gemset, to
-keep things tidy.
+It's a good idea to use [RVM](http://rvm.beginrescueend.com/) with a new gemset
+to keep things tidy.
 
 If you make changes that you'd like to share, push them into your Kelp fork,
 then submit a pull request.
@@ -103,6 +103,13 @@ Kelp comes with a `Rakefile`, so you can run the RSpec tests like so:
 Since this project is fairly immature and unstable, you can probably expect
 some failures. Wanna help fix them?
 
+You can also generate an [rcov](http://eigenclass.org/hiki.rb?rcov) coverage
+report via:
+
+    $ rake rcov
+
+This will write an HTML report to `coverage/index.html`.
+
 
 Future plans
 ------------
@@ -116,7 +123,6 @@ Future plans
 Copyright
 ---------
 
-Copyright (c) 2010 Eric Pierce.
-Released under the MIT license.
-See LICENSE for details.
+Copyright (c) 2010 Eric Pierce, released under the MIT license.
+See MIT-LICENSE for details.
 
