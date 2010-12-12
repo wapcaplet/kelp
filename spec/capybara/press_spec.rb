@@ -22,7 +22,7 @@ describe WebHelper, "#press" do
       end.should raise_error
     end
 
-    it "when the button does not exist in the scope" do
+    it "when the button exists but is not within the scope" do
       lambda do
         press "Submit", :within => "#greeting"
       end.should raise_error

@@ -3,9 +3,9 @@
 <body>
   <h1>Homepage</h1>
 
-  <p id="greeting">
-    Hello world
-  </p>
+  <div id="greeting">
+    <p>Hello world</p>
+  </div>
 
   <ul>
     <li>First</li>
@@ -13,20 +13,33 @@
     <li>Third</li>
   </ul>
 
-  <p id="links">
+  <div id="links">
     <a href="/about">About Us</a>
-  </p>
+  </div>
 
-  <p id="fields">
+  <div id="fields">
     <form action="/thanks" method="get">
       <input type="text" name="message" />
       <input type="submit" value="Submit" />
     </form>
-  </p>
+  </div>
 
-  <p id="farewell">
-    Goodbye world
-  </p>
+  <div id="tables">
+    <table>
+      <thead>
+        <tr> <th>Name</th> <th>Phone</th> <th>Action</th> </tr>
+      </thead>
+      <tbody>
+        <tr> <td>Eric</td> <td>555-4444</td> <td><a href="/edit1">Edit</a></td> </tr>
+        <tr> <td>John</td> <td>666-5555</td> <td><a href="/edit2">Edit</a></td> </tr>
+        <tr> <td>Terry</td> <td>777-6666</td> <td><a href="/edit3">Edit</a></td> </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="farewell">
+    <p>Goodbye world</p>
+  </div>
 
 </body>
 </html>

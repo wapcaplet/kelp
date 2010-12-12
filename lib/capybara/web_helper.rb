@@ -13,46 +13,15 @@ module WebHelper
     end
   end
 
-  # Execute a block within the scope of sibling elements following the
-  # element with the given +content+. If +content+ is empty or nil,
-  # keep the current scope.
-  def scope_after(content)
-    if content
-      within(:xpath, ".//*[contains(.,'#{content}')]/following::*") do
-        yield
-      end
-    else
-      yield
-    end
-  end
-
-  # Execute a block within the scope of sibling elements preceding the
-  # element with the given +content+. If +content+ is empty or nil,
-  # keep the current scope.
-  def scope_before(content)
-    if content
-      within(:xpath, ".//*[contains(.,'#{content}')]/preceding::*") do
-        yield
-      end
-    else
-      yield
-    end
-  end
-
   # Execute a block of code inside a given scope. The +scope+ Hash
-  # may include any one of the following:
+  # may include:
   #
   #   :within => locator    within the given selector
-  #   :after => 'text'      following-siblings of 'text'
-  #   :before => 'text'     preceding-siblings of 'text'
   #
+  # Other scopes such as :before, :after and so on may be supported later
   def in_scope(scope)
     scope_within(scope[:within]) do
-      scope_before(scope[:before]) do
-        scope_after(scope[:after]) do
-          yield
-        end
-      end
+      yield
     end
   end
 

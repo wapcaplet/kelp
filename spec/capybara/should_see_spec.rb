@@ -22,18 +22,6 @@ describe WebHelper, "#should_see" do
       it "when a string is within the scope" do
         should_see "Hello world", :within => "#greeting"
       end
-
-      it "when a string is after another string" do
-        should_see "Second", :after => "First"
-        should_see "Third", :after => "Second"
-        should_see "Third", :after => "First"
-      end
-
-      it "when a string is before another string" do
-        should_see "First", :before => "Second"
-        should_see "Second", :before => "Third"
-        should_see "First", :before => "Third"
-      end
     end
 
     context "should fail" do
