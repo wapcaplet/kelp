@@ -12,8 +12,11 @@ short, easy to remember, and is in keeping with the theme of greenish plants.
 Installation
 ------------
 
-Just copy files from `lib` into your `features/step_definitions` folder as you
-need them.
+Until Kelp grows a saner approach for installation (such as a Rails
+generator), just copy files from `lib` into your `features/step_definitions`
+folder as you need them, and add them to Cucumber's world, i.e.
+
+    World(WebHelper)
 
 
 Usage
@@ -72,12 +75,44 @@ Or to press the "Ludicrous" button under the "Speed" heading:
 Check out the comments in the source code for more about what's possible.
 
 
+Development
+-----------
+
+If you'd like to hack on Kelp, first fork and clone this repository. Then install
+[bundler](http://gembundler.com/):
+
+    $ gem install bundler
+
+And then install Kelp's dependencies (specified in `Gemfile`):
+
+    $ cd /path/to/kelp
+    $ bundle install
+
+I recommend using [RVM](http://rvm.beginrescueend.com/) with a new gemset, to
+keep things tidy.
+
+If you make changes that you'd like to share, push them into your Kelp fork,
+then submit a pull request.
+
+
+Testing
+-------
+
+Kelp comes with a `Rakefile`, so you can run the RSpec tests like so:
+
+    $ rake spec
+
+Since this project is fairly immature and unstable, you can probably expect
+some failures. Wanna help fix them?
+
+
 Future plans
 ------------
 
-* Add spec tests
+* Write Cucumber integration tests
 * Support other stuff besides Caypbara
 * Turn the project into a proper Rails plugin, with generators
+* Create a gem
 
 
 Copyright
