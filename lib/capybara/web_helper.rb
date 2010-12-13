@@ -80,27 +80,15 @@ module WebHelper
   end
 
   # Ensure that the element with the given HTML id is disabled.
-  def element_should_be_disabled(element_id)
+  def should_be_disabled(element_id)
     page.should have_xpath("//*[@id='#{element_id}']")
     page.should have_xpath("//*[@id='#{element_id}' and @disabled]")
   end
 
   # Ensure that the element with the given HTML id is enabled.
-  def element_should_be_enabled(element_id)
+  def should_be_enabled(element_id)
     page.should have_xpath("//*[@id='#{element_id}']")
     page.should have_no_xpath("//*[@id='#{element_id}' and @disabled]")
-  end
-
-
-  private
-
-  # Return an XPath for any table row containing all strings in +texts+.
-  def xpath_row_containing(texts)
-    texts = [texts] if texts.class == String
-    conditions = texts.collect do |text|
-      "contains(., '#{text}')"
-    end.join(' and ')
-    return "//table//tr[#{conditions}]"
   end
 
   # Ensure that the current page content includes a String or Regexp.
@@ -141,8 +129,20 @@ module WebHelper
     end
   end
 
+
+  private
+
+  # Return an XPath for any table row containing all strings in +texts+.
+  def xpath_row_containing(texts)
+    texts = [texts] if texts.class == String
+    conditions = texts.collect do |text|
+      "contains(., '#{text}')"
+    end.join(' and ')
+    return "//table//tr[#{conditions}]"
+  end
+
 end
 
-# TODO: Where to put this?
+# TODO: Put this in a generator
 #World(WebHelper)
 
