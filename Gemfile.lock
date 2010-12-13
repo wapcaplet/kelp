@@ -84,8 +84,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  capybara
+  capybara (>= 0.4.0)
   rcov
-  rspec
+  rspec (>= 2.2.0)
   rspec-rails
   sinatra
