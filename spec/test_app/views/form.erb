@@ -3,7 +3,7 @@
 <body>
   <h1>Form Test</h1>
 
-  <div id="fields">
+  <div id="person_form">
     <form action="/thanks" method="get">
       <p>
         <label for="first_name">First name</label>
@@ -22,6 +22,13 @@
         </select>
       </p>
       <p><input type="submit" value="Submit" /></p>
+    </form>
+  </div>
+
+  <div id="other_form">
+    <form action="/thanks" method="get">
+      <p><input id="readonly" type="text" disabled="disabled" /></p>
+      <p><input type="submit" value="Submit" disabled="disabled" /></p>
     </form>
   </div>
 
