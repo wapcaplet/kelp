@@ -1,12 +1,15 @@
 Development
 ===========
 
-If you'd like to hack on Kelp, first fork and clone this repository. Then install
-bundler_::
+If you'd like to hack on Kelp, fork the repository, then clone your fork::
+
+    $ git clone git://github.com/<your_username>/kelp.git
+
+Install bundler_::
 
     $ gem install bundler
 
-And then install Kelp's dependencies (specified in ``Gemfile``)::
+Then install Kelp's dependencies (specified in ``Gemfile``)::
 
     $ cd /path/to/kelp
     $ bundle install
@@ -14,10 +17,11 @@ And then install Kelp's dependencies (specified in ``Gemfile``)::
 It's a good idea to use RVM_ with a new gemset to keep things tidy.
 
 If you make changes that you'd like to share, push them into your Kelp fork,
-then submit a pull request.
+then `submit a pull request`_. If you find bugs, please `report them`_.
 
 .. _bundler: http://gembundler.com/
 .. _RVM: http://rvm.beginrescueend.com/
-
+.. _report them: https://github.com/wapcaplet/kelp/issues
+.. _submit a pull request: http://github.com/wapcaplet/kelp/pulls
 
 
