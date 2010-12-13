@@ -17,11 +17,11 @@ Then install Kelp's dependencies (specified in ``Gemfile``)::
 It's a good idea to use RVM_ with a new gemset to keep things tidy.
 
 If you make changes that you'd like to share, push them into your Kelp fork,
-then `submit a pull request`_. If you find bugs, please `report them`_.
+then `submit a pull request`_.
+
 
 .. _bundler: http://gembundler.com/
 .. _RVM: http://rvm.beginrescueend.com/
-.. _report them: https://github.com/wapcaplet/kelp/issues
 .. _submit a pull request: http://github.com/wapcaplet/kelp/pulls
 
 
