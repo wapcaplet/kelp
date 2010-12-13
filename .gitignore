@@ -1,3 +1,5 @@
 *.swp
 .bundle
 coverage
+docs/_build
+.rvmrc
