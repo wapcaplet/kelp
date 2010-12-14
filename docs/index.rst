@@ -19,9 +19,10 @@ Kelp is licensed under the `MIT License`_.
 Please use the `issue tracker`_ to report any bugs or feature requests.
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 3
 
     usage
+    lib/kelp/index
     development
     testing
     future
