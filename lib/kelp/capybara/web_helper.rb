@@ -1,68 +1,6 @@
+require 'kelp/helper'
 
 module WebHelper
-  # Execute a block of code within a given scope.
-  # +locator+ may be in css or xpath form, depending on what type
-  # is set in Capybara.default_locator.
-  def scope_within(locator)
-    if locator
-      within(locator) do
-        yield
-      end
-    else
-      yield
-    end
-  end
-
-  # Execute a block of code inside a given scope. The +scope+ Hash
-  # may include:
-  #
-  #   :within => locator    within the given selector
-  #
-  # Other scopes such as :before, :after and so on may be supported later
-  def in_scope(scope)
-    scope_within(scope[:within]) do
-      yield
-    end
-  end
-
-  # Verify the presence of one or more text strings.
-  # Scope may be defined per the #in_scope method.
-  def should_see(texts, scope={})
-    texts = [texts] if (texts.class == String || texts.class == Regexp)
-    in_scope(scope) do
-      texts.each do |text|
-        page_should_have text
-      end
-    end
-  end
-
-  # Verify the absence of one or more text strings.
-  # Scope may be defined per the #in_scope method.
-  def should_not_see(texts, scope={})
-    texts = [texts] if (texts.class == String || texts.class == Regexp)
-    in_scope(scope) do
-      texts.each do |text|
-        page_should_not_have text
-      end
-    end
-  end
-
-  # Follow a link.
-  # Scope may be defined per the #in_scope method.
-  def follow(link, scope={})
-    in_scope(scope) do
-      click_link(link)
-    end
-  end
-
-  # Press a button.
-  # Scope may be defined per the #in_scope method.
-  def press(button, scope={})
-    in_scope(scope) do
-      click_button(button)
-    end
-  end
-
   # Verify that a table row exists containing all the given text strings.
   def should_see_in_same_row(texts)
     page.should have_xpath(xpath_row_containing(texts))
@@ -91,41 +29,35 @@ module WebHelper
     page.should have_no_xpath("//*[@id='#{element_id}' and @disabled]")
   end
 
-  # Ensure that the current page content includes a String or Regexp.
-  def page_should_have(text_or_regexp)
-    if text_or_regexp.class == String
-      if page.respond_to? :should
-        page.should have_content(text_or_regexp)
-      else
-        assert page.has_content?(text_or_regexp)
-      end
-    elsif text_or_regexp.class == Regexp
-      if page.respond_to? :should
-        page.should have_xpath('.//*', :text => text_or_regexp)
-      else
-        assert page.has_xpath?('.//*', :text => text_or_regexp)
-      end
+  def page_should_contain_text(text)
+    if page.respond_to? :should
+      page.should have_content(text)
     else
-      raise "Expected String or Regexp, got #{text_or_regexp.class}"
+      assert page.has_content?(text)
     end
   end
 
-  # Ensure that the current page content does not include a String or Regexp.
-  def page_should_not_have(text_or_regexp)
-    if text_or_regexp.class == String
-      if page.respond_to? :should
-        page.should have_no_content(text_or_regexp)
-      else
-        assert page.has_no_content?(text_or_regexp)
-      end
-    elsif text_or_regexp.class == Regexp
-      if page.respond_to? :should
-        page.should have_no_xpath('.//*', :text => text_or_regexp)
-      else
-        assert page.has_no_xpath?('.//*', :text => text_or_regexp)
-      end
+  def page_should_contain_regexp(regexp)
+    if page.respond_to? :should
+      page.should have_xpath('.//*', :text => regexp)
     else
-      raise "Expected String or Regexp, got #{text_or_regexp.class}"
+      assert page.has_xpath?('.//*', :text => regexp)
+    end
+  end
+
+  def page_should_not_contain_text(text)
+    if page.respond_to? :should
+      page.should have_no_content(text)
+    else
+      assert page.has_no_content?(text)
+    end
+  end
+
+  def page_should_not_contain_regexp(regexp)
+    if page.respond_to? :should
+      page.should have_no_xpath('.//*', :text => regexp)
+    else
+      assert page.has_no_xpath?('.//*', :text => regexp)
     end
   end
 
@@ -140,9 +72,5 @@ module WebHelper
     end.join(' and ')
     return "//table//tr[#{conditions}]"
   end
-
 end
-
-# TODO: Put this in a generator
-#World(WebHelper)
 

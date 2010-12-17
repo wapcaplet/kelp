@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
-describe WebHelper, "#click_link_in_row" do
+describe "click_link_in_row" do
   before(:each) do
     visit('/home')
   end

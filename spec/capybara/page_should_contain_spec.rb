@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
-describe WebHelper, "#page_should_have" do
+describe "page_should_contain" do
   before(:each) do
     visit('/home')
   end
@@ -8,14 +8,14 @@ describe WebHelper, "#page_should_have" do
   context "passes when" do
     context "String" do
       it "exists" do
-        page_should_have "Hello world"
-        page_should_have "Goodbye world"
+        page_should_contain "Hello world"
+        page_should_contain "Goodbye world"
       end
     end
     context "Regexp" do
       it "matches" do
-        page_should_have /(Hello|Goodbye) world/
-        page_should_have /\d\d\d-\d\d\d\d/
+        page_should_contain /(Hello|Goodbye) world/
+        page_should_contain /\d\d\d-\d\d\d\d/
       end
     end
   end
@@ -24,7 +24,7 @@ describe WebHelper, "#page_should_have" do
     context "String" do
       it "does not exist" do
         lambda do
-          page_should_have "Wazzup world"
+          page_should_contain "Wazzup world"
         end.should raise_error
       end
     end
@@ -32,14 +32,14 @@ describe WebHelper, "#page_should_have" do
     context "Regexp" do
       it "does not match" do
         lambda do
-          page_should_have /(Foo|Bar|Baz) world/
+          page_should_contain /(Foo|Bar|Baz) world/
         end.should raise_error
       end
     end
 
     it "not a String or Regexp" do
       lambda do
-        page_should_have 123
+        page_should_contain 123
       end.should raise_error
     end
   end

@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
-describe WebHelper, "#should_be_disabled" do
+describe "should_be_disabled" do
   before(:each) do
     visit('/form')
   end

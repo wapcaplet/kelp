@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
-describe FormHelper, "#field_should_contain" do
+describe "field_should_contain" do
   before(:each) do
     visit('/form')
   end
@@ -57,7 +57,7 @@ describe FormHelper, "#field_should_contain" do
 end
 
 
-describe FormHelper, "#fields_should_contain" do
+describe "fields_should_contain" do
   before(:each) do
     visit('/form')
   end

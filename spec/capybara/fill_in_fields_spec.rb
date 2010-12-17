@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
-describe FormHelper, "#fill_in_fields" do
+describe "fill_in_fields" do
   before(:each) do
     visit('/form')
   end

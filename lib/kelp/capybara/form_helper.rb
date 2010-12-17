@@ -1,3 +1,5 @@
+require 'kelp/helper'
+
 module FormHelper
   # Fill in multiple fields according to values in a Hash.
   # Scope may be defined per the #in_scope method.

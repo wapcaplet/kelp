@@ -1,14 +1,12 @@
 require 'rspec'
 require 'capybara'
 require 'capybara/dsl'
+require 'kelp/capybara'
 require File.expand_path(File.dirname(__FILE__) + '/../test_app/test_app')
-require File.expand_path(File.dirname(__FILE__) + '/../../lib/kelp/capybara/web_helper')
-require File.expand_path(File.dirname(__FILE__) + '/../../lib/kelp/capybara/form_helper')
 
 RSpec.configure do |config|
   config.include Capybara
-  config.include WebHelper
-  config.include FormHelper
+  config.include Kelp::Capybara
   config.after do
     Capybara.reset_sessions!
     Capybara.use_default_driver

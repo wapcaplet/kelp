@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
-describe WebHelper, "#should_see_in_same_row" do
+describe "should_see_in_same_row" do
   before(:each) do
     visit('/home')
   end
@@ -20,7 +20,7 @@ describe WebHelper, "#should_see_in_same_row" do
   end
 end
 
-describe WebHelper, "#should_see_in_same_row" do
+describe "should_see_in_same_row" do
   before(:each) do
     visit('/home')
   end

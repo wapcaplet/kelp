@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
-describe FormHelper, "#dropdown_should_equal" do
+describe "dropdown_should_equal" do
   before(:each) do
     visit('/form')
   end
@@ -36,7 +36,7 @@ describe FormHelper, "#dropdown_should_equal" do
 
 end
 
-describe FormHelper, "#dropdown_should_include" do
+describe "dropdown_should_include" do
   before(:each) do
     visit('/form')
   end
@@ -78,7 +78,7 @@ describe FormHelper, "#dropdown_should_include" do
 
 end
 
-describe FormHelper, "#dropdown_value_should_equal" do
+describe "dropdown_value_should_equal" do
   before(:each) do
     visit('/form')
   end
