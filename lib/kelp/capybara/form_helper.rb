@@ -1,8 +1,18 @@
 require 'kelp/helper'
 
 module FormHelper
-  # Fill in multiple fields according to values in a Hash.
-  # Scope may be defined per the #in_scope method.
+  # Fill in multiple fields according to values in a +Hash+.
+  #
+  # @param [Hash] fields
+  #   "field" => "value" for each field to fill in
+  # @param [Hash] scope
+  #   Scoping keywords as understood by WebHelper#in_scope
+  #
+  # Examples:
+  #
+  #   fill_in_fields "First name" => "Otto", "Last name" => "Scratchansniff"
+  #   fill_in_fields "phone" => "303-224-7428", :within => "#home"
+  #
   def fill_in_fields(fields, scope={})
     in_scope(scope) do
       fields.each do |name, value|
@@ -12,7 +22,7 @@ module FormHelper
   end
 
   # Fill in multiple fields within the scope of a given selector.
-  # Syntactic sugar for #fill_in_fields.
+  # Alias for {#fill_in_fields} fields, :within => selector
   def fill_in_fields_within(selector, fields)
     fill_in_fields fields, :within => selector
   end
@@ -31,6 +41,12 @@ module FormHelper
   # value. Note that this is the *visible* content of the dropdown
   # (the content of the <option> element), rather than the
   # 'value' attribute of the option.
+  #
+  # @param [String] dropdown
+  #   Capybara locator for the dropdown (the +select+ element)
+  # @param [String] value
+  #   Value you expect to see as the currently-selected option
+  #
   def dropdown_should_equal(dropdown, value)
     field = nice_find_field(dropdown)
     # See if there's a 'selected' option
@@ -46,7 +62,15 @@ module FormHelper
   # Verify that a given dropdown includes all of the given values. Search
   # first by the 'value' attribute, then by the content of each option; if
   # values are not found in either place, an error occurs.
-  # Scope may be defined per the #in_scope method.
+  # Scope may be defined per the {#in_scope} method.
+  #
+  # @param [String] dropdown
+  #   Capybara locator for the dropdown (the +select+ element)
+  # @param [Array] values
+  #   Visible values you expect to be able to select from the dropdown
+  # @param [Hash] scope
+  #   Scoping keywords as understood by WebHelper#in_scope
+  #
   def dropdown_should_include(dropdown, values, scope={})
     in_scope(scope) do
       # If values is a String, convert it to an Array
@@ -64,9 +88,16 @@ module FormHelper
     end
   end
 
-  # Verify that the given <select> element has a given value selected. Works
-  # with single- or multi-select elements. This verifies the 'value' attribute
-  # of the selected option, rather than its visible content.
+  # Verify that a dropdown currently has the option with the given +value+
+  # attribute selected. Note that this differs from
+  # {#dropdown_should_equal}, in that it looks at the actual +value+
+  # attribute of the selected option, rather than its visible contents.
+  #
+  # @param [String] dropdown
+  #   Capybara locator for the dropdown (the +select+ element)
+  # @param [String] value
+  #   Expected +value+ attribute of the selected +option+
+  #
   def dropdown_value_should_equal(dropdown, value)
     # FIXME: When this returns False, does that fail the step?
     field = find_field(dropdown)
@@ -74,6 +105,12 @@ module FormHelper
   end
 
   # Verify that the given field contains the given value.
+  #
+  # @param [String] field
+  #   Capybara locator for the field (name, id, or label text)
+  # @param [String] value
+  #   Value you expect to see in the text field
+  #
   def field_should_contain(field, value)
     field = find_field(field)
     field_value = (field.tag_name == 'textarea') ? field.text : field.value
@@ -92,7 +129,12 @@ module FormHelper
   end
 
   # Verify the values of multiple fields given as a Hash.
-  # Scope may be defined per the #in_scope method.
+  #
+  # @param [Hash] field_values
+  #   "field" => "value" for each field you want to verify
+  # @param [Hash] scope
+  #   Scoping keywords as understood by WebHelper#in_scope
+  #
   def fields_should_contain(field_values, scope={})
     in_scope(scope) do
       field_values.each do |field, value|
@@ -112,7 +154,7 @@ module FormHelper
   end
 
   # Verify fields within the scope of a given selector.
-  # Syntactic sugar for #fields_should_contain.
+  # Alias for {#fields_should_contain} field_values, :within => selector
   def fields_should_contain_within(selector, field_values)
     fields_should_contain field_values, :within => selector
   end
