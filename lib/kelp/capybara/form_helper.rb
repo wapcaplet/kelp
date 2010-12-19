@@ -3,15 +3,13 @@ require 'kelp/helper'
 module FormHelper
   # Fill in multiple fields according to values in a +Hash+.
   #
+  #   fill_in_fields "First name" => "Otto", "Last name" => "Scratchansniff"
+  #   fill_in_fields "phone" => "303-224-7428", :within => "#home"
+  #
   # @param [Hash] fields
   #   "field" => "value" for each field to fill in
   # @param [Hash] scope
   #   Scoping keywords as understood by WebHelper#in_scope
-  #
-  # Examples:
-  #
-  #   fill_in_fields "First name" => "Otto", "Last name" => "Scratchansniff"
-  #   fill_in_fields "phone" => "303-224-7428", :within => "#home"
   #
   def fill_in_fields(fields, scope={})
     in_scope(scope) do
@@ -59,10 +57,10 @@ module FormHelper
     selected.text.should =~ /#{value}/
   end
 
-  # Verify that a given dropdown includes all of the given values. Search
-  # first by the 'value' attribute, then by the content of each option; if
-  # values are not found in either place, an error occurs.
-  # Scope may be defined per the {#in_scope} method.
+  # Verify that a given dropdown includes all of the given values. Search first
+  # by the 'value' attribute, then by the content of each option; if values are
+  # not found in either place, an error occurs. Scope may be defined per the
+  # {#in_scope} method.
   #
   # @param [String] dropdown
   #   Capybara locator for the dropdown (the +select+ element)
@@ -89,9 +87,9 @@ module FormHelper
   end
 
   # Verify that a dropdown currently has the option with the given +value+
-  # attribute selected. Note that this differs from
-  # {#dropdown_should_equal}, in that it looks at the actual +value+
-  # attribute of the selected option, rather than its visible contents.
+  # attribute selected. Note that this differs from {#dropdown_should_equal},
+  # in that it looks at the actual +value+ attribute of the selected option,
+  # rather than its visible contents.
   #
   # @param [String] dropdown
   #   Capybara locator for the dropdown (the +select+ element)

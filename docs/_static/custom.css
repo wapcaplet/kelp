@@ -1,9 +1,0 @@
-@import url("sphinxdoc.css");
-
-div.body a {
-    text-decoration: none;
-}
-div.body a:hover, div.body a:focus {
-    text-decoration: underline;
-}
-

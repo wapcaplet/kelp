@@ -5,14 +5,12 @@ module WebHelper
   # element exists containing all the given +texts+, and fails if no such
   # +tr+ exists. The texts may be in any order in the row.
   #
-  # @param [Array] texts
-  #   Array of Strings that should appear in the same row
-  #
-  # Examples:
-  #
   #   should_see_in_same_row ["Yakko", "Rob Paulsen"]
   #   should_see_in_same_row ["Wakko", "Jess Harnell"]
   #   should_see_in_same_row ["Dot", "Tress MacNeille"]
+  #
+  # @param [Array] texts
+  #   Array of Strings that should appear in the same row
   #
   def should_see_in_same_row(texts)
     page.should have_xpath(xpath_row_containing(texts))
@@ -23,13 +21,11 @@ module WebHelper
   # is no +tr+ containing all the given +texts+, and fails if there exists
   # such a +tr+.
   #
-  # @param [Array] texts
-  #   Array of Strings that should not appear in the same row
-  #
-  # Examples:
-  #
   #   should_not_see_in_same_row ["Pinky", "Maurice LaMarche"]
   #   should_not_see_in_same_row ["Brain", "Rob Paulsen"]
+  #
+  # @param [Array] texts
+  #   Array of Strings that should not appear in the same row
   #
   def should_not_see_in_same_row(texts)
     page.should have_no_xpath(xpath_row_containing(texts))
@@ -37,14 +33,12 @@ module WebHelper
 
   # Click a link in a table row containing the given text.
   #
+  #   click_link_in_row "Edit", "Pinky"
+  #
   # @param [String] link
   #   Content of the link to click
   # @param [String] text
   #   Other content that must be in the same row
-  #
-  # Examples:
-  #
-  #   click_link_in_row "Edit", "Pinky"
   #
   def click_link_in_row(link, text)
     row = find(:xpath, xpath_row_containing([link, text]))

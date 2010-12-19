@@ -18,11 +18,14 @@ module Helper
   # Execute a block of code inside a given scope. +scope+ must be a +Hash+
   # of parameters that describes the context in which to execute the block.
   #
-  # Examples:
-  #
   #    in_scope :within => '#footer'
   #        click_link "Contact Us"
   #    end
+  #
+  # @param [Hash] scope
+  #   Context in which to execute the block
+  # @option scope [String] :within
+  #   Selector string
   #
   def in_scope(scope)
     scope_within(scope[:within]) do
@@ -33,17 +36,15 @@ module Helper
   # Verify the presence of content on the page. Passes when all the given items
   # are found on the page, and fails if any of them are not found.
   #
-  # @param [String, Regexp, Array] texts
-  #   Text(s) or regexp(s) to look for
-  # @param [Hash] scope
-  #   Scoping keywords as understood by {#in_scope}
-  #
-  # Examples:
-  #
   #   should_see "Animaniacs"
   #   should_see ["Yakko", "Wakko", "Dot"]
   #   should_see "Baloney", :within => "#slacks"
   #   should_see /(Animaney|Totally Insaney|Pinky and the Brainy)/
+  #
+  # @param [String, Regexp, Array] texts
+  #   Text(s) or regexp(s) to look for
+  # @param [Hash] scope
+  #   Scoping keywords as understood by {#in_scope}
   #
   def should_see(texts, scope={})
     texts = [texts] if (texts.class == String || texts.class == Regexp)
@@ -71,19 +72,15 @@ module Helper
     end
   end
 
-  # Follow a link.
-  # Scope may be defined per the #in_scope method.
   # Follow a link on the page.
+  #
+  #   follow "Login"
+  #   follow "Contact Us", :within => "#footer"
   #
   # @param [String] link
   #   Capybara locator expression (id, name, or link text)
   # @param [Hash] scope
   #   Scoping keywords as understood by {#in_scope}
-  #
-  # Examples:
-  #
-  #   follow "Login"
-  #   follow "Contact Us", :within => "#footer"
   #
   def follow(link, scope={})
     in_scope(scope) do
@@ -93,15 +90,13 @@ module Helper
 
   # Press a button on the page.
   #
+  #   press "Cancel"
+  #   press "Submit", :within => "#survey"
+  #
   # @param [String] button
   #   Capybara locator expression (id, name, or button text)
   # @param [Hash] scope
   #   Scoping keywords as understood by {#in_scope}
-  #
-  # Examples:
-  #
-  #   press "Cancel"
-  #   press "Submit", :within => "#survey"
   #
   def press(button, scope={})
     in_scope(scope) do
@@ -110,6 +105,10 @@ module Helper
   end
 
   # Ensure that the current page content includes a String or Regexp.
+  #
+  # @param [String, Regexp] text_or_regexp
+  #   Content you expect to be on the page
+  #
   def page_should_contain(text_or_regexp)
     if text_or_regexp.class == String
       page_should_contain_text(text_or_regexp)
@@ -120,7 +119,11 @@ module Helper
     end
   end
 
-  ## Ensure that the current page content does not include a String or Regexp.
+  # Ensure that the current page content does not include a String or Regexp.
+  #
+  # @param [String, Regexp] text_or_regexp
+  #   Content you expect to be missing from the page
+  #
   def page_should_not_contain(text_or_regexp)
     if text_or_regexp.class == String
       page_should_not_contain_text(text_or_regexp)
