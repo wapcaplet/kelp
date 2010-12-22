@@ -1,13 +1,5 @@
 = Kelp
 
-This project aims to package a collection of useful helper methods for
-Cucumber. Currently, the provided methods depend on Capybara, though support
-may eventually be added for Webrat, email-spec, or related tools.
-
-{http://kelp.rtfd.org Read the docs} online or view the raw documentation in
-the `docs` folder.
-
-
 This is the documentation for {http://github.com/wapcaplet/kelp Kelp}, a
 collection of helpers that makes it easier to write step definitions for
 {http://cukes.info Cucumber}. The Kelp gem is hosted on
@@ -92,6 +84,7 @@ you pass to this should be in whatever format your +Capybara.default_selector+
 is set to. Other keywords like +:before+ or +:after+ may be supported in future
 revisions.
 
+
 == Development
 
 If you'd like to hack on Kelp, first fork the {http://github.com/wapcaplet/kelp
@@ -112,7 +105,7 @@ It's a good idea to use {http://rvm.beginrescueend.com/ RVM}
 with a new gemset to keep things tidy.
 
 If you make changes that you'd like to share, push them into your Kelp fork,
-then {http://github.com/wapcaplet/kelp/pulls submit a pull request}.
+then {http://github.com/wapcaplet/kelp/pulls submit} a pull request.
 
 
 == Testing
@@ -129,14 +122,11 @@ coverage report via:
 This will write an HTML report to +coverage/index.html+.
 
 
-
 == Future plans
 
 * Write Cucumber integration tests
 * Support other stuff besides Caypbara
 * Turn the project into a proper Rails plugin, with generators
-* Create a gem
-
 
 
 == Copyright

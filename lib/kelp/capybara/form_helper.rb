@@ -20,7 +20,10 @@ module FormHelper
   end
 
   # Fill in multiple fields within the scope of a given selector.
-  # Alias for {#fill_in_fields} fields, :within => selector
+  # Alias for:
+  #
+  #   fill_in_fields fields, :within => selector
+  #
   def fill_in_fields_within(selector, fields)
     fill_in_fields fields, :within => selector
   end
@@ -152,7 +155,10 @@ module FormHelper
   end
 
   # Verify fields within the scope of a given selector.
-  # Alias for {#fields_should_contain} field_values, :within => selector
+  # Alias for:
+  #
+  #   fields_should_contain field_values, :within => selector
+  #
   def fields_should_contain_within(selector, field_values)
     fields_should_contain field_values, :within => selector
   end
