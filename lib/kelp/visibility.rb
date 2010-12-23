@@ -1,5 +1,5 @@
-include 'kelp/scoping'
-include 'kelp/xpath'
+require 'kelp/scoping'
+require 'kelp/xpath'
 
 module Visibility
   include Scoping

@@ -1,5 +1,5 @@
-include 'kelp/scoping'
-include 'kelp/helper'
+require 'kelp/scoping'
+require 'kelp/helper'
 
 module Dropdown
   include Scoping
