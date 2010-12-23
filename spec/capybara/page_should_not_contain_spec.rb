@@ -44,7 +44,7 @@ describe "page_should_not_contain" do
     it "not a String or Regexp" do
       lambda do
         page_should_not_contain 123
-      end.should raise_error
+      end.should raise_error(ArgumentError)
     end
   end
 

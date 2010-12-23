@@ -16,6 +16,7 @@ module WebHelper
     page.should have_xpath(xpath_row_containing(texts))
   end
 
+
   # Verify that all items do not appear in the same table row. Passes if there
   # is no +tr+ containing all the given +texts+, and fails if there exists
   # such a +tr+.
@@ -29,6 +30,7 @@ module WebHelper
   def should_not_see_in_same_row(texts)
     page.should have_no_xpath(xpath_row_containing(texts))
   end
+
 
   # Click a link in a table row containing the given text.
   #
@@ -44,6 +46,7 @@ module WebHelper
     row.click_link(link)
   end
 
+
   # Verify that the HTML element with the given ID exists, and is disabled (has
   # the +disabled+ attribute).
   #
@@ -54,6 +57,7 @@ module WebHelper
     page.should have_xpath("//*[@id='#{element_id}']")
     page.should have_xpath("//*[@id='#{element_id}' and @disabled]")
   end
+
 
   # Verify that the HTML element with the given ID exists, and is enabled (does
   # not have the +disabled+ attribute).
@@ -66,6 +70,7 @@ module WebHelper
     page.should have_no_xpath("//*[@id='#{element_id}' and @disabled]")
   end
 
+
   def page_should_contain_text(text)
     if page.respond_to? :should
       page.should have_content(text)
@@ -73,6 +78,7 @@ module WebHelper
       assert page.has_content?(text)
     end
   end
+
 
   def page_should_contain_regexp(regexp)
     if page.respond_to? :should
@@ -82,6 +88,7 @@ module WebHelper
     end
   end
 
+
   def page_should_not_contain_text(text)
     if page.respond_to? :should
       page.should have_no_content(text)
@@ -89,6 +96,7 @@ module WebHelper
       assert page.has_no_content?(text)
     end
   end
+
 
   def page_should_not_contain_regexp(regexp)
     if page.respond_to? :should

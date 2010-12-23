@@ -19,6 +19,7 @@ module FormHelper
     end
   end
 
+
   # Fill in multiple fields within the scope of a given selector.
   # Alias for:
   #
@@ -28,15 +29,17 @@ module FormHelper
     fill_in_fields fields, :within => selector
   end
 
+
   # Verify that the given field is empty or nil.
   def field_should_be_empty(field)
     _field = nice_find_field(field)
     if _field.nil? || _field.value.nil?
       return true
     else
-      raise "Expected field '#{field}' to be empty, but it has a value '#{_field.value}'"
+      raise RuntimeError, "Expected field '#{field}' to be empty, but value is '#{_field.value}'"
     end
   end
+
 
   # Verify that the selected option in a dropdown has the given
   # value. Note that this is the *visible* content of the dropdown
@@ -59,6 +62,7 @@ module FormHelper
     end
     selected.text.should =~ /#{value}/
   end
+
 
   # Verify that a given dropdown includes all of the given strings.
   # This looks for the visible values in the dropdown, *not* the 'value'
@@ -84,6 +88,7 @@ module FormHelper
       end
     end
   end
+
 
   # Verify that a given dropdown does not include any of the given strings.
   # This looks for the visible values in the dropdown, *not* the 'value'
@@ -126,6 +131,7 @@ module FormHelper
     field.value.should include(value)
   end
 
+
   # Verify that the given field contains the given value.
   #
   # @param [String] field
@@ -149,6 +155,7 @@ module FormHelper
       assert_match(/#{value}/, field_value)
     end
   end
+
 
   # Verify the values of multiple fields given as a Hash.
   #
@@ -175,6 +182,7 @@ module FormHelper
     end
   end
 
+
   # Verify fields within the scope of a given selector.
   # Alias for:
   #
@@ -183,6 +191,7 @@ module FormHelper
   def fields_should_contain_within(selector, field_values)
     fields_should_contain field_values, :within => selector
   end
+
 
   private
 

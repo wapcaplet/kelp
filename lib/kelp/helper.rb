@@ -115,7 +115,7 @@ module Helper
     elsif text_or_regexp.class == Regexp
       page_should_contain_regexp(text_or_regexp)
     else
-      raise "Expected String or Regexp, got #{text_or_regexp.class}"
+      raise ArgumentError, "Expected String or Regexp, got #{text_or_regexp.class}"
     end
   end
 
@@ -130,7 +130,7 @@ module Helper
     elsif text_or_regexp.class == Regexp
       page_should_not_contain_regexp(text_or_regexp)
     else
-      raise "Expected String or Regexp, got #{text_or_regexp.class}"
+      raise ArgumentError, "Expected String or Regexp, got #{text_or_regexp.class}"
     end
   end
 end
