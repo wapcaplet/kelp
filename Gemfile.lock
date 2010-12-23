@@ -1,3 +1,9 @@
+PATH
+  remote: .
+  specs:
+    kelp (0.1.1)
+      capybara (>= 0.4.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -77,10 +83,6 @@ GEM
     thor (0.14.6)
     tilt (1.1)
     tzinfo (0.3.23)
-    webrat (0.7.2)
-      nokogiri (>= 1.2.0)
-      rack (>= 1.0)
-      rack-test (>= 0.5.3)
     xpath (0.1.2)
       nokogiri (~> 1.3)
 
@@ -88,9 +90,10 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bundler (~> 1.0)
   capybara (>= 0.4.0)
+  kelp!
   rcov
   rspec (>= 2.2.0)
   rspec-rails
   sinatra
-  webrat

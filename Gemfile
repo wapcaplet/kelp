@@ -1,16 +1,7 @@
 source :rubygems
 
-group :capybara do
-  gem 'capybara', '>= 0.4.0'
-end
+gem 'bundler', '~> 1.0'
 
-group :webrat do
-  gem 'webrat'
-end
+# Get all other dependencies from the gemspec
+gemspec
 
-group :test do
-  gem 'sinatra'
-  gem 'rspec', '>= 2.2.0' # Rails 3
-  gem 'rspec-rails'
-  gem 'rcov'
-end
