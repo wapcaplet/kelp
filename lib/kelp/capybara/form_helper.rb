@@ -60,15 +60,14 @@ module FormHelper
     selected.text.should =~ /#{value}/
   end
 
-  # Verify that a given dropdown includes all of the given values. Search first
-  # by the 'value' attribute, then by the content of each option; if values are
-  # not found in either place, an error occurs. Scope may be defined per the
-  # {#in_scope} method.
+  # Verify that a given dropdown includes all of the given strings.
+  # This looks for the visible values in the dropdown, *not* the 'value'
+  # attribute of each option.
   #
   # @param [String] dropdown
   #   Capybara locator for the dropdown (the +select+ element)
   # @param [Array] values
-  #   Visible values you expect to be able to select from the dropdown
+  #   Visible contents you expect to be able to select from the dropdown
   # @param [Hash] scope
   #   Scoping keywords as understood by WebHelper#in_scope
   #
@@ -80,14 +79,36 @@ module FormHelper
       field = nice_find_field(dropdown)
       # Look for each value
       values.each do |value|
-        begin
-          option = field.find(:xpath, ".//option[@value='#{value}']")
-        rescue Capybara::ElementNotFound
-          option = field.find(:xpath, ".//option[contains(., '#{value}')]")
-        end
+        page.should have_xpath(".//option[text()='#{value}']")
+        #page.should have_xpath(".//option[contains(., '#{value}')]")
       end
     end
   end
+
+  # Verify that a given dropdown does not include any of the given strings.
+  # This looks for the visible values in the dropdown, *not* the 'value'
+  # attribute of each option.
+  #
+  # @param [String] dropdown
+  #   Capybara locator for the dropdown (the +select+ element)
+  # @param [Array] values
+  #   Visible contents you do not want to see in the dropdown
+  # @param [Hash] scope
+  #   Scoping keywords as understood by WebHelper#in_scope
+  #
+  def dropdown_should_not_include(dropdown, values, scope={})
+    in_scope(scope) do
+      # If values is a String, convert it to an Array
+      values = [values] if values.class == String
+
+      field = nice_find_field(dropdown)
+      # Look for each value
+      values.each do |value|
+        page.should have_no_xpath(".//option[text()='#{value}']")
+      end
+    end
+  end
+
 
   # Verify that a dropdown currently has the option with the given +value+
   # attribute selected. Note that this differs from {#dropdown_should_equal},

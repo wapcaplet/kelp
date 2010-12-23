@@ -16,7 +16,6 @@ module WebHelper
     page.should have_xpath(xpath_row_containing(texts))
   end
 
-  # Verify that a table row does NOT exist containing all the given text strings.
   # Verify that all items do not appear in the same table row. Passes if there
   # is no +tr+ containing all the given +texts+, and fails if there exists
   # such a +tr+.

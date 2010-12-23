@@ -36,6 +36,7 @@ describe "dropdown_should_equal" do
 
 end
 
+
 describe "dropdown_should_include" do
   before(:each) do
     visit('/form')
@@ -75,8 +76,50 @@ describe "dropdown_should_include" do
       end.should raise_error
     end
   end
-
 end
+
+
+describe "dropdown_should_not_include" do
+  before(:each) do
+    visit('/form')
+  end
+
+  context "passes when" do
+    it "a single option does not exist in the dropdown" do
+      dropdown_should_not_include "Height", "Dwarf"
+      dropdown_should_not_include "Height", "Giant"
+      dropdown_should_not_include "Height", "Behemoth"
+    end
+
+    it "none of the multiple options exist in the dropdown" do
+      dropdown_should_not_include "Height", [
+        "Dwarf",
+        "Giant",
+        "Behemoth",
+      ]
+    end
+  end
+
+  context "fails when" do
+    it "a single option exists in the dropdown" do
+      lambda do
+        dropdown_should_not_include "Height", "Short"
+      end.should raise_error
+    end
+
+    it "any of several options exist in the dropdown" do
+      lambda do
+        dropdown_should_not_include "Height", [
+          "Dwarf",
+          "Giant",
+          "Behemoth",
+          "Tall",
+        ]
+      end.should raise_error
+    end
+  end
+end
+
 
 describe "dropdown_value_should_equal" do
   before(:each) do
