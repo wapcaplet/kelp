@@ -41,7 +41,7 @@ describe "should_see" do
       it "does not exist" do
         lambda do
           should_see "Goodbye cruel world"
-        end.should raise_error
+        end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
       end
 
       it "any of several do not exist" do
@@ -51,13 +51,13 @@ describe "should_see" do
             "Goodbye world",
             "Hello, nurse!"
           ]
-        end.should raise_error
+        end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
       end
 
       it "is not within the scope" do
         lambda do
           should_see "Goodbye world", :within => "#greeting"
-        end.should raise_error
+        end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
       end
     end
 
@@ -65,13 +65,13 @@ describe "should_see" do
       it "does not match" do
         lambda do
           should_see /(Yo|Wazzup) world/
-        end.should raise_error
+        end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
       end
 
       it "matches but is not within the scope" do
         lambda do
           should_see /Goodbye world/, :within => "#greeting"
-        end.should raise_error
+        end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
       end
     end
   end
@@ -126,7 +126,7 @@ describe "should_not_see" do
       it "exists" do
         lambda do
           should_not_see "Hello world"
-        end.should raise_error
+        end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
       end
 
       it "any of several exist" do
@@ -136,13 +136,13 @@ describe "should_not_see" do
             "Goodbye cruel world",
             "Goodbye world"
           ]
-        end.should raise_error
+        end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
       end
 
       it "exists within the scope" do
         lambda do
           should_not_see "Hello world", :within => "#greeting"
-        end.should raise_error
+        end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
       end
     end
 
@@ -150,7 +150,7 @@ describe "should_not_see" do
       it "matches" do
         lambda do
           should_not_see /(Hello|Goodbye) world/
-        end.should raise_error
+        end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
       end
 
       it "any of several regexps match" do
@@ -160,13 +160,13 @@ describe "should_not_see" do
             /(Ciao|Later) world/,
             /(Hello|Goodbye) world/
           ]
-        end.should raise_error
+        end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
       end
 
       it "matches within the scope" do
         lambda do
           should_not_see /(Hello|Goodbye) world/, :within => "#greeting"
-        end.should raise_error
+        end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
       end
     end
 
@@ -240,7 +240,7 @@ describe "page_should_contain" do
       it "does not exist" do
         lambda do
           page_should_contain "Wazzup world"
-        end.should raise_error
+        end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
       end
     end
 
@@ -248,7 +248,7 @@ describe "page_should_contain" do
       it "does not match" do
         lambda do
           page_should_contain /(Foo|Bar|Baz) world/
-        end.should raise_error
+        end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
       end
     end
 
@@ -286,20 +286,20 @@ describe "page_should_not_contain" do
       it "exists" do
         lambda do
           page_should_not_contain "Hello world"
-        end.should raise_error
+        end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
         lambda do
           page_should_not_contain "Goodbye world"
-        end.should raise_error
+        end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
       end
     end
     context "Regexp" do
       it "matches" do
         lambda do
           page_should_not_contain /(Hello|Goodbye) world/
-        end.should raise_error
+        end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
         lambda do
           page_should_not_contain /\d\d\d-\d\d\d\d/
-        end.should raise_error
+        end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
       end
     end
 

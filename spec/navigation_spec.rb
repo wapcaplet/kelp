@@ -21,13 +21,13 @@ describe "follow" do
     it "link does not exist" do
       lambda do
         follow "About Them"
-      end.should raise_error
+      end.should raise_error(Capybara::ElementNotFound)
     end
 
     it "link is not within the scope" do
       lambda do
         follow "About Us", :within => "#invalid_scope"
-      end.should raise_error
+      end.should raise_error(Capybara::ElementNotFound)
     end
   end
 
@@ -53,13 +53,13 @@ describe "press" do
     it "button does not exist" do
       lambda do
         press "Poke"
-      end.should raise_error
+      end.should raise_error(Capybara::ElementNotFound)
     end
 
     it "button exists but is not within the scope" do
       lambda do
         press "Submit", :within => "#greeting"
-      end.should raise_error
+      end.should raise_error(Capybara::ElementNotFound)
     end
   end
 end
@@ -81,7 +81,7 @@ describe "click_link_in_row" do
     it "link does not exist in the row" do
       lambda do
         click_link_in_row "Frob", "Eric"
-      end.should raise_error
+      end.should raise_error(Capybara::ElementNotFound)
     end
   end
 end

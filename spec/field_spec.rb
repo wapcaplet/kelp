@@ -27,7 +27,7 @@ describe "field_should_be_empty" do
         fill_in "first_name", :with => "Brian"
         lambda do
           field_should_be_empty "first_name"
-        end.should raise_error
+        end.should raise_error(RuntimeError)
       end
     end
 
@@ -36,7 +36,7 @@ describe "field_should_be_empty" do
         fill_in "First name", :with => "Brian"
         lambda do
           field_should_be_empty "First name"
-        end.should raise_error
+        end.should raise_error(RuntimeError)
       end
     end
   end
@@ -69,14 +69,14 @@ describe "field_should_contain" do
       it "is empty" do
         lambda do
           field_should_contain "first_name", "Brian"
-        end.should raise_error
+        end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
       end
 
       it "has a different value" do
         fill_in "first_name", :with => "Judith"
         lambda do
           field_should_contain "first_name", "Brian"
-        end.should raise_error
+        end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
       end
     end
 
@@ -84,14 +84,14 @@ describe "field_should_contain" do
       it "is empty" do
         lambda do
           field_should_contain "First name", "Brian"
-        end.should raise_error
+        end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
       end
 
       it "has a different value" do
         fill_in "First name", :with => "Judith"
         lambda do
           field_should_contain "First name", "Brian"
-        end.should raise_error
+        end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
       end
     end
 
@@ -152,7 +152,7 @@ describe "fields_should_contain" do
       it "are empty" do
         lambda do
           fields_should_contain "first_name" => "Terry", "last_name" => "Jones"
-        end.should raise_error
+        end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
       end
 
       it "do not all match" do
@@ -160,7 +160,7 @@ describe "fields_should_contain" do
         fill_in "last_name", :with => "Gilliam"
         lambda do
           fields_should_contain "first_name" => "Terry", "last_name" => "Jones"
-        end.should raise_error
+        end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
       end
     end
 
@@ -168,7 +168,7 @@ describe "fields_should_contain" do
       it "are empty" do
         lambda do
           fields_should_contain "First name" => "Terry", "Last name" => "Jones"
-        end.should raise_error
+        end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
       end
 
       it "do not all match" do
@@ -176,7 +176,7 @@ describe "fields_should_contain" do
         fill_in "Last name", :with => "Gilliam"
         lambda do
           fields_should_contain "First name" => "Terry", "Last name" => "Jones"
-        end.should raise_error
+        end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
       end
     end
 
@@ -236,14 +236,14 @@ describe "fill_in_fields" do
     it "filling a nonexistent field" do
       lambda do
         fill_in_fields "Middle name" => "Kaminsky"
-      end.should raise_error
+      end.should raise_error(Capybara::ElementNotFound)
     end
 
     it "filling a field in the wrong scope" do
       lambda do
         fill_in_fields_within "#other_form",
           "First name" => "Mel"
-      end.should raise_error
+      end.should raise_error(Capybara::ElementNotFound)
     end
   end
 

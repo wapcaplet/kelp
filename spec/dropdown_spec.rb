@@ -23,14 +23,14 @@ describe "dropdown_should_equal" do
     it "the option does not have the selected attribute" do
       lambda do
         dropdown_should_equal "Height", "Tall"
-      end.should raise_error
+      end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
     end
 
     it "the option was not the one chosen programmatically" do
       select "Tall", :from => "Height"
       lambda do
         dropdown_should_equal "Height", "Average"
-      end.should raise_error
+      end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
     end
   end
 
@@ -62,7 +62,7 @@ describe "dropdown_should_include" do
     it "a single option does not exist in the dropdown" do
       lambda do
         dropdown_should_include "Height", "Midget"
-      end.should raise_error
+      end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
     end
 
     it "any of several options do not exist in the dropdown" do
@@ -73,7 +73,7 @@ describe "dropdown_should_include" do
           "Tall",
           "Giant",
         ]
-      end.should raise_error
+      end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
     end
   end
 end
@@ -104,7 +104,7 @@ describe "dropdown_should_not_include" do
     it "a single option exists in the dropdown" do
       lambda do
         dropdown_should_not_include "Height", "Short"
-      end.should raise_error
+      end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
     end
 
     it "any of several options exist in the dropdown" do
@@ -115,7 +115,7 @@ describe "dropdown_should_not_include" do
           "Behemoth",
           "Tall",
         ]
-      end.should raise_error
+      end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
     end
   end
 end
@@ -141,14 +141,14 @@ describe "dropdown_value_should_equal" do
     it "the selected option has a different value" do
       lambda do
         dropdown_value_should_equal "Height", "99"
-      end.should raise_error
+      end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
     end
 
     it "the programmatically chosen option has a different value" do
       select "Tall", :from => "Height"
       lambda do
         dropdown_value_should_equal "Height", "2"
-      end.should raise_error
+      end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
     end
   end
 end
