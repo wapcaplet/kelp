@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
-describe Attribute, "should_be_disabled" do
+describe Kelp::Attribute, "should_be_disabled" do
   before(:each) do
     visit('/form')
   end
@@ -27,7 +27,7 @@ describe Attribute, "should_be_disabled" do
 end
 
 
-describe Attribute, "should_be_enabled" do
+describe Kelp::Attribute, "should_be_enabled" do
   before(:each) do
     visit('/form')
   end

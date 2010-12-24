@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
-describe "dropdown_should_equal" do
+describe Kelp::Dropdown, "dropdown_should_equal" do
   before(:each) do
     visit('/form')
   end
@@ -37,7 +37,7 @@ describe "dropdown_should_equal" do
 end
 
 
-describe "dropdown_should_include" do
+describe Kelp::Dropdown, "dropdown_should_include" do
   before(:each) do
     visit('/form')
   end
@@ -79,7 +79,7 @@ describe "dropdown_should_include" do
 end
 
 
-describe "dropdown_should_not_include" do
+describe Kelp::Dropdown, "dropdown_should_not_include" do
   before(:each) do
     visit('/form')
   end
@@ -121,7 +121,7 @@ describe "dropdown_should_not_include" do
 end
 
 
-describe "dropdown_value_should_equal" do
+describe Kelp::Dropdown, "dropdown_value_should_equal" do
   before(:each) do
     visit('/form')
   end

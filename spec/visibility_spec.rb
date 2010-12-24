@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
-describe "should_see" do
+describe Kelp::Visibility, "should_see" do
   before(:each) do
     visit('/home')
   end
@@ -79,7 +79,7 @@ describe "should_see" do
 end
 
 
-describe "should_not_see" do
+describe Kelp::Visibility, "should_not_see" do
   before(:each) do
     visit('/home')
   end
@@ -174,7 +174,7 @@ describe "should_not_see" do
 end
 
 
-describe "should_see_in_same_row" do
+describe Kelp::Visibility, "should_see_in_same_row" do
   before(:each) do
     visit('/home')
   end
@@ -194,7 +194,7 @@ describe "should_see_in_same_row" do
   end
 end
 
-describe "should_see_in_same_row" do
+describe Kelp::Visibility, "should_see_in_same_row" do
   before(:each) do
     visit('/home')
   end
@@ -215,7 +215,7 @@ describe "should_see_in_same_row" do
 end
 
 
-describe "page_should_contain" do
+describe Kelp::Visibility, "page_should_contain" do
   before(:each) do
     visit('/home')
   end
@@ -262,7 +262,7 @@ describe "page_should_contain" do
 end
 
 
-describe "page_should_not_contain" do
+describe Kelp::Visibility, "page_should_not_contain" do
   before(:each) do
     visit('/home')
   end

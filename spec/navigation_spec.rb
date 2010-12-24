@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
-describe "follow" do
+describe Kelp::Navigation, "follow" do
   before(:each) do
     visit('/home')
   end
@@ -34,7 +34,7 @@ describe "follow" do
 end
 
 
-describe "press" do
+describe Kelp::Navigation, "press" do
   before(:each) do
     visit('/home')
   end
@@ -65,7 +65,7 @@ describe "press" do
 end
 
 
-describe "click_link_in_row" do
+describe Kelp::Navigation, "click_link_in_row" do
   before(:each) do
     visit('/home')
   end

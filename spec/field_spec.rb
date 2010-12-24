@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
-describe "field_should_be_empty" do
+describe Kelp::Field, "field_should_be_empty" do
   before(:each) do
     visit('/form')
   end
@@ -43,7 +43,7 @@ describe "field_should_be_empty" do
 end
 
 
-describe "field_should_contain" do
+describe Kelp::Field, "field_should_contain" do
   before(:each) do
     visit('/form')
   end
@@ -100,7 +100,7 @@ describe "field_should_contain" do
 end
 
 
-describe "fields_should_contain" do
+describe Kelp::Field, "fields_should_contain" do
   before(:each) do
     visit('/form')
   end
@@ -185,7 +185,7 @@ describe "fields_should_contain" do
 end
 
 
-describe "fill_in_fields" do
+describe Kelp::Field, "fill_in_fields" do
   before(:each) do
     visit('/form')
   end
