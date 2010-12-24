@@ -2,6 +2,9 @@ require 'kelp/scoping'
 require 'kelp/xpath'
 
 module Kelp
+  # This module defines helper methods for navigating a webpage, including
+  # clicking links and pressing buttons.
+  #
   module Navigation
     include Scoping
     include XPath

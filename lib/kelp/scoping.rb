@@ -1,4 +1,7 @@
 module Kelp
+  # This module defines helper methods for restricting the scope of actions or
+  # verifications on a webpage.
+  #
   module Scoping
     # Execute a block of code within a given scope.
     # +locator+ may be in css or xpath form, depending on what type

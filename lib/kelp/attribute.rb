@@ -1,4 +1,7 @@
 module Kelp
+  # This module defines helper methods for verifying attributes of HTML
+  # elements on a web page.
+  #
   module Attribute
     # Verify that the HTML element with the given ID exists, and is disabled (has
     # the +disabled+ attribute).

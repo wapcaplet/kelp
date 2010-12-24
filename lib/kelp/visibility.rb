@@ -2,6 +2,9 @@ require 'kelp/scoping'
 require 'kelp/xpath'
 
 module Kelp
+  # This module defines methods for verifying the visibility (or invisibility)
+  # of elements on a web page.
+  #
   module Visibility
     include Scoping
     include XPath
@@ -79,6 +82,62 @@ module Kelp
     end
 
 
+    # Ensure that the current page content includes a String.
+    #
+    # @param [String] text
+    #   Content you expect to be on the page
+    #
+    def page_should_contain_text(text)
+      if page.respond_to? :should
+        page.should have_content(text)
+      else
+        assert page.has_content?(text)
+      end
+    end
+
+
+    # Ensure that the current page content matches a Regexp.
+    #
+    # @param [Regexp] regexp
+    #   Content you expect to match
+    #
+    def page_should_contain_regexp(regexp)
+      if page.respond_to? :should
+        page.should have_xpath('.//*', :text => regexp)
+      else
+        assert page.has_xpath?('.//*', :text => regexp)
+      end
+    end
+
+
+    # Ensure that the current page content does not include a String.
+    #
+    # @param [String] text
+    #   Content you expect to be missing from the page
+    #
+    def page_should_not_contain_text(text)
+      if page.respond_to? :should
+        page.should have_no_content(text)
+      else
+        assert page.has_no_content?(text)
+      end
+    end
+
+
+    # Ensure that the current page content does not match a Regexp.
+    #
+    # @param [Regexp] regexp
+    #   Content you expect to fail matching
+    #
+    def page_should_not_contain_regexp(regexp)
+      if page.respond_to? :should
+        page.should have_no_xpath('.//*', :text => regexp)
+      else
+        assert page.has_no_xpath?('.//*', :text => regexp)
+      end
+    end
+
+
     # Verify that all items appear in the same table row. Passes if a +tr+
     # element exists containing all the given +texts+, and fails if no such
     # +tr+ exists. The texts may be in any order in the row.
@@ -110,39 +169,5 @@ module Kelp
     end
 
 
-    def page_should_contain_text(text)
-      if page.respond_to? :should
-        page.should have_content(text)
-      else
-        assert page.has_content?(text)
-      end
-    end
-
-
-    def page_should_contain_regexp(regexp)
-      if page.respond_to? :should
-        page.should have_xpath('.//*', :text => regexp)
-      else
-        assert page.has_xpath?('.//*', :text => regexp)
-      end
-    end
-
-
-    def page_should_not_contain_text(text)
-      if page.respond_to? :should
-        page.should have_no_content(text)
-      else
-        assert page.has_no_content?(text)
-      end
-    end
-
-
-    def page_should_not_contain_regexp(regexp)
-      if page.respond_to? :should
-        page.should have_no_xpath('.//*', :text => regexp)
-      else
-        assert page.has_no_xpath?('.//*', :text => regexp)
-      end
-    end
   end
 end

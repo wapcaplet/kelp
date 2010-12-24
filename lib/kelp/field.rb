@@ -2,6 +2,9 @@ require 'kelp/helper'
 require 'kelp/scoping'
 
 module Kelp
+  # This module defines helper methods for filling in and verifying the content
+  # of fields in a web form.
+  #
   module Field
     include Scoping
     include Helper

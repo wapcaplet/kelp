@@ -2,6 +2,10 @@ require 'kelp/scoping'
 require 'kelp/helper'
 
 module Kelp
+  # This module defines methods for working with dropdown fields in a web form,
+  # including verifying their visible content as well as the +value+ attribute
+  # of selected options.
+  #
   module Dropdown
     include Scoping
     include Helper
