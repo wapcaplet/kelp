@@ -21,11 +21,11 @@ to report any bugs or feature requests.
 To use Kelp's helpers in your Cucumber step definitions, simply +require+ the
 helper module you're interested in:
 
-    require 'kelp/capybara/web_helper'
+    require 'kelp/visibility'
 
 Then add the relevant modules to Cucumber's +World+:
 
-    World(WebHelper)
+    World(Kelp::Visibility)
 
 Many of the provided helpers are designed to make it easier to do things you
 might otherwise be tempted to do with nested step definitions. For example, if
@@ -125,7 +125,7 @@ This will write an HTML report to +coverage/index.html+.
 == Future plans
 
 * Write Cucumber integration tests
-* Support other stuff besides Caypbara
+* Support other stuff besides Capybara
 * Turn the project into a proper Rails plugin, with generators
 
 
