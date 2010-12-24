@@ -12,6 +12,7 @@ module Kelp
     # Verify the presence of content on the page. Passes when all the given items
     # are found on the page, and fails if any of them are not found.
     #
+    # @example
     #   should_see "Animaniacs"
     #   should_see ["Yakko", "Wakko", "Dot"]
     #   should_see "Baloney", :within => "#slacks"
@@ -142,6 +143,7 @@ module Kelp
     # element exists containing all the given +texts+, and fails if no such
     # +tr+ exists. The texts may be in any order in the row.
     #
+    # @example
     #   should_see_in_same_row ["Yakko", "Rob Paulsen"]
     #   should_see_in_same_row ["Wakko", "Jess Harnell"]
     #   should_see_in_same_row ["Dot", "Tress MacNeille"]
@@ -158,6 +160,7 @@ module Kelp
     # is no +tr+ containing all the given +texts+, and fails if there exists
     # such a +tr+.
     #
+    # @example
     #   should_not_see_in_same_row ["Pinky", "Maurice LaMarche"]
     #   should_not_see_in_same_row ["Brain", "Rob Paulsen"]
     #

@@ -37,6 +37,10 @@ module Kelp
     # This looks for the visible values in the dropdown, *not* the 'value'
     # attribute of each option.
     #
+    # @example
+    #   dropdown_should_include "Weekday", "Monday"
+    #   dropdown_should_include "Size", ["Small", "Medium", "Large"]
+    #
     # @param [String] dropdown
     #   Capybara locator for the dropdown (the +select+ element)
     # @param [Array] values
@@ -53,7 +57,6 @@ module Kelp
         # Look for each value
         values.each do |value|
           page.should have_xpath(".//option[text()='#{value}']")
-          #page.should have_xpath(".//option[contains(., '#{value}')]")
         end
       end
     end

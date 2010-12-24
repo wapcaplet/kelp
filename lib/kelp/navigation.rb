@@ -11,6 +11,7 @@ module Kelp
 
     # Follow a link on the page.
     #
+    # @example
     #   follow "Login"
     #   follow "Contact Us", :within => "#footer"
     #
@@ -27,6 +28,7 @@ module Kelp
 
     # Press a button on the page.
     #
+    # @example
     #   press "Cancel"
     #   press "Submit", :within => "#survey"
     #
@@ -44,6 +46,7 @@ module Kelp
 
     # Click a link in a table row containing the given text.
     #
+    # @example
     #   click_link_in_row "Edit", "Pinky"
     #
     # @param [String] link

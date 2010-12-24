@@ -20,6 +20,7 @@ module Kelp
     # Execute a block of code inside a given scope. +scope+ must be a +Hash+
     # of parameters that describes the context in which to execute the block.
     #
+    # @example
     #    in_scope :within => '#footer'
     #        click_link "Contact Us"
     #    end

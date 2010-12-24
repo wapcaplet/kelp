@@ -11,6 +11,7 @@ module Kelp
 
     # Fill in multiple fields according to values in a +Hash+.
     #
+    # @example
     #   fill_in_fields "First name" => "Otto", "Last name" => "Scratchansniff"
     #   fill_in_fields "phone" => "303-224-7428", :within => "#home"
     #
@@ -31,6 +32,7 @@ module Kelp
     # Fill in multiple fields within the scope of a given selector.
     # Alias for:
     #
+    # @example
     #   fill_in_fields fields, :within => selector
     #
     def fill_in_fields_within(selector, fields)
