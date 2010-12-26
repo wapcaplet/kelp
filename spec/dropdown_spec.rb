@@ -6,23 +6,33 @@ describe Kelp::Dropdown, "dropdown_should_equal" do
   end
 
   context "passes when" do
-    it "the option has the selected attribute" do
+    it "the option has the 'selected' attribute" do
       dropdown_should_equal "Height", "Average"
+    end
+
+    it "the first option is selected by default" do
+      dropdown_should_equal "Weight", "Light"
     end
 
     it "the option is chosen programmatically" do
       select "Short", :from => "Height"
       dropdown_should_equal "Height", "Short"
 
-      select "Tall", :from => "Height"
-      dropdown_should_equal "Height", "Tall"
+      select "Heavy", :from => "Weight"
+      dropdown_should_equal "Weight", "Heavy"
     end
   end
 
   context "fails when" do
-    it "the option does not have the selected attribute" do
+    it "the option does not have the 'selected' attribute" do
       lambda do
         dropdown_should_equal "Height", "Tall"
+      end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
+    end
+
+    it "the option is not the first one selected by default" do
+      lambda do
+        dropdown_should_equal "Weight", "Medium"
       end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
     end
 
@@ -127,8 +137,12 @@ describe Kelp::Dropdown, "dropdown_value_should_equal" do
   end
 
   context "passes when" do
-    it "the selected option has the given value" do
+    it "the option with the 'selected' attribute has the given value" do
       dropdown_value_should_equal "Height", "2"
+    end
+
+    it "the first option selected by default has the given value" do
+      dropdown_value_should_equal "Weight", "1"
     end
 
     it "the programmatically chosen option has the given value" do
@@ -138,9 +152,15 @@ describe Kelp::Dropdown, "dropdown_value_should_equal" do
   end
 
   context "fails when" do
-    it "the selected option has a different value" do
+    it "the option with the 'selected' attribute has a different value" do
       lambda do
         dropdown_value_should_equal "Height", "99"
+      end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
+    end
+
+    it "the first option selected by default does not have given value" do
+      lambda do
+        dropdown_value_should_equal "Weight", "2"
       end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
     end
 

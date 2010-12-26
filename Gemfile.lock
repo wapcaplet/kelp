@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    kelp (0.1.1)
+    kelp (0.1.2)
       capybara (>= 0.4.0)
 
 GEM

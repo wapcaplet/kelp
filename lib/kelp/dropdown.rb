@@ -73,6 +73,8 @@ module Kelp
     # @param [Hash] scope
     #   Scoping keywords as understood by WebHelper#in_scope
     #
+    # @since 0.1.2
+    #
     def dropdown_should_not_include(dropdown, values, scope={})
       in_scope(scope) do
         # If values is a String, convert it to an Array

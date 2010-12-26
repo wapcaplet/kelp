@@ -59,6 +59,8 @@ module Kelp
     #   Value you expect to see in the text field
     #
     def field_should_contain(field, value)
+      # TODO: Make this work equally well with any kind of field
+      # (text, single-select, multi-select)
       field = find_field(field)
       field_value = (field.tag_name == 'textarea') ? field.text : field.value
       # If field value is an Array, take the first item
