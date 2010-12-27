@@ -1,0 +1,6 @@
+--main README.rdoc
+lib/**/*.rb
+-
+ChangeLog
+MIT-LICENSE
+
