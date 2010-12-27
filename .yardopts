@@ -1,7 +1,6 @@
---main README.rdoc
+--readme README.rdoc
 lib/**/*.rb
 -
-README.rdoc
 ChangeLog
 MIT-LICENSE
 
