@@ -3,7 +3,7 @@ require 'kelp/helper'
 
 module Kelp
   # This module defines methods for working with dropdown fields in a web form,
-  # including verifying their visible content as well as the +value+ attribute
+  # including verifying their visible content as well as the `value` attribute
   # of selected options.
   #
   module Dropdown
@@ -16,7 +16,7 @@ module Kelp
     # 'value' attribute of the option.
     #
     # @param [String] dropdown
-    #   Capybara locator for the dropdown (the +select+ element)
+    #   Capybara locator for the dropdown (the `select` element)
     # @param [String] value
     #   Value you expect to see as the currently-selected option
     #
@@ -42,11 +42,11 @@ module Kelp
     #   dropdown_should_include "Size", ["Small", "Medium", "Large"]
     #
     # @param [String] dropdown
-    #   Capybara locator for the dropdown (the +select+ element)
+    #   Capybara locator for the dropdown (the `select` element)
     # @param [Array] values
     #   Visible contents you expect to be able to select from the dropdown
     # @param [Hash] scope
-    #   Scoping keywords as understood by WebHelper#in_scope
+    #   Scoping keywords as understood by {#in_scope}
     #
     def dropdown_should_include(dropdown, values, scope={})
       in_scope(scope) do
@@ -67,11 +67,11 @@ module Kelp
     # attribute of each option.
     #
     # @param [String] dropdown
-    #   Capybara locator for the dropdown (the +select+ element)
+    #   Capybara locator for the dropdown (the `select` element)
     # @param [Array] values
     #   Visible contents you do not want to see in the dropdown
     # @param [Hash] scope
-    #   Scoping keywords as understood by WebHelper#in_scope
+    #   Scoping keywords as understood by {#in_scope}
     #
     # @since 0.1.2
     #
@@ -89,15 +89,15 @@ module Kelp
     end
 
 
-    # Verify that a dropdown currently has the option with the given +value+
+    # Verify that a dropdown currently has the option with the given `value`
     # attribute selected. Note that this differs from {#dropdown_should_equal},
-    # in that it looks at the actual +value+ attribute of the selected option,
+    # in that it looks at the actual `value` attribute of the selected option,
     # rather than its visible contents.
     #
     # @param [String] dropdown
-    #   Capybara locator for the dropdown (the +select+ element)
+    #   Capybara locator for the dropdown (the `select` element)
     # @param [String] value
-    #   Expected +value+ attribute of the selected +option+
+    #   Expected `value` attribute of the selected `option`
     #
     def dropdown_value_should_equal(dropdown, value)
       # FIXME: When this returns False, does that fail the step?

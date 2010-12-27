@@ -4,7 +4,7 @@ module Kelp
   #
   module Scoping
     # Execute a block of code within a given scope.
-    # +locator+ may be in css or xpath form, depending on what type
+    # `locator` may be in css or xpath form, depending on what type
     # is set in Capybara.default_locator.
     def scope_within(locator)
       if locator
@@ -17,7 +17,7 @@ module Kelp
     end
 
 
-    # Execute a block of code inside a given scope. +scope+ must be a +Hash+
+    # Execute a block of code inside a given scope. `scope` must be a `Hash`
     # of parameters that describes the context in which to execute the block.
     #
     # @example

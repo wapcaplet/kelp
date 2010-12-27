@@ -139,9 +139,9 @@ module Kelp
     end
 
 
-    # Verify that all items appear in the same table row. Passes if a +tr+
-    # element exists containing all the given +texts+, and fails if no such
-    # +tr+ exists. The texts may be in any order in the row.
+    # Verify that all items appear in the same table row. Passes if a `tr`
+    # element exists containing all the given `texts`, and fails if no such
+    # `tr` exists. The texts may be in any order in the row.
     #
     # @example
     #   should_see_in_same_row ["Yakko", "Rob Paulsen"]
@@ -157,8 +157,8 @@ module Kelp
 
 
     # Verify that all items do not appear in the same table row. Passes if there
-    # is no +tr+ containing all the given +texts+, and fails if there exists
-    # such a +tr+.
+    # is no `tr` containing all the given `texts`, and fails if there exists
+    # such a `tr`.
     #
     # @example
     #   should_not_see_in_same_row ["Pinky", "Maurice LaMarche"]

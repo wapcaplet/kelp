@@ -1,29 +1,31 @@
-= Kelp
+Kelp
+====
 
-This is the documentation for {http://github.com/wapcaplet/kelp Kelp}, a
+This is the documentation for [Kelp](http://github.com/wapcaplet/kelp), a
 collection of helpers that makes it easier to write step definitions for
-{http://cukes.info Cucumber}. The Kelp gem is hosted on
-{http://rubygems.org/gems/kelp Rubygems}, so you can install it with:
+[Cucumber](http://cukes.info). The Kelp gem is hosted on
+[Rubygems](http://rubygems.org/gems/kelp), so you can install it with:
 
     $ gem install kelp
 
 The name "Kelp" is a contraction of "Cuke Helpers". It was chosen because it's
 short, easy to remember, and is in keeping with the theme of greenish plants.
 Kelp is licensed under the
-{http://www.opensource.org/licenses/mit-license.php MIT License}.
+[MIT License](http://www.opensource.org/licenses/mit-license.php).
 
-Please use the {http://github.com/wapcaplet/kelp/issues issue tracker}
+Please use the [issue tracker](http://github.com/wapcaplet/kelp/issues)
 to report any bugs or feature requests.
 
 
-== Usage
+Usage
+-----
 
-To use Kelp's helpers in your Cucumber step definitions, simply +require+ the
+To use Kelp's helpers in your Cucumber step definitions, simply `require` the
 helper module you're interested in:
 
     require 'kelp/visibility'
 
-Then add the relevant modules to Cucumber's +World+:
+Then add the relevant modules to Cucumber's `World`:
 
     World(Kelp::Visibility)
 
@@ -38,7 +40,7 @@ have a step definition like this:
       And %{I should see "Login"}
     end
 
-Using the provided helper method +should_see+, you can do this instead:
+Using the provided helper method `should_see`, you can do this instead:
 
     Then /^I should see the login page$/ do
       should_see "Welcome"
@@ -79,57 +81,61 @@ instance, if you want to look within an element with id="greeting"`, do:
 
     should_see "Welcome", :within => "#greeting"
 
-At the moment, the +:within+ keyword is the only accepted scope; the locator
-you pass to this should be in whatever format your +Capybara.default_selector+
-is set to. Other keywords like +:before+ or +:after+ may be supported in future
+At the moment, the `:within` keyword is the only accepted scope; the locator
+you pass to this should be in whatever format your `Capybara.default_selector`
+is set to. Other keywords like `:before` or `:after` may be supported in future
 revisions.
 
 
-== Development
+Development
+-----------
 
 If you'd like to hack on Kelp, first fork the {http://github.com/wapcaplet/kelp
 repository}, then clone your fork:
 
     $ git clone git://github.com/your_username/kelp.git
 
-Install {http://gembundler.com/ bundler}:
+Install [bundler](http://gembundler.com/):
 
     $ gem install bundler
 
-Then install Kelp's dependencies (specified in +Gemfile+):
+Then install Kelp's dependencies (specified in `Gemfile`):
 
     $ cd /path/to/kelp
     $ bundle install
 
-It's a good idea to use {http://rvm.beginrescueend.com/ RVM}
+It's a good idea to use [RVM](http://rvm.beginrescueend.com/)
 with a new gemset to keep things tidy.
 
 If you make changes that you'd like to share, push them into your Kelp fork,
-then {http://github.com/wapcaplet/kelp/pulls submit} a pull request.
+then [submit a pull request](http://github.com/wapcaplet/kelp/pulls).
 
 
-== Testing
+Testing
+-------
 
-Kelp comes with a +Rakefile+, so you can run the RSpec tests like so:
+Kelp comes with a `Rakefile`, so you can run the RSpec tests like so:
 
     $ rake spec
 
-You can also generate an {http://eigenclass.org/hiki.rb?rcov rcov}
+You can also generate an [rcov](http://eigenclass.org/hiki.rb?rcov)
 coverage report via:
 
     $ rake rcov
 
-This will write an HTML report to +coverage/index.html+.
+This will write an HTML report to `coverage/index.html`.
 
 
-== Future plans
+Future plans
+------------
 
 * Write Cucumber integration tests
 * Support other stuff besides Capybara
 * Turn the project into a proper Rails plugin, with generators
 
 
-== Copyright
+Copyright
+---------
 
 The MIT License
 

@@ -9,7 +9,7 @@ module Kelp
     include Scoping
     include Helper
 
-    # Fill in multiple fields according to values in a +Hash+.
+    # Fill in multiple fields according to values in a `Hash`.
     #
     # @example
     #   fill_in_fields "First name" => "Otto", "Last name" => "Scratchansniff"
@@ -18,7 +18,7 @@ module Kelp
     # @param [Hash] fields
     #   "field" => "value" for each field to fill in
     # @param [Hash] scope
-    #   Scoping keywords as understood by WebHelper#in_scope
+    #   Scoping keywords as understood by {#in_scope}
     #
     def fill_in_fields(fields, scope={})
       in_scope(scope) do
@@ -83,7 +83,7 @@ module Kelp
     # @param [Hash] field_values
     #   "field" => "value" for each field you want to verify
     # @param [Hash] scope
-    #   Scoping keywords as understood by WebHelper#in_scope
+    #   Scoping keywords as understood by {#in_scope}
     #
     def fields_should_contain(field_values, scope={})
       in_scope(scope) do
