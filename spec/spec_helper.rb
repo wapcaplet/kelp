@@ -7,6 +7,7 @@ require File.expand_path(File.dirname(__FILE__) + '/test_app/test_app')
 RSpec.configure do |config|
   config.include Capybara
   config.include Kelp::Attribute
+  config.include Kelp::Checkbox
   config.include Kelp::Dropdown
   config.include Kelp::Field
   config.include Kelp::Navigation
