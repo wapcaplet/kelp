@@ -1,52 +1,41 @@
-# <%= embed_file('support/edit_warning.txt') %>
 
 require 'uri'
 require 'cgi'
 require File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "paths"))
+#require File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "selectors"))
 
-module WithinHelpers
-  def with_scope(locator)
-    locator ? within(locator) { yield } : yield
-  end
+# Single-line step scoper
+When /^(.*) within ([^:]+)$/ do |step, parent|
+  scope_within(parent) { When step }
 end
-World(WithinHelpers)
+
+# Multi-line step scoper
+When /^(.*) within ([^:]+):$/ do |step, parent, table_or_string|
+  scope_within(parent) { When "#{step}:", table_or_string }
+end
 
 Given /^(?:|I )am on (.+)$/ do |page_name|
-  visit path_to(page_name)
+  visit path_to page_name
 end
 
 When /^(?:|I )go to (.+)$/ do |page_name|
-  visit path_to(page_name)
+  visit path_to page_name
 end
 
-When /^(?:|I )press "([^"]*)"(?: within "([^"]*)")?$/ do |button, selector|
-  press button, :within => selector
-  #with_scope(selector) do
-    #click_button(button)
-  #end
+When /^(?:|I )press "([^"]*)"$/ do |button|
+  click_button button
 end
 
-When /^(?:|I )follow "([^"]*)"(?: within "([^"]*)")?$/ do |link, selector|
-  follow link, :within => selector
-  #with_scope(selector) do
-    #click_link(link)
-  #end
+When /^(?:|I )follow "([^"]*)"$/ do |link|
+  click_link link
 end
 
-When /^(?:|I )fill in "([^"]*)" with "([^"]*)"(?: within "([^"]*)")?$/ do |field, value, selector|
-  fields = {field => value}
-  fill_in_fields fields, :within => selector
-  #with_scope(selector) do
-    #fill_in(field, :with => value)
-  #end
+When /^(?:|I )fill in "([^"]*)" with "([^"]*)"$/ do |field, value|
+  fill_in field, :with => value
 end
 
-When /^(?:|I )fill in "([^"]*)" for "([^"]*)"(?: within "([^"]*)")?$/ do |value, field, selector|
-  fields = {field => value}
-  fill_in_fields fields, :within => selector
-  #with_scope(selector) do
-    #fill_in(field, :with => value)
-  #end
+When /^(?:|I )fill in "([^"]*)" for "([^"]*)"$/ do |value, field|
+  fill_in field, :with => value
 end
 
 # Use this to fill in an entire form with data from a table. Example:
@@ -60,142 +49,60 @@ end
 # TODO: Add support for checkbox, select og option
 # based on naming conventions.
 #
-When /^(?:|I )fill in the following(?: within "([^"]*)")?:$/ do |selector, fields|
-  fill_in_fields fields.rows_hash, :within => selector
-  #with_scope(selector) do
-    #fields.rows_hash.each do |name, value|
-      #When %{I fill in "#{name}" with "#{value}"}
-    #end
-  #end
+When /^(?:|I )fill in the following:$/ do |fields|
+  fill_in_fields fields.rows_hash
 end
 
-When /^(?:|I )select "([^"]*)" from "([^"]*)"(?: within "([^"]*)")?$/ do |value, field, selector|
-  with_scope(selector) do
-    select(value, :from => field)
-  end
+When /^(?:|I )select "([^"]*)" from "([^"]*)"$/ do |value, field|
+  select value, :from => field
 end
 
-When /^(?:|I )check "([^"]*)"(?: within "([^"]*)")?$/ do |field, selector|
-  with_scope(selector) do
-    check(field)
-  end
+When /^(?:|I )check "([^"]*)"$/ do |field|
+  check field
 end
 
-When /^(?:|I )uncheck "([^"]*)"(?: within "([^"]*)")?$/ do |field, selector|
-  with_scope(selector) do
-    uncheck(field)
-  end
+When /^(?:|I )uncheck "([^"]*)"$/ do |field|
+  uncheck field
 end
 
-When /^(?:|I )choose "([^"]*)"(?: within "([^"]*)")?$/ do |field, selector|
-  with_scope(selector) do
-    choose(field)
-  end
+When /^(?:|I )choose "([^"]*)"$/ do |field|
+  choose field
 end
 
-When /^(?:|I )attach the file "([^"]*)" to "([^"]*)"(?: within "([^"]*)")?$/ do |path, field, selector|
-  with_scope(selector) do
-    attach_file(field, path)
-  end
+When /^(?:|I )attach the file "([^"]*)" to "([^"]*)"$/ do |path, field|
+  attach_file field, File.expand_path(path)
 end
 
-Then /^(?:|I )should see JSON:$/ do |expected_json|
-  require 'json'
-  expected = JSON.pretty_generate(JSON.parse(expected_json))
-  actual   = JSON.pretty_generate(JSON.parse(response.body))
-  expected.should == actual
+Then /^(?:|I )should see "([^"]*)"$/ do |text|
+  should_see text
 end
 
-Then /^(?:|I )should see "([^"]*)"(?: within "([^"]*)")?$/ do |text, selector|
-  should_see text, :within => selector
-  #with_scope(selector) do
-    #if page.respond_to? :should
-      #page.should have_content(text)
-    #else
-      #assert page.has_content?(text)
-    #end
-  #end
+Then /^(?:|I )should see \/([^\/]*)\/$/ do |regexp|
+  should_see Regexp.new(regexp)
 end
 
-Then /^(?:|I )should see \/([^\/]*)\/(?: within "([^"]*)")?$/ do |regexp, selector|
-  should_see Regexp.new(regexp), :within => selector
-  #regexp = Regexp.new(regexp)
-  #with_scope(selector) do
-    #if page.respond_to? :should
-      #page.should have_xpath('//*', :text => regexp)
-    #else
-      #assert page.has_xpath?('//*', :text => regexp)
-    #end
-  #end
+Then /^(?:|I )should not see "([^"]*)"$/ do |text|
+  should_not_see text
 end
 
-Then /^(?:|I )should not see "([^"]*)"(?: within "([^"]*)")?$/ do |text, selector|
-  should_not_see text, :within => selector
-  #with_scope(selector) do
-    #if page.respond_to? :should
-      #page.should have_no_content(text)
-    #else
-      #assert page.has_no_content?(text)
-    #end
-  #end
+Then /^(?:|I )should not see \/([^\/]*)\/$/ do |regexp|
+  should_not_see Regexp.new(regexp)
 end
 
-Then /^(?:|I )should not see \/([^\/]*)\/(?: within "([^"]*)")?$/ do |regexp, selector|
-  should_not_see Regexp.new(regexp), :within => selector
-  #regexp = Regexp.new(regexp)
-  #with_scope(selector) do
-    #if page.respond_to? :should
-      #page.should have_no_xpath('//*', :text => regexp)
-    #else
-      #assert page.has_no_xpath?('//*', :text => regexp)
-    #end
-  #end
+Then /^the "([^"]*)" field(?: within (.*))? should contain "([^"]*)"$/ do |field, parent, value|
+  field_should_contain field, value, :within => parent
 end
 
-Then /^the "([^"]*)" field(?: within "([^"]*)")? should contain "([^"]*)"$/ do |field, selector, value|
-  with_scope(selector) do
-    field = find_field(field)
-    field_value = (field.tag_name == 'textarea') ? field.text : field.value
-    if field_value.respond_to? :should
-      field_value.should =~ /#{value}/
-    else
-      assert_match(/#{value}/, field_value)
-    end
-  end
+Then /^the "([^"]*)" field(?: within (.*))? should not contain "([^"]*)"$/ do |field, parent, value|
+  field_should_not_contain field, value, :within => parent
 end
 
-Then /^the "([^"]*)" field(?: within "([^"]*)")? should not contain "([^"]*)"$/ do |field, selector, value|
-  with_scope(selector) do
-    field = find_field(field)
-    field_value = (field.tag_name == 'textarea') ? field.text : field.value
-    if field_value.respond_to? :should_not
-      field_value.should_not =~ /#{value}/
-    else
-      assert_no_match(/#{value}/, field_value)
-    end
-  end
+Then /^the "([^"]*)" checkbox(?: within (.*))? should be checked$/ do |label, parent|
+  checkbox_should_be_checked label, :within => parent
 end
 
-Then /^the "([^"]*)" checkbox(?: within "([^"]*)")? should be checked$/ do |label, selector|
-  with_scope(selector) do
-    field_checked = find_field(label)['checked']
-    if field_checked.respond_to? :should
-      field_checked.should be_true
-    else
-      assert field_checked
-    end
-  end
-end
-
-Then /^the "([^"]*)" checkbox(?: within "([^"]*)")? should not be checked$/ do |label, selector|
-  with_scope(selector) do
-    field_checked = find_field(label)['checked']
-    if field_checked.respond_to? :should
-      field_checked.should be_false
-    else
-      assert !field_checked
-    end
-  end
+Then /^the "([^"]*)" checkbox(?: within (.*))? should not be checked$/ do |label, parent|
+  checkbox_should_not_be_checked label, :within => parent
 end
 
 Then /^(?:|I )should be on (.+)$/ do |page_name|
