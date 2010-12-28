@@ -8,8 +8,14 @@ module Kelp
     # is set in Capybara.default_locator.
     def scope_within(locator)
       if locator
-        within(locator) do
-          yield
+        # Use the selector_for method if it's defined
+        if defined? selector_for
+          within(*selector_for(locator)) { yield }
+        # Otherwise, remove any surrounding double-quotes
+        # and fall back on the Capybara locator syntax (CSS or XPath)
+        else
+          locator.gsub!(/^"(.*?)"$/, '\1')
+          within(locator) { yield }
         end
       else
         yield

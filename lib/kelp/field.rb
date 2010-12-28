@@ -29,10 +29,16 @@ module Kelp
     end
 
 
+    # Fill in a single field within the scope of a given selector.
+    def fill_in_field(field, value, scope={})
+      fields = {field => value}
+      fill_in_fields fields, :within => selector
+    end
+
+
     # Fill in multiple fields within the scope of a given selector.
     # Alias for:
     #
-    # @example
     #   fill_in_fields fields, :within => selector
     #
     def fill_in_fields_within(selector, fields)
@@ -58,23 +64,39 @@ module Kelp
     # @param [String] value
     #   Value you expect to see in the text field
     #
-    def field_should_contain(field, value)
-      # TODO: Make this work equally well with any kind of field
-      # (text, single-select, multi-select)
-      field = find_field(field)
-      field_value = (field.tag_name == 'textarea') ? field.text : field.value
-      # If field value is an Array, take the first item
-      if field_value.class == Array
-        field_value = field_value.first
+    def field_should_contain(field, value, scope={})
+      in_scope(scope) do
+        # TODO: Make this work equally well with any kind of field
+        # (text, single-select, multi-select)
+        field = find_field(field)
+        field_value = (field.tag_name == 'textarea') ? field.text : field.value
+        # If field value is an Array, take the first item
+        if field_value.class == Array
+          field_value = field_value.first
+        end
+        # Escape any problematic characters in the expected value
+        value = Regexp.escape(value)
+        # Match actual to expected
+        if field_value.respond_to? :should
+          field_value.should =~ /#{value}/
+        else
+          assert_match(/#{value}/, field_value)
+        end
       end
-      # Escape any problematic characters in the expected value
-      value = Regexp.escape(value)
-      # Match actual to expected
-      if field_value.respond_to? :should
-        field_value.should =~ /#{value}/
-      else
-        assert_match(/#{value}/, field_value)
-      end
+    end
+
+
+    def field_should_not_contain(field, value, scope={})
+      raise "Not implemented yet"
+      #with_scope(parent) do
+        #field = find_field(field)
+        #field_value = (field.tag_name == 'textarea') ? field.text : field.value
+        #if field_value.respond_to? :should_not
+          #field_value.should_not =~ /#{value}/
+        #else
+          #assert_no_match(/#{value}/, field_value)
+        #end
+      #end
     end
 
 
