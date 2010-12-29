@@ -49,7 +49,7 @@ module Kelp
     # Fill in a single fields within the scope of a given selector.
     # Alias for:
     #
-    #   fill_in_field selector, field, value
+    #   fill_in_field field, value, :within => selector
     #
     def fill_in_field_within(selector, field, value)
       fill_in_field field, value, :within => selector
