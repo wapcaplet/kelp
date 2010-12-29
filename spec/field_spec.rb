@@ -185,6 +185,44 @@ describe Kelp::Field, "fields_should_contain" do
 end
 
 
+describe Kelp::Field, "fill_in_field" do
+  before(:each) do
+    visit('/form')
+  end
+
+  context "passes when" do
+    it "filling a single field by id" do
+      fill_in_field "first_name", "Mel"
+      field_should_contain "first_name", "Mel"
+    end
+
+    it "filling a single field by label" do
+      fill_in_field "First name", "Mel"
+      field_should_contain "First name", "Mel"
+    end
+
+    it "filling a single field by id within a scope" do
+      fill_in_field_within "#person_form", "first_name", "Mel"
+      field_should_contain_within "#person_form", "first_name", "Mel"
+    end
+  end
+
+  context "fails when" do
+    it "filling a nonexistent field" do
+      lambda do
+        fill_in_field "Middle name", "Kaminsky"
+      end.should raise_error(Capybara::ElementNotFound)
+    end
+
+    it "filling a field in the wrong scope" do
+      lambda do
+        fill_in_field_within "#other_form", "First name", "Mel"
+      end.should raise_error(Capybara::ElementNotFound)
+    end
+  end
+end
+
+
 describe Kelp::Field, "fill_in_fields" do
   before(:each) do
     visit('/form')
@@ -219,7 +257,7 @@ describe Kelp::Field, "fill_in_fields" do
 
     it "filling a single field by id within a scope" do
       fill_in_fields_within "#person_form", "first_name" => "Mel"
-      field_should_contain "first_name", "Mel"
+      field_should_contain "first_name", "Mel", :within => "#person_form"
     end
 
     it "filling multiple fields by id within a scope" do

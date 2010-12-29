@@ -32,7 +32,7 @@ module Kelp
     # Fill in a single field within the scope of a given selector.
     def fill_in_field(field, value, scope={})
       fields = {field => value}
-      fill_in_fields fields, :within => selector
+      fill_in_fields fields, scope
     end
 
 
@@ -43,6 +43,16 @@ module Kelp
     #
     def fill_in_fields_within(selector, fields)
       fill_in_fields fields, :within => selector
+    end
+
+
+    # Fill in a single fields within the scope of a given selector.
+    # Alias for:
+    #
+    #   fill_in_field selector, field, value
+    #
+    def fill_in_field_within(selector, field, value)
+      fill_in_field field, value, :within => selector
     end
 
 
@@ -123,6 +133,16 @@ module Kelp
           end
         end
       end
+    end
+
+
+    # Verify a single field within the scope of a given selector.
+    # Alias for:
+    #
+    #   field_should_contain field, value, :within => selector
+    #
+    def field_should_contain_within(selector, field, value)
+      field_should_contain field, value, :within => selector
     end
 
 
