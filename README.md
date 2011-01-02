@@ -14,7 +14,8 @@ Kelp is licensed under the
 [MIT License](http://www.opensource.org/licenses/mit-license.php).
 
 Please use the [issue tracker](http://github.com/wapcaplet/kelp/issues)
-to report any bugs or feature requests.
+to report any bugs or feature requests. Visit the `#kelp` channel on
+`irc.freenode.net` to chat.
 
 
 Usage
