@@ -4,7 +4,12 @@ Kelp History
 0.1.2
 -----
 
-TODO
+- Improved namespacing for submodules, so you can be more specific about
+  requiring the helpers you need.
+- Improved documentation and formatting, and converted all docs to YARD format.
+- Added new methods fill_in_field, added scoping to field_should(_not)_contain
+- Modified scope_within to use cucumber-rails' selector_for if it's defined
+
 
 0.1.1
 -----
