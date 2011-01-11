@@ -13,6 +13,8 @@ short, easy to remember, and is in keeping with the theme of greenish plants.
 Kelp is licensed under the
 [MIT License](http://www.opensource.org/licenses/mit-license.php).
 
+Documentation is
+[available on rdoc.info](http://rdoc.info/github/wapcaplet/kelp/master/frames).
 Please use the [issue tracker](http://github.com/wapcaplet/kelp/issues)
 to report any bugs or feature requests. Visit the `#kelp` channel on
 `irc.freenode.net` to chat.
@@ -86,6 +88,10 @@ At the moment, the `:within` keyword is the only accepted scope; the locator
 you pass to this should be in whatever format your `Capybara.default_selector`
 is set to. Other keywords like `:before` or `:after` may be supported in future
 revisions.
+
+See the
+[kelp documentation](http://rdoc.info/github/wapcaplet/kelp/master/frames).
+for more information.
 
 
 Development
