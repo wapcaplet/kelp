@@ -97,8 +97,9 @@ for more information.
 Development
 -----------
 
-If you'd like to hack on Kelp, first fork the {http://github.com/wapcaplet/kelp
-repository}, then clone your fork:
+If you'd like to hack on Kelp, first fork the
+[repository](http://github.com/wapcaplet/kelp repository),
+then clone your fork:
 
     $ git clone git://github.com/your_username/kelp.git
 
