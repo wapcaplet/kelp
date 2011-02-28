@@ -14,6 +14,7 @@ Gem::Specification.new do |s|
   s.platform = Gem::Platform::RUBY
 
   s.add_dependency 'capybara', '>= 0.4.0'
+  s.add_dependency 'webrat'
 
   s.add_development_dependency 'sinatra'
   s.add_development_dependency 'rspec', '>= 2.2.0'

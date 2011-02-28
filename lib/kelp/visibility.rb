@@ -89,10 +89,20 @@ module Kelp
     #   Content you expect to be on the page
     #
     def page_should_contain_text(text)
-      if page.respond_to? :should
-        page.should have_content(text)
+      if Kelp.driver == :capybara
+        if page.respond_to? :should
+          page.should have_content(text)
+        else
+          assert page.has_content?(text)
+        end
+      elsif Kelp.driver == :webrat
+        if defined?(Spec::Rails::Matchers)
+          response.should contain(text)
+        else
+          assert_contain text
+        end
       else
-        assert page.has_content?(text)
+        raise RuntimeError, "Unsupported driver: #{Kelp.driver}"
       end
     end
 
@@ -103,10 +113,20 @@ module Kelp
     #   Content you expect to match
     #
     def page_should_contain_regexp(regexp)
-      if page.respond_to? :should
-        page.should have_xpath('.//*', :text => regexp)
+      if Kelp.driver == :capybara
+        if page.respond_to? :should
+          page.should have_xpath('.//*', :text => regexp)
+        else
+          assert page.has_xpath?('.//*', :text => regexp)
+        end
+      elsif Kelp.driver == :webrat
+        if defined?(Spec::Rails::Matchers)
+          response.should contain(regexp)
+        else
+          assert_match(regexp, response_body)
+        end
       else
-        assert page.has_xpath?('.//*', :text => regexp)
+        raise RuntimeError, "Unsupported driver: #{Kelp.driver}"
       end
     end
 
@@ -117,10 +137,21 @@ module Kelp
     #   Content you expect to be missing from the page
     #
     def page_should_not_contain_text(text)
-      if page.respond_to? :should
-        page.should have_no_content(text)
+      if Kelp.driver == :capybara
+        if page.respond_to? :should
+          page.should have_no_content(text)
+        else
+          assert page.has_no_content?(text)
+        end
+      elsif Kelp.driver == :webrat
+        if defined?(Spec::Rails::Matchers)
+          response.should_not contain(text)
+        else
+          hc = Webrat::Matchers::HasContent.new(text)
+          assert !hc.matches?(content), hc.negative_failure_message
+        end
       else
-        assert page.has_no_content?(text)
+        raise RuntimeError, "Unsupported driver: #{Kelp.driver}"
       end
     end
 
@@ -131,10 +162,20 @@ module Kelp
     #   Content you expect to fail matching
     #
     def page_should_not_contain_regexp(regexp)
-      if page.respond_to? :should
-        page.should have_no_xpath('.//*', :text => regexp)
+      if Kelp.driver == :capybara
+        if page.respond_to? :should
+          page.should have_no_xpath('.//*', :text => regexp)
+        else
+          assert page.has_no_xpath?('.//*', :text => regexp)
+        end
+      elsif Kelp.driver == :webrat
+        if defined?(Spec::Rails::Matchers)
+          response.should_not contain(regexp)
+        else
+          assert_not_contain(regexp)
+        end
       else
-        assert page.has_no_xpath?('.//*', :text => regexp)
+        raise RuntimeError, "Unsupported driver: #{Kelp.driver}"
       end
     end
 
@@ -152,7 +193,11 @@ module Kelp
     #   Array of Strings that should appear in the same row
     #
     def should_see_in_same_row(texts)
-      page.should have_xpath(xpath_row_containing(texts))
+      if Kelp.driver == :capybara
+        page.should have_xpath(xpath_row_containing(texts))
+      elsif Kelp.driver == :webrat
+        raise RuntimeError, "Not implemented yet"
+      end
     end
 
 
@@ -168,7 +213,11 @@ module Kelp
     #   Array of Strings that should not appear in the same row
     #
     def should_not_see_in_same_row(texts)
-      page.should have_no_xpath(xpath_row_containing(texts))
+      if Kelp.driver == :capybara
+        page.should have_no_xpath(xpath_row_containing(texts))
+      elsif Kelp.driver == :webrat
+        raise RuntimeError, "Not implemented yet"
+      end
     end
 
 
