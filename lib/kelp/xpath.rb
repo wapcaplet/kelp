@@ -6,9 +6,27 @@ module Kelp
     def xpath_row_containing(texts)
       texts = [texts] if texts.class == String
       conditions = texts.collect do |text|
-        "contains(., '#{text}')"
+        "contains(., #{xpath_sanitize(text)})"
       end.join(' and ')
       return "//table//tr[#{conditions}]"
+    end
+
+    # Return the given text string in an XPath-safe form, with
+    # any single-quotes escaped by using the XPath `concat`
+    # function to combine them with the rest of the text.
+    #
+    # @example
+    #   xpath_sanitize("Bob's")
+    #   # => concat('Bob', "'", 's')
+    #
+    def xpath_sanitize(text)
+      # If there's nothing to escape, just wrap text in single-quotes
+      if !text.include?("'")
+        return "'#{text}'"
+      else
+        result = text.gsub(/'/, %{', "'", '})
+        return "concat('#{result}')"
+      end
     end
   end
 end

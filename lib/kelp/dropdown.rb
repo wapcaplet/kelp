@@ -27,7 +27,8 @@ module Kelp
         selected = field.find(:xpath, ".//option[@selected='selected']")
       # If not, find the option matching the first field value
       rescue Capybara::ElementNotFound
-        selected = field.find(:xpath, ".//option[@value='#{field.value.first}']")
+        first_value = xpath_sanitize(field.value.first)
+        selected = field.find(:xpath, ".//option[@value=#{first_value}]")
       end
       selected.text.should =~ /#{value}/
     end
@@ -56,7 +57,7 @@ module Kelp
         field = nice_find_field(dropdown)
         # Look for each value
         values.each do |value|
-          page.should have_xpath(".//option[text()='#{value}']")
+          page.should have_xpath(".//option[text()=#{xpath_sanitize(value)}]")
         end
       end
     end
@@ -83,7 +84,7 @@ module Kelp
         field = nice_find_field(dropdown)
         # Look for each value
         values.each do |value|
-          page.should have_no_xpath(".//option[text()='#{value}']")
+          page.should have_no_xpath(".//option[text()=#{xpath_sanitize(value)}]")
         end
       end
     end

@@ -98,7 +98,7 @@ Development
 -----------
 
 If you'd like to hack on Kelp, first fork the
-[repository](http://github.com/wapcaplet/kelp repository),
+[repository](http://github.com/wapcaplet/kelp),
 then clone your fork:
 
     $ git clone git://github.com/your_username/kelp.git
@@ -107,7 +107,7 @@ Install [bundler](http://gembundler.com/):
 
     $ gem install bundler
 
-Then install Kelp's dependencies (specified in `Gemfile`):
+Then install Kelp's dependencies:
 
     $ cd /path/to/kelp
     $ bundle install

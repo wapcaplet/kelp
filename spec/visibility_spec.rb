@@ -183,13 +183,17 @@ describe Kelp::Visibility, "should_see_in_same_row" do
     it "two strings are in the same row" do
       should_see_in_same_row ["Eric", "Edit"]
       should_see_in_same_row ["John", "Edit"]
-      should_see_in_same_row ["Terry", "Edit"]
+    end
+
+    it "two strings are in the same row, and one has single and/or double-quotes" do
+      should_see_in_same_row [%{Eric "Quoted"}, "Edit"]
+      should_see_in_same_row [%{"John's" quo'ta'tions}, "Edit"]
+      should_see_in_same_row [%{Terry's "Big" thing}, "Edit"]
     end
 
     it "three strings are in the same row" do
       should_see_in_same_row ["Eric", "555-4444", "Edit"]
       should_see_in_same_row ["John", "666-5555", "Edit"]
-      should_see_in_same_row ["Terry", "777-6666", "Edit"]
     end
   end
 end

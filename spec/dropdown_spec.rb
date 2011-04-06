@@ -59,6 +59,12 @@ describe Kelp::Dropdown, "dropdown_should_include" do
       dropdown_should_include "Height", "Tall"
     end
 
+    it "a single option with quotes exists in the dropdown" do
+      dropdown_should_include "Quotes", %{Single 'quotes'}
+      dropdown_should_include "Quotes", %{"Double" quotes}
+      dropdown_should_include "Quotes", %{'Single' and "Double" quotes}
+    end
+
     it "multiple options exist in the dropdown" do
       dropdown_should_include "Height", [
         "Short",
