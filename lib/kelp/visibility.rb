@@ -191,12 +191,16 @@ module Kelp
     #
     # @param [Array] texts
     #   Array of Strings that should appear in the same row
+    # @param [Hash] scope
+    #   Scoping keywords as understood by {#in_scope}
     #
-    def should_see_in_same_row(texts)
-      if Kelp.driver == :capybara
-        page.should have_xpath(xpath_row_containing(texts))
-      elsif Kelp.driver == :webrat
-        raise RuntimeError, "Not implemented yet"
+    def should_see_in_same_row(texts, scope={})
+      in_scope(scope) do
+        if Kelp.driver == :capybara
+          page.should have_xpath(xpath_row_containing(texts))
+        elsif Kelp.driver == :webrat
+          raise RuntimeError, "Not implemented yet"
+        end
       end
     end
 
@@ -211,14 +215,19 @@ module Kelp
     #
     # @param [Array] texts
     #   Array of Strings that should not appear in the same row
+    # @param [Hash] scope
+    #   Scoping keywords as understood by {#in_scope}
     #
-    def should_not_see_in_same_row(texts)
-      if Kelp.driver == :capybara
-        page.should have_no_xpath(xpath_row_containing(texts))
-      elsif Kelp.driver == :webrat
-        raise RuntimeError, "Not implemented yet"
+    def should_not_see_in_same_row(texts, scope={})
+      in_scope(scope) do
+        if Kelp.driver == :capybara
+          page.should have_no_xpath(xpath_row_containing(texts))
+        elsif Kelp.driver == :webrat
+          raise RuntimeError, "Not implemented yet"
+        end
       end
     end
 
   end
 end
+

@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = "kelp"
-  s.version = "0.1.3"
+  s.version = "0.1.4"
   s.summary = "Cucumber helper methods"
   s.description = <<-EOS
     Kelp is a collection of helper methods for Cucumber to ease the process of
@@ -14,12 +14,12 @@ Gem::Specification.new do |s|
   s.platform = Gem::Platform::RUBY
 
   s.add_dependency 'capybara', '>= 0.4.0'
-  s.add_dependency 'webrat'
 
   s.add_development_dependency 'sinatra'
   s.add_development_dependency 'rspec', '>= 2.2.0'
   s.add_development_dependency 'rspec-rails'
   s.add_development_dependency 'rcov'
+  s.add_development_dependency 'webrat'
 
   s.files = `git ls-files`.split("\n")
   s.require_path = 'lib'

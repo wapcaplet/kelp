@@ -185,9 +185,15 @@ describe Kelp::Visibility, "should_see_in_same_row" do
       should_see_in_same_row ["John", "Edit"]
     end
 
+    it "two strings are in the same row within a given scope" do
+      should_see_in_same_row ["Eric", "Edit"], :within => "#table_a"
+      should_see_in_same_row ["John", "Edit"], :within => "#table_a"
+      should_see_in_same_row ["Graham", "Edit"], :within => "#table_b"
+    end
+
     it "two strings are in the same row, and one has single and/or double-quotes" do
-      should_see_in_same_row [%{Eric "Quoted"}, "Edit"]
-      should_see_in_same_row [%{"John's" quo'ta'tions}, "Edit"]
+      should_see_in_same_row [%{Graham "Quoted"}, "Edit"]
+      should_see_in_same_row [%{"Michael's" quo'ta'tions}, "Edit"]
       should_see_in_same_row [%{Terry's "Big" thing}, "Edit"]
     end
 
@@ -196,9 +202,29 @@ describe Kelp::Visibility, "should_see_in_same_row" do
       should_see_in_same_row ["John", "666-5555", "Edit"]
     end
   end
+
+  context "fails when" do
+    it "two strings exist, but are not in the same row" do
+      lambda do
+        should_see_in_same_row ["Eric", "John"]
+      end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
+    end
+
+    it "two strings are in the same row, but a third is not" do
+      lambda do
+        should_see_in_same_row ["Eric", "Edit", "Delete"]
+      end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
+    end
+
+    it "two strings are in the same row, but outside the given scope" do
+      lambda do
+        should_see_in_same_row ["Eric", "Edit"], :within => "#table_b"
+      end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
+    end
+  end
 end
 
-describe Kelp::Visibility, "should_see_in_same_row" do
+describe Kelp::Visibility, "should_not_see_in_same_row" do
   before(:each) do
     visit('/home')
   end
@@ -214,6 +240,24 @@ describe Kelp::Visibility, "should_see_in_same_row" do
       should_not_see_in_same_row ["Eric", "555-4444", "Delete"]
       should_not_see_in_same_row ["John", "666-5555", "Delete"]
       should_not_see_in_same_row ["Terry", "777-6666", "Delete"]
+    end
+
+    it "two strings are not in the same row within a given scope" do
+      should_not_see_in_same_row ["Terry", "Delete"], :within => "#table_a"
+    end
+  end
+
+  context "fails when" do
+    it "two strings are in the same row" do
+      lambda do
+        should_not_see_in_same_row ["Eric", "Edit"]
+      end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
+    end
+
+    it "two strings are in the same row within a given scope" do
+      lambda do
+        should_not_see_in_same_row ["Eric", "Edit"], :within => "#table_a"
+      end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
     end
   end
 end

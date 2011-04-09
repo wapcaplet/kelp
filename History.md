@@ -1,11 +1,17 @@
 Kelp History
 ============
 
-0.1.3
+0.1.4
 -----
 
 - Fixed single-quote escaping issue in table rows and dropdowns
 - Began adding Webrat support (still untested and not fully implemented)
+
+
+0.1.3
+-----
+
+Messed up 0.1.4 release. Incorrectly requires webrat.
 
 
 0.1.2
