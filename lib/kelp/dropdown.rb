@@ -19,18 +19,22 @@ module Kelp
     #   Capybara locator for the dropdown (the `select` element)
     # @param [String] value
     #   Value you expect to see as the currently-selected option
+    # @param [Hash] scope
+    #   Scoping keywords as understood by {#in_scope}
     #
-    def dropdown_should_equal(dropdown, value)
-      field = nice_find_field(dropdown)
-      # See if there's a 'selected' option
-      begin
-        selected = field.find(:xpath, ".//option[@selected='selected']")
-      # If not, find the option matching the first field value
-      rescue Capybara::ElementNotFound
-        first_value = xpath_sanitize(field.value.first)
-        selected = field.find(:xpath, ".//option[@value=#{first_value}]")
+    def dropdown_should_equal(dropdown, value, scope={})
+      in_scope(scope) do
+        field = nice_find_field(dropdown)
+        # See if there's a 'selected' option
+        begin
+          selected = field.find(:xpath, ".//option[@selected='selected']")
+        # If not, find the option matching the first field value
+        rescue Capybara::ElementNotFound
+          first_value = xpath_sanitize(field.value.first)
+          selected = field.find(:xpath, ".//option[@value=#{first_value}]")
+        end
+        selected.text.should =~ /#{value}/
       end
-      selected.text.should =~ /#{value}/
     end
 
 

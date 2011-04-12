@@ -8,6 +8,7 @@ Feature: Kelp Step Definitions
     When I run "cucumber features -q --no-color" in the sinatra app
     Then the results should be:
       """
-      1 scenario (1 passed)
+      5 scenarios (5 passed)
+      18 steps (18 passed)
       """
 
