@@ -1,3 +1,5 @@
+# app.rb
+
 require 'rubygems'
 require 'sinatra/base'
 require 'rack'

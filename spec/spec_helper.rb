@@ -6,7 +6,7 @@ require 'capybara/dsl'
 #require 'webrat'
 
 require 'kelp'
-require File.expand_path(File.dirname(__FILE__) + '/test_app/test_app')
+require File.expand_path(File.join(File.dirname(__FILE__), '..', 'examples', 'sinatra_app', 'app'))
 
 RSpec.configure do |config|
   config.include Capybara
