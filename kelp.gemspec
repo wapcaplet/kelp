@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = "kelp"
-  s.version = "0.1.4"
+  s.version = "0.1.5"
   s.summary = "Cucumber helper methods"
   s.description = <<-EOS
     Kelp is a collection of helper methods for Cucumber to ease the process of
