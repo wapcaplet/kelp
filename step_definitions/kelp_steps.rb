@@ -10,12 +10,36 @@ World(Kelp::Dropdown)
 SHOULD_OR_NOT = /(should|should not)/
 WITHIN = /(?: within "(.+)")?/
 
-# Verify the presence or absence of multiple text strings in a table.
-Then /^I #{SHOULD_OR_NOT} see the following#{WITHIN}:$/ do |expect, within, fields|
-  if expect == 'should'
-    should_see fields.raw.flatten, :within => within
+# Verify the presence or absence of multiple text strings in the page,
+# or within a given context.
+#
+# With `should see`, fails if any of the strings are missing.
+# With `should not see`, fails if any of the strings are present.
+#
+# `items` may be a Cucumber table, or a multi-line string. Examples:
+#
+#   Then I should see the following:
+#     | First thing |
+#     | Next thing |
+#     | Last thing |
+#
+#   Then I should see the following:
+#     """
+#     First thing
+#     Next thing
+#     Last thing
+#     """
+#
+Then /^I #{SHOULD_OR_NOT} see the following#{WITHIN}:$/ do |expect, within, items|
+  if strings.class == Cucumber::Ast::Table
+    strings = items.raw.flatten
   else
-    should_not_see fields.raw.flatten, :within => within
+    strings = items.split("\n")
+  end
+  if expect == 'should'
+    should_see strings, :within => within
+  else
+    should_not_see strings, :within => within
   end
 end
 
