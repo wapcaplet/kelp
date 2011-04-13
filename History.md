@@ -1,6 +1,13 @@
 Kelp History
 ============
 
+0.1.5
+-----
+
+- Added Rails generator for generating kelp_steps.rb with some predefined steps
+- Cucumber self-tests
+
+
 0.1.4
 -----
 
