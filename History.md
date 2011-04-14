@@ -5,7 +5,8 @@ Kelp History
 -----
 
 - Added Rails generator for generating kelp_steps.rb with some predefined steps
-- Cucumber self-tests
+- Included some cucumber self-tests, especially to test the generated steps
+- Fixed scoping error in xpath_row_containing
 
 
 0.1.4
@@ -18,7 +19,7 @@ Kelp History
 0.1.3
 -----
 
-Messed up 0.1.4 release. Incorrectly requires webrat.
+- Messed up 0.1.4 release. Incorrectly requires webrat.
 
 
 0.1.2
