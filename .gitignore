@@ -5,3 +5,4 @@ docs/_build
 .rvmrc
 doc
 .yardoc
+examples/sinatra_app/features/step_definitions
