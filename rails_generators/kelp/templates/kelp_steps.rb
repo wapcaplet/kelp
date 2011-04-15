@@ -18,7 +18,8 @@ World(Kelp::Visibility)
 World(Kelp::Dropdown)
 
 SHOULD_OR_NOT = /(should|should not)/
-WITHIN = /(?: within "(.+)")?/
+WITHIN = /(?: within "([^\"]+)")?/
+STR = /([^\"]+)/
 
 # Verify the presence or absence of multiple text strings in the page,
 # or within a given context.
@@ -71,13 +72,13 @@ end
 # Verify that a dropdown has a given value selected. This verifies the visible
 # value shown to the user, rather than the value attribute of the selected
 # option element.
-Then /^the "(.+)" dropdown#{WITHIN} should equal "(.+)"$/ do |dropdown, selector, value|
+Then /^the "#{STR}" dropdown#{WITHIN} should equal "#{STR}"$/ do |dropdown, selector, value|
   dropdown_should_equal(dropdown, value, :within => selector)
 end
 
 
 # Verify that a dropdown includes or doesn't include the given value.
-Then /^the "(.+)" dropdown#{WITHIN} #{SHOULD_OR_NOT} include "(.+)"$/ do |dropdown, selector, expect, value|
+Then /^the "#{STR}" dropdown#{WITHIN} #{SHOULD_OR_NOT} include "#{STR}"$/ do |dropdown, selector, expect, value|
   if expect == 'should'
     dropdown_should_include(dropdown, value, :within => selector)
   else
@@ -87,7 +88,7 @@ end
 
 
 # Verify that a dropdown includes or doesn't include all values in the given table.
-Then /^the "(.+)" dropdown#{WITHIN} #{SHOULD_OR_NOT} include:$/ do |dropdown, selector, expect, values|
+Then /^the "#{STR}" dropdown#{WITHIN} #{SHOULD_OR_NOT} include:$/ do |dropdown, selector, expect, values|
   values.raw.flatten.each do |value|
     if expect == 'should'
       dropdown_should_include(dropdown, value, :within => selector)
@@ -99,7 +100,7 @@ end
 
 
 # Verify that a given field is empty or nil
-Then /^the "(.+)" field#{WITHIN} should be empty$/ do |field, selector|
+Then /^the "#{STR}" field#{WITHIN} should be empty$/ do |field, selector|
   with_scope(selector) do
     field_should_be_empty field
   end
@@ -116,24 +117,26 @@ end
 # Verify that expected text exists or does not exist in the same row as
 # identifier text. This can be used to ensure the presence or absence of "Edit"
 # or "Delete" links, or specific data associated with a row in a table.
-Then /^I #{SHOULD_OR_NOT} see "(.+)" next to "(.+)"$/ do |expect, expected, identifier|
-  if expect = 'should'
-    should_see_in_same_row [expected, identifier]
-  else
-    should_not_see_in_same_row [expected, identifier]
+Then /^I #{SHOULD_OR_NOT} see "#{STR}" next to "#{STR}"#{WITHIN}$/ do |expect, expected, identifier, selector|
+  with_scope(selector) do
+    if expect == 'should'
+      should_see_in_same_row [expected, identifier]
+    else
+      should_not_see_in_same_row [expected, identifier]
+    end
   end
 end
 
 
 # Click a link in a table row that contains the given text.
 # This can be used to click the "Edit" link for a specific record.
-When /^I follow "(.+)" next to "(.+)"$/ do |link, identifier|
+When /^I follow "#{STR}" next to "#{STR}"$/ do |link, identifier|
   click_link_in_row(link, identifier)
 end
 
 
 # Verify that a checkbox in a certain table row is checked or unchecked
-Then /^the "(.+)" checkbox next to "(.+)"#{WITHIN} should be (checked|unchecked)$/ do |checkbox, text, selector, state|
+Then /^the "#{STR}" checkbox next to "#{STR}"#{WITHIN} should be (checked|unchecked)$/ do |checkbox, text, selector, state|
   within(:xpath, xpath_row_containing(text)) do
     if state == 'checked'
       checkbox_should_be_checked(checkbox, text, :within => selector)
