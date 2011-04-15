@@ -16,6 +16,7 @@
 require 'kelp'
 World(Kelp::Visibility)
 World(Kelp::Dropdown)
+World(Kelp::Checkbox)
 
 SHOULD_OR_NOT = /(should|should not)/
 WITHIN = /(?: within "([^\"]+)")?/
@@ -139,9 +140,9 @@ end
 Then /^the "#{STR}" checkbox next to "#{STR}"#{WITHIN} should be (checked|unchecked)$/ do |checkbox, text, selector, state|
   within(:xpath, xpath_row_containing(text)) do
     if state == 'checked'
-      checkbox_should_be_checked(checkbox, text, :within => selector)
+      checkbox_should_be_checked(checkbox, :within => selector)
     else
-      checkbox_should_not_be_checked(checkbox, text, :within => selector)
+      checkbox_should_not_be_checked(checkbox, :within => selector)
     end
   end
 end
