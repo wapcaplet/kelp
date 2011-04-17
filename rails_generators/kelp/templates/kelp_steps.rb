@@ -46,7 +46,7 @@ Then /^I #{SHOULD_OR_NOT} see the following#{WITHIN}:$/ do |expect, selector, it
   if items.class == Cucumber::Ast::Table
     strings = items.raw.flatten
   else
-    strings = items.split("\n")
+    strings = items.split(/[\r\n]+/)
   end
   if expect == 'should'
     should_see strings, :within => selector
