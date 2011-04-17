@@ -94,6 +94,20 @@ See the
 for more information.
 
 
+Rails generator
+---------------
+
+Kelp provides a generator for Rails 2.x projects, to quickly add some generic
+step definitions. Simply run:
+
+    $ script/generate kelp
+
+This will create `features/step_definitions/kelp_steps.rb` with some example
+step definitions using Kelp's helper methods.
+
+A Rails 3.x generator is not currently provided. Contributions are welcome!
+
+
 Development
 -----------
 
@@ -131,15 +145,21 @@ coverage report via:
 
     $ rake rcov
 
-This will write an HTML report to `coverage/index.html`.
+This will write an HTML report to `coverage/index.html`. Finally, there are
+some Cucumber self-tests included, mainly for testing the `kelp_steps.rb`
+file used by the Rails generator. Run via:
+
+    $ cucumber
+
+This self-test is a single scenario that exercises scenarios in
+`examples/sinatra_app/features`, and ensures that they perform as expected.
 
 
 Future plans
 ------------
 
-* Write Cucumber integration tests
+* Generator for Rails 3
 * Support other stuff besides Capybara
-* Turn the project into a proper Rails plugin, with generators
 
 
 Copyright
