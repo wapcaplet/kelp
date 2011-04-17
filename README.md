@@ -136,20 +136,16 @@ then [submit a pull request](http://github.com/wapcaplet/kelp/pulls).
 Testing
 -------
 
-Kelp comes with a `Rakefile`, so you can run the RSpec tests like so:
+Kelp comes with a `Rakefile`, so you can run the RSpec tests and generate an
+[rcov](http://eigenclass.org/hiki.rb?rcov) coverage report via:
 
     $ rake spec
-
-You can also generate an [rcov](http://eigenclass.org/hiki.rb?rcov)
-coverage report via:
-
-    $ rake rcov
 
 This will write an HTML report to `coverage/index.html`. Finally, there are
 some Cucumber self-tests included, mainly for testing the `kelp_steps.rb`
 file used by the Rails generator. Run via:
 
-    $ cucumber
+    $ rake cucumber
 
 This self-test is a single scenario that exercises scenarios in
 `examples/sinatra_app/features`, and ensures that they perform as expected.
