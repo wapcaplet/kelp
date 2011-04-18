@@ -1,8 +1,10 @@
 *.swp
 .bundle
 coverage
+coverage.data
 docs/_build
 .rvmrc
 doc
 .yardoc
 examples/sinatra_app/features/step_definitions
+pkg
