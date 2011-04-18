@@ -18,7 +18,15 @@ Feature: Kelp Step Definitions
     When I run cucumber on "visibility.feature"
     Then the results should be:
       """
+      3 scenarios (3 passed)
+      11 steps (11 passed)
+      """
+
+  Scenario: Checkbox test
+    When I run cucumber on "checkbox.feature"
+    Then the results should be:
+      """
       2 scenarios (2 passed)
-      8 steps (8 passed)
+      6 steps (6 passed)
       """
 

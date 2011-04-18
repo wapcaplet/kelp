@@ -11,6 +11,7 @@ Feature: Visibility
     And I should not see the following:
       | Goodbye cruel world |
 
+
   Scenario: Should or shouldn't see in same row
     Then I should see a table row containing:
       | Eric | Edit |
@@ -25,4 +26,10 @@ Feature: Visibility
     And I should not see table rows containing:
       | John  | Delete |
       | Terry | Delete |
+
+
+  Scenario: Should or shouldn't see next to
+    Then I should see "Edit" next to "John"
+    And I should not see "Delete" next to "John"
+
 

@@ -14,9 +14,14 @@
 #
 
 require 'kelp'
-World(Kelp::Visibility)
-World(Kelp::Dropdown)
+World(Kelp::Attribute)
 World(Kelp::Checkbox)
+World(Kelp::Dropdown)
+World(Kelp::Field)
+World(Kelp::Navigation)
+World(Kelp::Scoping)
+World(Kelp::Visibility)
+
 
 SHOULD_OR_NOT = /(should|should not)/
 WITHIN = /(?: within "([^\"]+)")?/
@@ -116,14 +121,14 @@ end
 
 
 # Verify that expected text exists or does not exist in the same row as
-# identifier text. This can be used to ensure the presence or absence of "Edit"
+# some text. This can be used to ensure the presence or absence of "Edit"
 # or "Delete" links, or specific data associated with a row in a table.
-Then /^I #{SHOULD_OR_NOT} see "#{STR}" next to "#{STR}"#{WITHIN}$/ do |expect, expected, identifier, selector|
-  with_scope(selector) do
+Then /^I #{SHOULD_OR_NOT} see "#{STR}" next to "#{STR}"#{WITHIN}$/ do |expect, text, next_to, selector|
+  scope_within(selector) do
     if expect == 'should'
-      should_see_in_same_row [expected, identifier]
+      should_see_in_same_row [text, next_to]
     else
-      should_not_see_in_same_row [expected, identifier]
+      should_not_see_in_same_row [text, next_to]
     end
   end
 end
@@ -131,15 +136,24 @@ end
 
 # Click a link in a table row that contains the given text.
 # This can be used to click the "Edit" link for a specific record.
-When /^I follow "#{STR}" next to "#{STR}"$/ do |link, identifier|
-  click_link_in_row(link, identifier)
+When /^I follow "#{STR}" next to "#{STR}"$/ do |link, next_to|
+  click_link_in_row(link, next_to)
 end
 
 
-# Verify that a checkbox in a certain table row is checked or unchecked
-Then /^the "#{STR}" checkbox next to "#{STR}"#{WITHIN} should be (checked|unchecked)$/ do |checkbox, text, selector, state|
-  within(:xpath, xpath_row_containing(text)) do
-    if state == 'checked'
+# Verify that a checkbox in a certain table row is checked or unchecked.
+# "should not be checked" and "should be unchecked" are equivalent, and
+# "should be checked" and "should not be unchecked" are equivalent.
+#
+# Examples:
+#
+#   Then the "Like" checkbox next to "Apple" should be checked
+#   And the "Like" checkbox next to "Banana" should be unchecked
+#
+Then /^the "#{STR}" checkbox next to "#{STR}"#{WITHIN} #{SHOULD_OR_NOT} be (checked|unchecked)$/ do |checkbox, next_to, selector, expect, state|
+
+  within(:xpath, xpath_row_containing(next_to)) do
+    if (expect == 'should' && state == 'checked') || (expect == 'should not' && state == 'unchecked')
       checkbox_should_be_checked(checkbox, :within => selector)
     else
       checkbox_should_not_be_checked(checkbox, :within => selector)
