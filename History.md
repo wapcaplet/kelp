@@ -1,6 +1,13 @@
 Kelp History
 ============
 
+0.1.6
+-----
+
+- Improved generated step definitions in kelp_steps.rb, fixed some bugs therein
+- Expanded cucumber self-tests for generated step definitions
+
+
 0.1.5
 -----
 
