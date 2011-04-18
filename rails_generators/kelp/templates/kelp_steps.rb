@@ -22,6 +22,18 @@ World(Kelp::Navigation)
 World(Kelp::Scoping)
 World(Kelp::Visibility)
 
+module KelpStepHelper
+  # Convert a Cucumber::Ast::Table or multiline string into
+  # a list of strings
+  def listify(items)
+    if items.class == Cucumber::Ast::Table
+      strings = items.raw.flatten
+    else
+      strings = items.split(/[\r\n]+/)
+    end
+  end
+end
+World(KelpStepHelper)
 
 SHOULD_OR_NOT = /(should|should not)/
 WITHIN = /(?: within "([^\"]+)")?/
@@ -48,11 +60,7 @@ STR = /([^\"]+)/
 #     """
 #
 Then /^I #{SHOULD_OR_NOT} see the following#{WITHIN}:$/ do |expect, selector, items|
-  if items.class == Cucumber::Ast::Table
-    strings = items.raw.flatten
-  else
-    strings = items.split(/[\r\n]+/)
-  end
+  strings = listify(items)
   if expect == 'should'
     should_see strings, :within => selector
   else
@@ -64,6 +72,15 @@ end
 # Verify that one or more table rows containing the correct values exist (or do
 # not exist). Rows do not need to match exactly, and fields do not need to be
 # in the same order.
+#
+# Examples:
+#
+#   Then I should see table rows containing:
+#     | Eric | Edit |
+#     | John | Edit |
+#   And I should not see a table row containing:
+#     | Eric | Delete |
+#
 Then /^I #{SHOULD_OR_NOT} see (?:a table row|table rows)#{WITHIN} containing:$/ do |expect, selector, rows|
   rows.raw.each do |fields|
     if expect == 'should'
@@ -78,12 +95,22 @@ end
 # Verify that a dropdown has a given value selected. This verifies the visible
 # value shown to the user, rather than the value attribute of the selected
 # option element.
+#
+# Examples:
+#
+#   Then the "Height" dropdown should equal "Average"
+#
 Then /^the "#{STR}" dropdown#{WITHIN} should equal "#{STR}"$/ do |dropdown, selector, value|
   dropdown_should_equal(dropdown, value, :within => selector)
 end
 
 
 # Verify that a dropdown includes or doesn't include the given value.
+#
+# Examples:
+#
+#   Then the "Height" dropdown should include "Tall"
+#
 Then /^the "#{STR}" dropdown#{WITHIN} #{SHOULD_OR_NOT} include "#{STR}"$/ do |dropdown, selector, expect, value|
   if expect == 'should'
     dropdown_should_include(dropdown, value, :within => selector)
@@ -93,9 +120,24 @@ Then /^the "#{STR}" dropdown#{WITHIN} #{SHOULD_OR_NOT} include "#{STR}"$/ do |dr
 end
 
 
-# Verify that a dropdown includes or doesn't include all values in the given table.
+# Verify that a dropdown includes or doesn't include all values in the given
+# table or multiline string.
+#
+# Examples:
+#
+#   Then the "Height" dropdown should include:
+#     | Short |
+#     | Average |
+#     | Tall |
+#   And the "Favorite Colors" dropdown should include:
+#     """
+#     Red
+#     Green
+#     Blue
+#     """
+#
 Then /^the "#{STR}" dropdown#{WITHIN} #{SHOULD_OR_NOT} include:$/ do |dropdown, selector, expect, values|
-  values.raw.flatten.each do |value|
+  listify(values).each do |value|
     if expect == 'should'
       dropdown_should_include(dropdown, value, :within => selector)
     else
@@ -107,14 +149,14 @@ end
 
 # Verify that a given field is empty or nil
 Then /^the "#{STR}" field#{WITHIN} should be empty$/ do |field, selector|
-  with_scope(selector) do
+  scope_within(selector) do
     field_should_be_empty field
   end
 end
 
 
 # Verify multiple fields in a form, optionally restricted to a given selector.
-# Fields may be text inputs or dropdowns
+# Fields may be text inputs or dropdowns.
 Then /^the fields#{WITHIN} should contain:$/ do |selector, fields|
   fields_should_contain_within(selector, fields.rows_hash)
 end

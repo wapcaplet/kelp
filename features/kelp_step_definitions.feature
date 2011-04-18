@@ -6,12 +6,28 @@ Feature: Kelp Step Definitions
   Background:
     Given the latest Kelp step definitions
 
+  Scenario: Checkbox test
+    When I run cucumber on "checkbox.feature"
+    Then the results should be:
+      """
+      2 scenarios (2 passed)
+      6 steps (6 passed)
+      """
+
   Scenario: Dropdown test
     When I run cucumber on "dropdown.feature"
     Then the results should be:
       """
       3 scenarios (3 passed)
-      10 steps (10 passed)
+      11 steps (11 passed)
+      """
+
+  Scenario: Field test
+    When I run cucumber on "field.feature"
+    Then the results should be:
+      """
+      2 scenarios (2 passed)
+      7 steps (7 passed)
       """
 
   Scenario: Visibility test
@@ -20,13 +36,5 @@ Feature: Kelp Step Definitions
       """
       3 scenarios (3 passed)
       11 steps (11 passed)
-      """
-
-  Scenario: Checkbox test
-    When I run cucumber on "checkbox.feature"
-    Then the results should be:
-      """
-      2 scenarios (2 passed)
-      6 steps (6 passed)
       """
 

@@ -17,6 +17,12 @@ Feature: Dropdowns
       | Single 'quotes' |
       | "Double" quotes |
       | 'Single' and "Double" quotes |
+    And the "Favorite Colors" dropdown should include:
+      """
+      Red
+      Green
+      Blue
+      """
 
   Scenario: Dropdown should not include
     Then the "Height" dropdown should not include "Midget"
