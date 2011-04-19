@@ -37,6 +37,7 @@ World(KelpStepHelper)
 
 SHOULD_OR_NOT = /(should|should not)/
 WITHIN = /(?: within "([^\"]+)")?/
+ELEMENT = /(?:field|checkbox|dropdown|button)/
 STR = /([^\"]+)/
 
 # Verify the presence or absence of multiple text strings in the page,
@@ -48,15 +49,15 @@ STR = /([^\"]+)/
 # `items` may be a Cucumber table, or a multi-line string. Examples:
 #
 #   Then I should see the following:
-#     | First thing |
-#     | Next thing |
-#     | Last thing |
+#     | Apple crumble    |
+#     | Banana cream pie |
+#     | Cherry tart      |
 #
 #   Then I should see the following:
 #     """
-#     First thing
-#     Next thing
-#     Last thing
+#     Bacon & Eggs
+#     Biscuits & Gravy
+#     Hash Browns
 #     """
 #
 Then /^I #{SHOULD_OR_NOT} see the following#{WITHIN}:$/ do |expect, selector, items|
@@ -126,10 +127,11 @@ end
 # Examples:
 #
 #   Then the "Height" dropdown should include:
-#     | Short |
+#     | Short   |
 #     | Average |
-#     | Tall |
-#   And the "Favorite Colors" dropdown should include:
+#     | Tall    |
+#
+#   Then the "Favorite Colors" dropdown should include:
 #     """
 #     Red
 #     Green
@@ -147,7 +149,12 @@ Then /^the "#{STR}" dropdown#{WITHIN} #{SHOULD_OR_NOT} include:$/ do |dropdown, 
 end
 
 
-# Verify that a given field is empty or nil
+# Verify that a given field is empty or nil.
+#
+# Examples:
+#
+#   Then the "First name" field should be empty
+#
 Then /^the "#{STR}" field#{WITHIN} should be empty$/ do |field, selector|
   scope_within(selector) do
     field_should_be_empty field
@@ -157,6 +164,13 @@ end
 
 # Verify multiple fields in a form, optionally restricted to a given selector.
 # Fields may be text inputs or dropdowns.
+#
+# Examples:
+#
+#   Then the fields should contain:
+#     | First name | Eric   |
+#     | Last name  | Pierce |
+#
 Then /^the fields#{WITHIN} should contain:$/ do |selector, fields|
   fields_should_contain_within(selector, fields.rows_hash)
 end
@@ -165,6 +179,12 @@ end
 # Verify that expected text exists or does not exist in the same row as
 # some text. This can be used to ensure the presence or absence of "Edit"
 # or "Delete" links, or specific data associated with a row in a table.
+#
+# Examples:
+#
+#   Then I should see "Edit" next to "John"
+#   And I should not see "Delete" next to "John"
+#
 Then /^I #{SHOULD_OR_NOT} see "#{STR}" next to "#{STR}"#{WITHIN}$/ do |expect, text, next_to, selector|
   scope_within(selector) do
     if expect == 'should'
@@ -176,8 +196,44 @@ Then /^I #{SHOULD_OR_NOT} see "#{STR}" next to "#{STR}"#{WITHIN}$/ do |expect, t
 end
 
 
+# Verify that several expected text strings exist or do not exist in the same
+# row as some text. Prevents multiple "should see X next to Y" calls. Similar
+# to "should see a row containing", but targeted toward a specific row.
+#
+# Examples:
+#
+#   Then I should see the following next to "Terry":
+#     | Copy   |
+#     | Edit   |
+#     | Delete |
+#
+#   Then I should see the following next to "John":
+#     """
+#     Copy
+#     Edit
+#     Delete
+#     """
+#
+Then /^I #{SHOULD_OR_NOT} see the following next to "#{STR}"#{WITHIN}:$/ do |expect, next_to, selector, items|
+  scope_within(selector) do
+    listify(items).each do |text|
+      if expect == 'should'
+        should_see_in_same_row [text, next_to]
+      else
+        should_not_see_in_same_row [text, next_to]
+      end
+    end
+  end
+end
+
+
 # Click a link in a table row that contains the given text.
 # This can be used to click the "Edit" link for a specific record.
+#
+# Examples:
+#
+#   When I follow "Edit" next to "John"
+#
 When /^I follow "#{STR}" next to "#{STR}"$/ do |link, next_to|
   click_link_in_row(link, next_to)
 end
@@ -202,4 +258,5 @@ Then /^the "#{STR}" checkbox next to "#{STR}"#{WITHIN} #{SHOULD_OR_NOT} be (chec
     end
   end
 end
+
 
