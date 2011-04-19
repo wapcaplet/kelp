@@ -57,12 +57,12 @@ module Kelp
 
 
     # Verify that the given field is empty or nil.
-    def field_should_be_empty(field)
-      _field = nice_find_field(field)
-      if _field.nil? || _field.value.nil?
-        return true
-      else
-        raise RuntimeError, "Expected field '#{field}' to be empty, but value is '#{_field.value}'"
+    def field_should_be_empty(field, scope={})
+      in_scope(scope) do
+        _field = nice_find_field(field)
+        if !(_field.nil? || _field.value.nil?)
+          raise RuntimeError, "Expected field '#{field}' to be empty, but value is '#{_field.value}'"
+        end
       end
     end
 

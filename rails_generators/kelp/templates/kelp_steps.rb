@@ -156,9 +156,7 @@ end
 #   Then the "First name" field should be empty
 #
 Then /^the "#{STR}" field#{WITHIN} should be empty$/ do |field, selector|
-  scope_within(selector) do
-    field_should_be_empty field
-  end
+  field_should_be_empty(field, :within => selector)
 end
 
 
@@ -186,12 +184,10 @@ end
 #   And I should not see "Delete" next to "John"
 #
 Then /^I #{SHOULD_OR_NOT} see "#{STR}" next to "#{STR}"#{WITHIN}$/ do |expect, text, next_to, selector|
-  scope_within(selector) do
-    if expect == 'should'
-      should_see_in_same_row [text, next_to]
-    else
-      should_not_see_in_same_row [text, next_to]
-    end
+  if expect == 'should'
+    should_see_in_same_row([text, next_to], :within => selector)
+  else
+    should_not_see_in_same_row([text, next_to], :within => selector)
   end
 end
 
@@ -215,13 +211,11 @@ end
 #     """
 #
 Then /^I #{SHOULD_OR_NOT} see the following next to "#{STR}"#{WITHIN}:$/ do |expect, next_to, selector, items|
-  scope_within(selector) do
-    listify(items).each do |text|
-      if expect == 'should'
-        should_see_in_same_row [text, next_to]
-      else
-        should_not_see_in_same_row [text, next_to]
-      end
+  listify(items).each do |text|
+    if expect == 'should'
+      should_see_in_same_row([text, next_to], :within => selector)
+    else
+      should_not_see_in_same_row([text, next_to], :within => selector)
     end
   end
 end
