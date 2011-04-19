@@ -3,9 +3,9 @@ module Kelp
   # verifications on a webpage.
   #
   module Scoping
-    # Execute a block of code within a given scope.
-    # `locator` may be in css or xpath form, depending on what type
-    # is set in Capybara.default_locator.
+    # Execute a block of code within a given scope. If `locator` begins with
+    # `/` or `./`, then it's assumed to be an XPath selector; otherwise, it's
+    # assumed to be a CSS selector.
     def scope_within(locator)
       if locator
         # Use the selector_for method if it's defined
@@ -15,7 +15,11 @@ module Kelp
         # and fall back on the Capybara locator syntax (CSS or XPath)
         else
           locator.gsub!(/^"(.*?)"$/, '\1')
-          within(locator) { yield }
+          if locator =~ /\.?\//
+            within(:xpath, locator) { yield }
+          else
+            within(:css, locator) { yield }
+          end
         end
       else
         yield

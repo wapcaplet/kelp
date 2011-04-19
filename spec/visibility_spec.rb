@@ -19,8 +19,12 @@ describe Kelp::Visibility, "should_see" do
         ]
       end
 
-      it "is within the scope" do
+      it "is within a CSS scope" do
         should_see "Hello world", :within => "#greeting"
+      end
+
+      it "is within an XPath scope" do
+        should_see "Hello world", :within => "//div[@id='greeting']"
       end
     end
 
@@ -29,9 +33,14 @@ describe Kelp::Visibility, "should_see" do
         should_see /(Hello|Goodbye) world/
       end
 
-      it "matches within the scope" do
+      it "matches within a CSS scope" do
         should_see /(Hello|Goodbye) world/, :within => "#greeting"
         should_see /(Hello|Goodbye) world/, :within => "#farewell"
+      end
+
+      it "matches within an XPath scope" do
+        should_see /(Hello|Goodbye) world/, :within => "//div[@id='greeting']"
+        should_see /(Hello|Goodbye) world/, :within => "//div[@id='farewell']"
       end
     end
   end
@@ -54,10 +63,22 @@ describe Kelp::Visibility, "should_see" do
         end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
       end
 
-      it "is not within the scope" do
+      it "is not within a given CSS scope" do
         lambda do
           should_see "Goodbye world", :within => "#greeting"
         end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
+      end
+
+      it "is not within a given XPath scope" do
+        lambda do
+          should_see "Goodbye world", :within => "//div[@id='greeting']"
+        end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
+      end
+
+      it "is given a nonexistent XPath scope" do
+        lambda do
+          should_see "Goodbye world", :within => "//div[@id='nonexistent']"
+        end.should raise_error(Capybara::ElementNotFound)
       end
     end
 
@@ -97,8 +118,12 @@ describe Kelp::Visibility, "should_not_see" do
         ]
       end
 
-      it "exists but is not within the scope" do
+      it "exists but is not within the given CSS scope" do
         should_not_see "Goodbye world", :within => "#greeting"
+      end
+
+      it "exists but is not within the given XPath scope" do
+        should_not_see "Goodbye world", :within => "//div[@id='greeting']"
       end
     end
 
@@ -139,9 +164,15 @@ describe Kelp::Visibility, "should_not_see" do
         end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
       end
 
-      it "exists within the scope" do
+      it "exists within the given CSS scope" do
         lambda do
           should_not_see "Hello world", :within => "#greeting"
+        end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
+      end
+
+      it "exists within the given XPath scope" do
+        lambda do
+          should_not_see "Hello world", :within => "//div[@id='greeting']"
         end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
       end
     end
