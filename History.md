@@ -6,6 +6,7 @@ Kelp History
 
 - Improved generated step definitions in kelp_steps.rb, fixed some bugs therein
 - Expanded cucumber self-tests for generated step definitions
+- Fixed bug with field_should_be_empty; now works with textarea
 
 
 0.1.5
