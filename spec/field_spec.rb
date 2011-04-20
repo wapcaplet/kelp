@@ -10,6 +10,7 @@ describe Kelp::Field, "field_should_be_empty" do
       it "is empty" do
         field_should_be_empty "first_name"
         field_should_be_empty "last_name"
+        field_should_be_empty "biography"
       end
     end
 
@@ -17,6 +18,7 @@ describe Kelp::Field, "field_should_be_empty" do
       it "is empty" do
         field_should_be_empty "First name"
         field_should_be_empty "Last name"
+        field_should_be_empty "Life story"
       end
     end
   end

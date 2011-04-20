@@ -60,7 +60,7 @@ module Kelp
     def field_should_be_empty(field, scope={})
       in_scope(scope) do
         _field = nice_find_field(field)
-        if !(_field.nil? || _field.value.nil?)
+        if !(_field.nil? || _field.value.nil? || _field.value == '')
           raise RuntimeError, "Expected field '#{field}' to be empty, but value is '#{_field.value}'"
         end
       end
