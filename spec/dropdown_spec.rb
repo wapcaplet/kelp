@@ -144,16 +144,16 @@ describe Kelp::Dropdown, "dropdown_value_should_equal" do
 
   context "passes when" do
     it "the option with the 'selected' attribute has the given value" do
-      dropdown_value_should_equal "Height", "2"
+      dropdown_value_should_equal "Height", "average"
     end
 
     it "the first option selected by default has the given value" do
-      dropdown_value_should_equal "Weight", "1"
+      dropdown_value_should_equal "Weight", "light"
     end
 
     it "the programmatically chosen option has the given value" do
       select "Tall", :from => "Height"
-      dropdown_value_should_equal "Height", "3"
+      dropdown_value_should_equal "Height", "tall"
     end
   end
 

@@ -28,10 +28,14 @@ module Kelp
         # See if there's a 'selected' option
         begin
           selected = field.find(:xpath, ".//option[@selected='selected']")
-        # If not, find the option matching the first field value
+        # If not, find the option matching the field's 'value' attribute
         rescue Capybara::ElementNotFound
-          first_value = xpath_sanitize(field.value.first)
-          selected = field.find(:xpath, ".//option[@value=#{first_value}]")
+          # FIXME: Find a way to support multiple-selection dropdowns
+          if field.value.class == Array
+            raise Exception, "Multiple-selection dropdowns are not supported"
+          end
+          field_value = xpath_sanitize(field.value)
+          selected = field.find(:xpath, ".//option[@value=#{field_value}]")
         end
         selected.text.should =~ /#{value}/
       end
