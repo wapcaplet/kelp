@@ -1,6 +1,12 @@
 Kelp History
 ============
 
+0.1.7
+-----
+
+- Fixed bug with dropdown_should_include, caused by Rails string monkeypatching
+
+
 0.1.6
 -----
 
