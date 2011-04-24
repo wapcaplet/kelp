@@ -147,15 +147,16 @@ file used by the Rails generator. Run via:
 
     $ rake cucumber
 
-This self-test is a single scenario that exercises scenarios in
-`examples/sinatra_app/features`, and ensures that they perform as expected.
+This self-test includes high-level scenarios that exercise more detailed
+scenarios in `examples/sinatra_app/features`, ensuring that the generated step
+definitions perform as expected.
 
 
 Future plans
 ------------
 
 * Generator for Rails 3
-* Support other stuff besides Capybara
+* Support Webrat
 
 
 Copyright
