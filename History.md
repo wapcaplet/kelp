@@ -5,6 +5,7 @@ Kelp History
 -----
 
 - Fixed bug with dropdown_should_include, caused by Rails string monkeypatching
+- Allow should_see and should_not_see to check all strings before failing
 
 
 0.1.6
