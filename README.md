@@ -1,10 +1,10 @@
 Kelp
 ====
 
-This is the documentation for [Kelp](http://github.com/wapcaplet/kelp), a
-collection of helpers that makes it easier to write step definitions for
-[Cucumber](http://cukes.info). The Kelp gem is hosted on
-[Rubygems](http://rubygems.org/gems/kelp), so you can install it with:
+[Kelp](http://github.com/wapcaplet/kelp) is a collection of helpers that makes
+it easier to write step definitions for [Cucumber](http://cukes.info). The Kelp
+gem is hosted on [Rubygems](http://rubygems.org/gems/kelp), so you can install
+it with:
 
     $ gem install kelp
 
