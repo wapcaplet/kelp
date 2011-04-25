@@ -1,5 +1,6 @@
 require 'kelp/scoping'
 require 'kelp/xpath'
+require 'kelp/exceptions'
 
 module Kelp
   # This module defines methods for verifying the visibility (or invisibility)
@@ -25,10 +26,19 @@ module Kelp
     #
     def should_see(texts, scope={})
       texts = [texts] if (texts.class == String || texts.class == Regexp)
+      unexpected = []
       in_scope(scope) do
         texts.each do |text|
-          page_should_contain text
+          begin
+            page_should_contain text
+          rescue RSpec::Expectations::ExpectationNotMetError
+            unexpected << text
+          end
         end
+      end
+      if !unexpected.empty?
+        raise Kelp::Unexpected,
+          "Expected to see: #{texts.inspect}\nDid not see: #{unexpected.inspect}"
       end
     end
 
@@ -43,10 +53,19 @@ module Kelp
     #
     def should_not_see(texts, scope={})
       texts = [texts] if (texts.class == String || texts.class == Regexp)
+      unexpected = []
       in_scope(scope) do
         texts.each do |text|
-          page_should_not_contain text
+          begin
+            page_should_not_contain text
+          rescue RSpec::Expectations::ExpectationNotMetError
+            unexpected << text
+          end
         end
+      end
+      if !unexpected.empty?
+        raise Kelp::Unexpected,
+          "Expected not to see: #{texts.inspect}\nDid see: #{unexpected.inspect}"
       end
     end
 

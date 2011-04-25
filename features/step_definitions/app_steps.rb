@@ -24,8 +24,11 @@ When /^I run cucumber on "(.+)"$/ do |feature|
 end
 
 
-Then /^the results should be:$/ do |expected_results|
-  if !@output.include?(expected_results)
+Then /^the results should include:$/ do |expected_results|
+  # Remove leading whitespace before comparison
+  got = @output.gsub(/^\s*/, '')
+  want = expected_results.gsub(/^\s*/, '')
+  if !got.include?(want)
     got = @output.collect {|line| "  #{line}"}.join
     want = expected_results.collect {|line| "  #{line}"}.join
     raise("Expected:\n#{want}\nGot:\n#{got}")

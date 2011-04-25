@@ -50,7 +50,7 @@ describe Kelp::Visibility, "should_see" do
       it "does not exist" do
         lambda do
           should_see "Goodbye cruel world"
-        end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
+        end.should raise_error(Kelp::Unexpected)
       end
 
       it "any of several do not exist" do
@@ -60,19 +60,19 @@ describe Kelp::Visibility, "should_see" do
             "Goodbye world",
             "Hello, nurse!"
           ]
-        end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
+        end.should raise_error(Kelp::Unexpected)
       end
 
       it "is not within a given CSS scope" do
         lambda do
           should_see "Goodbye world", :within => "#greeting"
-        end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
+        end.should raise_error(Kelp::Unexpected)
       end
 
       it "is not within a given XPath scope" do
         lambda do
           should_see "Goodbye world", :within => "//div[@id='greeting']"
-        end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
+        end.should raise_error(Kelp::Unexpected)
       end
 
       it "is given a nonexistent XPath scope" do
@@ -86,13 +86,13 @@ describe Kelp::Visibility, "should_see" do
       it "does not match" do
         lambda do
           should_see /(Yo|Wazzup) world/
-        end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
+        end.should raise_error(Kelp::Unexpected)
       end
 
       it "matches but is not within the scope" do
         lambda do
           should_see /Goodbye world/, :within => "#greeting"
-        end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
+        end.should raise_error(Kelp::Unexpected)
       end
     end
   end
@@ -151,7 +151,7 @@ describe Kelp::Visibility, "should_not_see" do
       it "exists" do
         lambda do
           should_not_see "Hello world"
-        end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
+        end.should raise_error(Kelp::Unexpected)
       end
 
       it "any of several exist" do
@@ -161,19 +161,19 @@ describe Kelp::Visibility, "should_not_see" do
             "Goodbye cruel world",
             "Goodbye world"
           ]
-        end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
+        end.should raise_error(Kelp::Unexpected)
       end
 
       it "exists within the given CSS scope" do
         lambda do
           should_not_see "Hello world", :within => "#greeting"
-        end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
+        end.should raise_error(Kelp::Unexpected)
       end
 
       it "exists within the given XPath scope" do
         lambda do
           should_not_see "Hello world", :within => "//div[@id='greeting']"
-        end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
+        end.should raise_error(Kelp::Unexpected)
       end
     end
 
@@ -181,7 +181,7 @@ describe Kelp::Visibility, "should_not_see" do
       it "matches" do
         lambda do
           should_not_see /(Hello|Goodbye) world/
-        end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
+        end.should raise_error(Kelp::Unexpected)
       end
 
       it "any of several regexps match" do
@@ -191,13 +191,13 @@ describe Kelp::Visibility, "should_not_see" do
             /(Ciao|Later) world/,
             /(Hello|Goodbye) world/
           ]
-        end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
+        end.should raise_error(Kelp::Unexpected)
       end
 
       it "matches within the scope" do
         lambda do
           should_not_see /(Hello|Goodbye) world/, :within => "#greeting"
-        end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
+        end.should raise_error(Kelp::Unexpected)
       end
     end
 

@@ -8,7 +8,7 @@ Feature: Kelp Step Definitions
 
   Scenario: Checkbox test
     When I run cucumber on "checkbox.feature"
-    Then the results should be:
+    Then the results should include:
       """
       2 scenarios (2 passed)
       6 steps (6 passed)
@@ -16,7 +16,7 @@ Feature: Kelp Step Definitions
 
   Scenario: Dropdown test
     When I run cucumber on "dropdown.feature"
-    Then the results should be:
+    Then the results should include:
       """
       3 scenarios (3 passed)
       11 steps (11 passed)
@@ -24,7 +24,7 @@ Feature: Kelp Step Definitions
 
   Scenario: Field test
     When I run cucumber on "field.feature"
-    Then the results should be:
+    Then the results should include:
       """
       2 scenarios (2 passed)
       7 steps (7 passed)
@@ -32,9 +32,24 @@ Feature: Kelp Step Definitions
 
   Scenario: Visibility test
     When I run cucumber on "visibility.feature"
-    Then the results should be:
+    Then the results should include:
       """
       3 scenarios (3 passed)
-      11 steps (11 passed)
+      12 steps (12 passed)
       """
+
+  @focus
+  Scenario: Visibility failure test
+    When I run cucumber on "visibility_fail.feature"
+    Then the results should include:
+      """
+      Expected to see: ["First", "Missing", "Second", "Uh-oh", "Third", "Not there"]
+      Did not see: ["Missing", "Uh-oh", "Not there"] (Kelp::Unexpected)
+      """
+    And the results should include:
+      """
+      Expected not to see: ["First", "Missing", "Second", "Uh-oh", "Third", "Not there"]
+      Did see: ["First", "Second", "Third"] (Kelp::Unexpected)
+      """
+
 

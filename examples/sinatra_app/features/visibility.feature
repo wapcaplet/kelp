@@ -5,8 +5,17 @@ Feature: Visibility
 
   Scenario: Should or shouldn't see
     Then I should see the following:
+      | Homepage |
       | Hello world |
       | Goodbye world |
+
+    And I should see the following:
+      """
+      First
+      Second
+      Third
+      About Us
+      """
 
     And I should not see the following:
       | Goodbye cruel world |
