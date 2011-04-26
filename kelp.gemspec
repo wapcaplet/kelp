@@ -1,12 +1,11 @@
-
-
 Gem::Specification.new do |s|
   s.name = "kelp"
-  s.version = "0.1.7"
+  s.version = "0.1.8"
   s.summary = "Cucumber helper methods"
   s.description = <<-EOS
     Kelp is a collection of helper methods for Cucumber to ease the process of
-    writing step definitions.
+    writing step definitions. It also includes a Rails generator for generic
+    step definitions building upon those helpers.
   EOS
   s.authors = ["Eric Pierce"]
   s.email = "wapcaplet88@gmail.com"

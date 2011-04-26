@@ -31,8 +31,8 @@ end
 desc "Run RSpec and Cucumber tests with coverage analysis"
 task :all do |t|
   rm 'coverage.data' if File.exist?('coverage.data')
-  Rake::Task['rcov:spec'].invoke
-  Rake::Task['rcov:cucumber'].invoke
+  Rake::Task['spec'].invoke
+  Rake::Task['cucumber'].invoke
 end
 
 task :default => ['all']
