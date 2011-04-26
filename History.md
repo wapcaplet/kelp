@@ -1,6 +1,12 @@
 Kelp History
 ============
 
+0.1.8
+-----
+
+- Fixed bug with should_see / should_not_see in RSpec 1.x
+
+
 0.1.7
 -----
 
