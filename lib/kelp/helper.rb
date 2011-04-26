@@ -10,5 +10,15 @@ module Kelp
         raise "Could not find field with locator: '#{locator}'"
       end
     end
+
+    # Return the appropriate "ExpectationNotMetError" class for the current
+    # version of RSpec
+    def rspec_unexpected
+      if defined?(RSpec)
+        RSpec::Expectations::ExpectationNotMetError
+      else
+        Spec::Expectations::ExpectationNotMetError
+      end
+    end
   end
 end

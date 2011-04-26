@@ -238,19 +238,19 @@ describe Kelp::Visibility, "should_see_in_same_row" do
     it "two strings exist, but are not in the same row" do
       lambda do
         should_see_in_same_row ["Eric", "John"]
-      end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
+      end.should raise_error(rspec_unexpected)
     end
 
     it "two strings are in the same row, but a third is not" do
       lambda do
         should_see_in_same_row ["Eric", "Edit", "Delete"]
-      end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
+      end.should raise_error(rspec_unexpected)
     end
 
     it "two strings are in the same row, but outside the given scope" do
       lambda do
         should_see_in_same_row ["Eric", "Edit"], :within => "#table_b"
-      end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
+      end.should raise_error(rspec_unexpected)
     end
   end
 end
@@ -282,13 +282,13 @@ describe Kelp::Visibility, "should_not_see_in_same_row" do
     it "two strings are in the same row" do
       lambda do
         should_not_see_in_same_row ["Eric", "Edit"]
-      end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
+      end.should raise_error(rspec_unexpected)
     end
 
     it "two strings are in the same row within a given scope" do
       lambda do
         should_not_see_in_same_row ["Eric", "Edit"], :within => "#table_a"
-      end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
+      end.should raise_error(rspec_unexpected)
     end
   end
 end
@@ -319,7 +319,7 @@ describe Kelp::Visibility, "page_should_contain" do
       it "does not exist" do
         lambda do
           page_should_contain "Wazzup world"
-        end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
+        end.should raise_error(rspec_unexpected)
       end
     end
 
@@ -327,7 +327,7 @@ describe Kelp::Visibility, "page_should_contain" do
       it "does not match" do
         lambda do
           page_should_contain /(Foo|Bar|Baz) world/
-        end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
+        end.should raise_error(rspec_unexpected)
       end
     end
 
@@ -365,20 +365,20 @@ describe Kelp::Visibility, "page_should_not_contain" do
       it "exists" do
         lambda do
           page_should_not_contain "Hello world"
-        end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
+        end.should raise_error(rspec_unexpected)
         lambda do
           page_should_not_contain "Goodbye world"
-        end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
+        end.should raise_error(rspec_unexpected)
       end
     end
     context "Regexp" do
       it "matches" do
         lambda do
           page_should_not_contain /(Hello|Goodbye) world/
-        end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
+        end.should raise_error(rspec_unexpected)
         lambda do
           page_should_not_contain /\d\d\d-\d\d\d\d/
-        end.should raise_error(RSpec::Expectations::ExpectationNotMetError)
+        end.should raise_error(rspec_unexpected)
       end
     end
 

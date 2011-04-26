@@ -1,6 +1,7 @@
 require 'kelp/scoping'
 require 'kelp/xpath'
 require 'kelp/exceptions'
+require 'kelp/helper'
 
 module Kelp
   # This module defines methods for verifying the visibility (or invisibility)
@@ -31,7 +32,7 @@ module Kelp
         texts.each do |text|
           begin
             page_should_contain text
-          rescue RSpec::Expectations::ExpectationNotMetError
+          rescue rspec_unexpected
             unexpected << text
           end
         end
@@ -58,7 +59,7 @@ module Kelp
         texts.each do |text|
           begin
             page_should_not_contain text
-          rescue RSpec::Expectations::ExpectationNotMetError
+          rescue rspec_unexpected
             unexpected << text
           end
         end
@@ -121,7 +122,7 @@ module Kelp
           assert_contain text
         end
       else
-        raise RuntimeError, "Unsupported driver: #{Kelp.driver}"
+        raise NotImplementedError, "Unsupported driver: #{Kelp.driver}"
       end
     end
 
@@ -145,7 +146,7 @@ module Kelp
           assert_match(regexp, response_body)
         end
       else
-        raise RuntimeError, "Unsupported driver: #{Kelp.driver}"
+        raise NotImplementedError, "Unsupported driver: #{Kelp.driver}"
       end
     end
 
@@ -170,7 +171,7 @@ module Kelp
           assert !hc.matches?(content), hc.negative_failure_message
         end
       else
-        raise RuntimeError, "Unsupported driver: #{Kelp.driver}"
+        raise NotImplementedError, "Unsupported driver: #{Kelp.driver}"
       end
     end
 
@@ -194,7 +195,7 @@ module Kelp
           assert_not_contain(regexp)
         end
       else
-        raise RuntimeError, "Unsupported driver: #{Kelp.driver}"
+        raise NotImplementedError, "Unsupported driver: #{Kelp.driver}"
       end
     end
 
@@ -218,7 +219,7 @@ module Kelp
         if Kelp.driver == :capybara
           page.should have_xpath(xpath_row_containing(texts))
         elsif Kelp.driver == :webrat
-          raise RuntimeError, "Not implemented yet"
+          raise NotImplementedError, "Not implemented yet"
         end
       end
     end
@@ -242,7 +243,7 @@ module Kelp
         if Kelp.driver == :capybara
           page.should have_no_xpath(xpath_row_containing(texts))
         elsif Kelp.driver == :webrat
-          raise RuntimeError, "Not implemented yet"
+          raise NotImplementedError, "Not implemented yet"
         end
       end
     end

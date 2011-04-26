@@ -38,7 +38,6 @@ Feature: Kelp Step Definitions
       12 steps (12 passed)
       """
 
-  @focus
   Scenario: Visibility failure test
     When I run cucumber on "visibility_fail.feature"
     Then the results should include:
