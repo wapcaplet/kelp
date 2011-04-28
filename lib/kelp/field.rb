@@ -9,6 +9,44 @@ module Kelp
     include Scoping
     include Helper
 
+    # Select a value from a dropdown or listbox, or fill in a text field,
+    # depending on what kind of form field is available. If `field` is a
+    # dropdown or listbox, select `value` from that; otherwise, assume
+    # `field` is a text box.
+    def select_or_fill(field, value)
+      begin
+        select(value, :from => field)
+      rescue
+        fill_in(field, :with => value)
+      end
+    end
+
+
+    # Check a checkbox, select from a dropdown or listbox, or fill in a text
+    # field, depending on what kind of form field is available. If value
+    # is `checked` or `unchecked`, assume `field` is a checkbox; otherwise,
+    # fall back on `select_or_fill`.
+    def check_or_select_or_fill(field, value)
+      # If value is "checked" or "unchecked", assume
+      # field is a checkbox
+      if value == "checked"
+        begin
+          check(field)
+        rescue
+          select_or_fill(field, value)
+        end
+      elsif value == "unchecked"
+        begin
+          uncheck(field)
+        rescue
+          select_or_fill(field, value)
+        end
+      else
+        select_or_fill(field, value)
+      end
+    end
+
+
     # Fill in multiple fields according to values in a `Hash`.
     #
     # @example
@@ -22,8 +60,8 @@ module Kelp
     #
     def fill_in_fields(fields, scope={})
       in_scope(scope) do
-        fields.each do |name, value|
-          fill_in name, :with => value
+        fields.each do |field, value|
+          check_or_select_or_fill(field, value)
         end
       end
     end

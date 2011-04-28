@@ -257,6 +257,24 @@ describe Kelp::Field, "fill_in_fields" do
       field_should_contain "Last name", "Brooks"
     end
 
+    it "filling text fields, dropdowns, and checkboxes by label" do
+      fill_in_fields \
+        "First name" => "Mel",
+        "Last name" => "Brooks",
+        "Height" => "Short",
+        "Weight" => "Medium",
+        "I like salami" => "checked",
+        "I like cheese" => "unchecked",
+        "Message" => "I can't make decisions, I'm a president!"
+      field_should_contain "First name", "Mel"
+      field_should_contain "Last name", "Brooks"
+      dropdown_should_equal "Height", "Short"
+      dropdown_should_equal "Weight", "Medium"
+      checkbox_should_be_checked "I like salami"
+      checkbox_should_not_be_checked "I like cheese"
+      field_should_contain "Message", "I'm a president!"
+    end
+
     it "filling a single field by id within a scope" do
       fill_in_fields_within "#person_form", "first_name" => "Mel"
       field_should_contain "first_name", "Mel", :within => "#person_form"
@@ -288,5 +306,4 @@ describe Kelp::Field, "fill_in_fields" do
   end
 
 end
-
 
