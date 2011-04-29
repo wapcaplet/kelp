@@ -193,17 +193,33 @@ describe Kelp::Field, "fill_in_field" do
   end
 
   context "passes when" do
-    it "filling a single field by id" do
+    it "filling a single text field by id" do
       fill_in_field "first_name", "Mel"
       field_should_contain "first_name", "Mel"
     end
 
-    it "filling a single field by label" do
+    it "filling a single text field by label" do
       fill_in_field "First name", "Mel"
       field_should_contain "First name", "Mel"
     end
 
-    it "filling a single field by id within a scope" do
+    it "checking a checkbox" do
+      fill_in_field "I like cheese", "checked"
+      checkbox_should_be_checked "I like cheese"
+      fill_in_field "I like cheese", "unchecked"
+      checkbox_should_not_be_checked "I like cheese"
+    end
+
+    it "selecting from a dropdown" do
+      fill_in_field "Height", "Short"
+      dropdown_should_equal "Height", "Short"
+      fill_in_field "Height", "Average"
+      dropdown_should_equal "Height", "Average"
+      fill_in_field "Height", "Tall"
+      dropdown_should_equal "Height", "Tall"
+    end
+
+    it "filling a single text field by id within a scope" do
       fill_in_field_within "#person_form", "first_name", "Mel"
       field_should_contain_within "#person_form", "first_name", "Mel"
     end
@@ -213,6 +229,12 @@ describe Kelp::Field, "fill_in_field" do
     it "filling a nonexistent field" do
       lambda do
         fill_in_field "Middle name", "Kaminsky"
+      end.should raise_error(Capybara::ElementNotFound)
+    end
+
+    it "selecting a nonexistent value from a dropdown" do
+      lambda do
+        fill_in_field "Height", "Gigantic"
       end.should raise_error(Capybara::ElementNotFound)
     end
 
