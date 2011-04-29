@@ -16,6 +16,11 @@ module Kelp
     #
     # @since 0.1.9
     #
+    # @param [String] field
+    #   Capybara locator for the field (name, id, or label text)
+    # @param [String] value
+    #   Text to select from a dropdown or enter in a text box
+    #
     def select_or_fill(field, value)
       begin
         select(value, :from => field)
@@ -28,9 +33,15 @@ module Kelp
     # Check a checkbox, select from a dropdown or listbox, or fill in a text
     # field, depending on what kind of form field is available. If value
     # is `checked` or `unchecked`, assume `field` is a checkbox; otherwise,
-    # fall back on `select_or_fill`.
+    # fall back on {#select_or_fill}.
     #
     # @since 0.1.9
+    #
+    # @param [String] field
+    #   Capybara locator for the field (name, id, or label text)
+    # @param [String] value
+    #   Text to select from a dropdown or enter in a text box, or
+    #   `checked` or `unchecked` to operate on a checkbox
     #
     def check_or_select_or_fill(field, value)
       # If value is "checked" or "unchecked", assume
@@ -54,19 +65,21 @@ module Kelp
 
 
     # Fill in multiple fields according to values in a `Hash`.
+    # Fields may be text boxes, dropdowns/listboxes, or checkboxes.
+    # See {#check_or_select_or_fill} for details.
     #
     # @example
     #   fill_in_fields "First name" => "Otto", "Last name" => "Scratchansniff"
     #   fill_in_fields "phone" => "303-224-7428", :within => "#home"
     #
-    # @param [Hash] fields
-    #   "field" => "value" for each field to fill in
+    # @param [Hash] field_values
+    #   "field" => "value" for each field to fill in, select, or check/uncheck
     # @param [Hash] scope
     #   Scoping keywords as understood by {#in_scope}
     #
-    def fill_in_fields(fields, scope={})
+    def fill_in_fields(field_values, scope={})
       in_scope(scope) do
-        fields.each do |field, value|
+        field_values.each do |field, value|
           check_or_select_or_fill(field, value)
         end
       end
@@ -74,6 +87,21 @@ module Kelp
 
 
     # Fill in a single field within the scope of a given selector.
+    # The field may be a text box, dropdown/listbox, or checkbox.
+    # See {#check_or_select_or_fill} for details.
+    #
+    # @example
+    #   fill_in_field "Email", "otto@scratchansniff.wb"
+    #   fill_in_field "Send me junk email", "unchecked"
+    #
+    # @param [String] field
+    #   Capybara locator for the field (name, id, or label text)
+    # @param [String] value
+    #   Text to select from a dropdown or enter in a text box, or
+    #   `checked` or `unchecked` to operate on a checkbox
+    # @param [Hash] scope
+    #   Scoping keywords as understood by {#in_scope}
+    #
     def fill_in_field(field, value, scope={})
       fields = {field => value}
       fill_in_fields fields, scope
@@ -101,6 +129,12 @@ module Kelp
 
 
     # Verify that the given field is empty or nil.
+    #
+    # @param [String] field
+    #   Capybara locator for the field (name, id, or label text)
+    # @param [Hash] scope
+    #   Scoping keywords as understood by {#in_scope}
+    #
     def field_should_be_empty(field, scope={})
       in_scope(scope) do
         _field = nice_find_field(field)
@@ -117,6 +151,8 @@ module Kelp
     #   Capybara locator for the field (name, id, or label text)
     # @param [String] value
     #   Value you expect to see in the text field
+    # @param [Hash] scope
+    #   Scoping keywords as understood by {#in_scope}
     #
     def field_should_contain(field, value, scope={})
       in_scope(scope) do
