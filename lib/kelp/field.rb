@@ -13,6 +13,9 @@ module Kelp
     # depending on what kind of form field is available. If `field` is a
     # dropdown or listbox, select `value` from that; otherwise, assume
     # `field` is a text box.
+    #
+    # @since 0.1.9
+    #
     def select_or_fill(field, value)
       begin
         select(value, :from => field)
@@ -26,6 +29,9 @@ module Kelp
     # field, depending on what kind of form field is available. If value
     # is `checked` or `unchecked`, assume `field` is a checkbox; otherwise,
     # fall back on `select_or_fill`.
+    #
+    # @since 0.1.9
+    #
     def check_or_select_or_fill(field, value)
       # If value is "checked" or "unchecked", assume
       # field is a checkbox
