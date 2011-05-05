@@ -14,12 +14,12 @@ module Kelp
     # dropdown or listbox, select `value` from that; otherwise, assume
     # `field` is a text box.
     #
-    # @since 0.1.9
-    #
     # @param [String] field
     #   Capybara locator for the field (name, id, or label text)
     # @param [String] value
     #   Text to select from a dropdown or enter in a text box
+    #
+    # @since 0.1.9
     #
     def select_or_fill(field, value)
       begin
@@ -35,13 +35,13 @@ module Kelp
     # is `checked` or `unchecked`, assume `field` is a checkbox; otherwise,
     # fall back on {#select_or_fill}.
     #
-    # @since 0.1.9
-    #
     # @param [String] field
     #   Capybara locator for the field (name, id, or label text)
     # @param [String] value
     #   Text to select from a dropdown or enter in a text box, or
     #   `checked` or `unchecked` to operate on a checkbox
+    #
+    # @since 0.1.9
     #
     def check_or_select_or_fill(field, value)
       # If value is "checked" or "unchecked", assume
