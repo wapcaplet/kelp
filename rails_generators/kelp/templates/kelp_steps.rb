@@ -77,6 +77,18 @@ When /^#{I}follow #{TEXT} next to #{TEXT}$/ do |link, next_to|
 end
 
 
+Then /^(?:|I )should be on (.+)$/ do |page_name|
+  should_be_on_page(page_name)
+end
+
+Then /^(?:|I )should have the following query string:$/ do |expected_pairs|
+  should_have_query(expected_pairs.rows_hash)
+end
+
+Then /^show me the page$/ do
+  save_and_open_page
+end
+
 # ==========================
 # VISIBILITY
 # ==========================
@@ -432,3 +444,6 @@ Then /^the #{TEXT} checkbox next to #{TEXT}#{WITHIN} should not be (checked|unch
 end
 
 
+When /^(?:|I )attach the file "([^"]*)" to "([^"]*)"$/ do |path, field|
+  attach_file field, File.expand_path(path)
+end
