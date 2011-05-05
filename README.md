@@ -97,13 +97,16 @@ for more information.
 Rails generator
 ---------------
 
-Kelp provides a generator for Rails 2.x projects, to quickly add some generic
-step definitions. Simply run:
+Kelp provides a generator for Rails 2.x projects, which writes step definitions
+to `features/step_definitions/web_steps.rb`. This file provides all of the same
+step definitions normally provided by
+[cucumber-rails](http://github.com/aslakhellesoy/cucumber-rails), with several
+enhancements. If you have made customizations to your `web_steps.rb`, they will
+be overwritten! Consider yourself warned.
+
+To generate `web_steps.rb`, simply run:
 
     $ script/generate kelp
-
-This will create `features/step_definitions/kelp_steps.rb` with some example
-step definitions using Kelp's helper methods.
 
 A Rails 3.x generator is not currently provided. Contributions are welcome!
 
@@ -142,7 +145,7 @@ Kelp comes with a `Rakefile`, so you can run the RSpec tests and generate an
     $ rake spec
 
 This will write an HTML report to `coverage/index.html`. Finally, there are
-some Cucumber self-tests included, mainly for testing the `kelp_steps.rb`
+some Cucumber self-tests included, mainly for testing the `web_steps.rb`
 file used by the Rails generator. Run via:
 
     $ rake cucumber

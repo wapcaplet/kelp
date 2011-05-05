@@ -1,6 +1,13 @@
 Kelp History
 ============
 
+0.1.9
+-----
+
+- Fill-in methods now accept checkbox and dropdown fields
+- Generated step definitions now replace those of cucumber-rails
+
+
 0.1.8
 -----
 
