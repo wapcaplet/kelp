@@ -41,11 +41,11 @@ describe Kelp::Navigation, "press" do
 
   context "passes when" do
     it "button exists" do
-      press "Submit"
+      press "Submit message"
     end
 
     it "button exists within the scope" do
-      press "Submit", :within => "#fields"
+      press "Submit message", :within => "#fields"
     end
   end
 
@@ -58,7 +58,7 @@ describe Kelp::Navigation, "press" do
 
     it "button exists but is not within the scope" do
       lambda do
-        press "Submit", :within => "#greeting"
+        press "Submit message", :within => "#greeting"
       end.should raise_error(Capybara::ElementNotFound)
     end
   end

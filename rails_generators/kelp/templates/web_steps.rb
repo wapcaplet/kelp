@@ -18,22 +18,10 @@ World(Kelp::Attribute)
 World(Kelp::Checkbox)
 World(Kelp::Dropdown)
 World(Kelp::Field)
+World(Kelp::Helper)
 World(Kelp::Navigation)
 World(Kelp::Scoping)
 World(Kelp::Visibility)
-
-module KelpStepHelper
-  # Convert a Cucumber::Ast::Table or multiline string into
-  # a list of strings
-  def listify(items)
-    if items.class == Cucumber::Ast::Table
-      strings = items.raw.flatten
-    else
-      strings = items.split(/[\r\n]+/)
-    end
-  end
-end
-World(KelpStepHelper)
 
 
 # Patterns shared by step definitions

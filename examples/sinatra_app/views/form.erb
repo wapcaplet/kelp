@@ -33,14 +33,12 @@
           <option value="heavy">Heavy</option>
         </select>
       </p>
-      <p>
-        <label for="quotes">Quotes</label>
-        <select id="quotes">
-          <option value="1">Single 'quotes'</option>
-          <option value="2">"Double" quotes</option>
-          <option value="3">'Single' and "Double" quotes</option>
-        </select>
-      </p>
+      <p><button value="Submit person form" /></p>
+    </div>
+  </form>
+
+  <div id="preferences_form">
+    <form action="/thanks" method="get">
       <p>
         <label for="favorite_colors">Favorite Colors</label>
         <select id="favorite_colors" multiple="multiple">
@@ -57,23 +55,6 @@
         <label for="like_salami">I like salami</label>
         <input id="like_salami" type="checkbox" />
       </p>
-      <p>
-        <label for="message">Message</label>
-        <input id="message" type="text" value="Your message goes here" />
-      </p>
-      <p><input type="submit" value="Submit" /></p>
-    </form>
-  </div>
-
-  <div id="other_form">
-    <form action="/thanks" method="get">
-      <p><input id="readonly" type="text" disabled="disabled" /></p>
-      <p><input type="submit" value="Submit" disabled="disabled" /></p>
-    </form>
-  </div>
-
-  <div id="checkbox_form">
-    <form action="/thanks" method="get">
       <table>
         <tr>
           <th>Apple</th>
@@ -90,6 +71,26 @@
           </td>
         </tr>
       </table>
+      <p>
+        <label for="message">Message</label>
+        <input id="message" type="text" value="Your message goes here" />
+      </p>
+      <p><input type="submit" value="Save preferences" /></p>
+    </form>
+  </div>
+
+  <div id="other_form">
+    <form action="/thanks" method="get">
+      <p>
+        <label for="quotes">Quotes</label>
+        <select id="quotes">
+          <option value="1">Single 'quotes'</option>
+          <option value="2">"Double" quotes</option>
+          <option value="3">'Single' and "Double" quotes</option>
+        </select>
+      </p>
+      <p><input id="readonly" type="text" disabled="disabled" /></p>
+      <p><input type="submit" value="Save is disabled" disabled="disabled" /></p>
     </form>
   </div>
 

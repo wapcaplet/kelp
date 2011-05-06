@@ -10,7 +10,7 @@ module Kelp
   #
   module Navigation
     include Scoping
-    include XPath
+    include XPaths
 
     # Follow a link on the page.
     #

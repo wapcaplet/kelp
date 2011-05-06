@@ -1,5 +1,16 @@
 module Kelp
   module Helper
+    # Convert a Cucumber::Ast::Table or multiline string into
+    # a list of strings
+    def listify(items)
+      if items.class == Cucumber::Ast::Table
+        strings = items.raw.flatten
+      else
+        strings = items.split(/[\r\n]+/)
+      end
+    end
+
+
     # A slightly friendlier version of Capybara's `find_field`, which actually
     # tells you which locator failed to match (instead of giving a useless
     # Unable to find '#<XPath::Union:0xXXXXXXX>' message).
@@ -11,6 +22,7 @@ module Kelp
       end
     end
 
+
     # Return the appropriate "ExpectationNotMetError" class for the current
     # version of RSpec
     def rspec_unexpected
@@ -20,5 +32,6 @@ module Kelp
         Spec::Expectations::ExpectationNotMetError
       end
     end
+
   end
 end

@@ -392,3 +392,83 @@ describe Kelp::Visibility, "page_should_not_contain" do
 end
 
 
+describe Kelp::Visibility, "should_see_button" do
+  before(:each) do
+    visit('/form')
+  end
+
+  context "passes when" do
+    it "an input tag with the given value exists" do
+      should_see_button "Save preferences"
+      should_see_button "Save is disabled"
+    end
+
+    it "a button tag with the given value exists" do
+      should_see_button "Submit person form"
+    end
+
+    it "an input tag with the given value exists within a scope" do
+      should_see_button "Save preferences", :within => "#preferences_form"
+      should_see_button "Save is disabled", :within => "#other_form"
+    end
+
+    it "a button tag with the given value exists within a scope" do
+      should_see_button "Submit person form", :within => "#person_form"
+    end
+  end
+
+  context "fails when" do
+    it "an input tag with the given value does not exist" do
+      lambda do
+        should_see_button "Save nonexistent"
+      end.should raise_error(Kelp::Unexpected)
+    end
+
+    it "an input tag with the given value exists, but in a different scope" do
+      lambda do
+        should_see_button "Save preferences", :within => "#person_form"
+      end.should raise_error(Kelp::Unexpected)
+    end
+  end
+
+end
+
+
+describe Kelp::Visibility, "should_not_see_button" do
+  before(:each) do
+    visit('/form')
+  end
+
+  context "passes when" do
+    it "an input or button tag with the given value does not exist" do
+      should_not_see_button "No such button"
+    end
+
+    it "an input tag with the given value does not exist within a scope" do
+      should_not_see_button "Save preferences", :within => "#person_form"
+      should_not_see_button "Submit person form", :within => "#preferences_form"
+    end
+  end
+
+  context "fails when" do
+    it "an input tag with the given value exists" do
+      lambda do
+        should_not_see_button "Save preferences"
+      end.should raise_error(Kelp::Unexpected)
+    end
+
+    it "a button tag with the given value exists" do
+      lambda do
+        should_not_see_button "Submit person form"
+      end.should raise_error(Kelp::Unexpected)
+    end
+
+    it "an input tag with the given value exists in the given scope" do
+      lambda do
+        should_not_see_button "Save preferences", :within => "#preferences_form"
+      end.should raise_error(Kelp::Unexpected)
+    end
+  end
+
+end
+

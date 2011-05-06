@@ -1,3 +1,4 @@
+require 'xpath'
 require 'kelp/scoping'
 require 'kelp/xpath'
 require 'kelp/exceptions'
@@ -9,7 +10,7 @@ module Kelp
   #
   module Visibility
     include Scoping
-    include XPath
+    include XPaths
 
     # Verify the presence of content on the page. Passes when all the given items
     # are found on the page, and fails if any of them are not found.
@@ -24,6 +25,9 @@ module Kelp
     #   Text(s) or regexp(s) to look for
     # @param [Hash] scope
     #   Scoping keywords as understood by {#in_scope}
+    #
+    # @raise [Kelp::Unexpected]
+    #   If any of the expected text strings are not seen in the given scope
     #
     def should_see(texts, scope={})
       texts = [texts] if (texts.class == String || texts.class == Regexp)
@@ -51,6 +55,9 @@ module Kelp
     #   Text(s) or regexp(s) to look for
     # @param [Hash] scope
     #   Scoping keywords as understood by {#in_scope}
+    #
+    # @raise [Kelp::Unexpected]
+    #   If any of the expected text strings are seen in the given scope
     #
     def should_not_see(texts, scope={})
       texts = [texts] if (texts.class == String || texts.class == Regexp)
@@ -244,6 +251,64 @@ module Kelp
           page.should have_no_xpath(xpath_row_containing(texts))
         elsif Kelp.driver == :webrat
           raise NotImplementedError, "Not implemented yet"
+        end
+      end
+    end
+
+
+    # Verify that a button with the given text appears on the page.
+    # Works for `<input...>` as well as `<button...>` elements.
+    #
+    # @example
+    #   should_see_button "Submit"
+    #   should_see_button "Save changes", :within => "#preferences"
+    #
+    # @param [String] button_text
+    #   Visible button text to look for
+    # @param [Hash] scope
+    #   Scoping keywords as understood by {#in_scope}
+    #
+    # @raise [Kelp::Unexpected]
+    #   If no button with the given text exists in the given scope
+    #
+    # @since 0.1.9
+    #
+    def should_see_button(button_text, scope={})
+      in_scope(scope) do
+        xpath = XPath::HTML.button(button_text)
+        begin
+          page.should have_xpath(xpath)
+        rescue rspec_unexpected
+          raise Kelp::Unexpected, "Expected to see button '#{button_text}', but button does not exist."
+        end
+      end
+    end
+
+
+    # Verify that a button with the given text does not appear on the page.
+    # Works for `<input...>` as well as `<button...>` elements.
+    #
+    # @example
+    #   should_not_see_button "Delete"
+    #   should_not_see_button "Save changes", :within => "#read_only"
+    #
+    # @param [String] button_text
+    #   Visible button text to look for
+    # @param [Hash] scope
+    #   Scoping keywords as understood by {#in_scope}
+    #
+    # @raise [Kelp::Unexpected]
+    #   If a button with the given text does exist in the given scope
+    #
+    # @since 0.1.9
+    #
+    def should_not_see_button(button_text, scope={})
+      in_scope(scope) do
+        xpath = XPath::HTML.button(button_text)
+        begin
+          page.should have_no_xpath(xpath)
+        rescue rspec_unexpected
+          raise Kelp::Unexpected, "Did not expect to see button '#{button_text}', but button exists."
         end
       end
     end

@@ -1,7 +1,7 @@
 module Kelp
   # This module defines helper methods for building XPath expressions.
   #
-  module XPath
+  module XPaths
     # Return an XPath for any table row containing all strings in `texts`,
     # within the current context.
     def xpath_row_containing(texts)

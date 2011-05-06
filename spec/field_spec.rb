@@ -240,7 +240,7 @@ describe Kelp::Field, "fill_in_field" do
 
     it "filling a field in the wrong scope" do
       lambda do
-        fill_in_field_within "#other_form", "First name", "Mel"
+        fill_in_field_within "#preferences_form", "First name", "Mel"
       end.should raise_error(Capybara::ElementNotFound)
     end
   end
@@ -321,7 +321,7 @@ describe Kelp::Field, "fill_in_fields" do
 
     it "filling a field in the wrong scope" do
       lambda do
-        fill_in_fields_within "#other_form",
+        fill_in_fields_within "#preferences_form",
           "First name" => "Mel"
       end.should raise_error(Capybara::ElementNotFound)
     end
