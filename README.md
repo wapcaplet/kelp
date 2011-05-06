@@ -108,6 +108,10 @@ To generate `web_steps.rb`, simply run:
 
     $ script/generate kelp
 
+*Note*: If you are upgrading from a version of Kelp prior to 0.1.9, you should
+remove `kelp_steps.rb` from your `features/step_definitions` directory; these
+are obsolete, and conflict with the newer step definitions in `web_steps.rb`.
+
 A Rails 3.x generator is not currently provided. Contributions are welcome!
 
 
