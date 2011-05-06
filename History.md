@@ -5,7 +5,9 @@ Kelp History
 -----
 
 - Fill-in methods now accept checkbox and dropdown fields
-- Generated step definitions now replace those of cucumber-rails
+- Generated step definitions now replace those of cucumber-rails (web_steps.rb)
+- should_be_on_page and should_have_query methods added
+- should_see_button and should_not_see_button visibility methods added
 
 
 0.1.8

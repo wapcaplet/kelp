@@ -36,18 +36,40 @@ ELEMENT = /(?:field|checkbox|dropdown|button)/
 # NAVIGATION
 # ==========================
 
+# Load a given page path directly. `page_name` may be an absolute path,
+# or an expression that is translated to an absolute path by your `path_to`
+# function.
+#
+# Examples:
+#
+#   Given I am on the home page
+#   When I go to my account page
+#   And I go to "/logout"
+#
 Given /^#{I}(am on|go to) (.+)$/ do |page_name|
   visit path_to(page_name)
 end
 
 
 # Press a button on a webpage.
+#
+# Examples:
+#
+#   When I press "Delete"
+#   And I press "Yes" within "#confirmation"
+#
 When /^#{I}press #{TEXT}#{WITHIN}$/ do |button, selector|
   press(button, :within => selector)
 end
 
 
-# CLick a link in a webpage.
+# Click a link in a webpage.
+#
+# Examples:
+#
+#   When I follow "List of stuff"
+#   And I follow "Next" within "navigation"
+#
 When /^#{I}follow #{TEXT}#{WITHIN}$/ do |link, selector|
   follow(link, :within => selector)
 end
@@ -65,17 +87,32 @@ When /^#{I}follow #{TEXT} next to #{TEXT}$/ do |link, next_to|
 end
 
 
-Then /^(?:|I )should be on (.+)$/ do |page_name|
+# Verify that the current path name matches that of the given page.
+#
+Then /^#{I}should be on (.+)$/ do |page_name|
   should_be_on_page(page_name)
 end
 
-Then /^(?:|I )should have the following query string:$/ do |expected_pairs|
+
+# Verify that the current URL has the given query parameters.
+#
+# Examples:
+#
+#   Then I should have the following query string:
+#     | fruit | apple |
+#     | color | red   |
+#
+Then /^#{I}should have the following query string:$/ do |expected_pairs|
   should_have_query(expected_pairs.rows_hash)
 end
 
+
+# Save the current page as an HTML file, and open it in your preferred browser.
+# Requires that you have the `launchy` gem installed.
 Then /^show me the page$/ do
   save_and_open_page
 end
+
 
 # ==========================
 # VISIBILITY
@@ -209,6 +246,22 @@ end
 
 Then /^#{I}should not see the following next to #{TEXT}#{WITHIN}:$/ do |next_to, selector, items|
   should_not_see_in_same_row(listify(items) + [next_to], :within => selector)
+end
+
+
+# Verify that a given button is or isn't visible on the webpage.
+#
+# Examples:
+#
+#   Then I should see a "Save" button
+#   But I should not see a "Delete" button
+#
+Then /^#{I}should see a #{TEXT} button#{WITHIN}$/ do |button, selector|
+  should_see_button(button, :within => selector)
+end
+
+Then /^#{I}should not see a #{TEXT} button#{WITHIN}$/ do |button, selector|
+  should_not_see_button(button, :within => selector)
 end
 
 
@@ -432,6 +485,13 @@ Then /^the #{TEXT} checkbox next to #{TEXT}#{WITHIN} should not be (checked|unch
 end
 
 
-When /^(?:|I )attach the file "([^"]*)" to "([^"]*)"$/ do |path, field|
+# Attach the filename at the given path to the given form field.
+#
+# Examples:
+#
+#   When I attach the file "tmp/my_data.csv" to "CSV file"
+#
+When /^#{I}attach the file #{TEXT} to #{TEXT}$/ do |path, field|
   attach_file field, File.expand_path(path)
 end
+
