@@ -87,3 +87,46 @@ describe Kelp::Navigation, "click_link_in_row" do
 end
 
 
+describe Kelp::Navigation, "should_be_on_page" do
+  context "passes when" do
+    it "current path matches the expected path" do
+      visit('/home')
+      should_be_on_page '/home'
+      visit('/form')
+      should_be_on_page '/form'
+    end
+  end
+
+  context "fails when" do
+    it "current path does not match the expected path" do
+      visit('/home')
+      lambda do
+        should_be_on_page '/form'
+      end.should raise_error(rspec_unexpected)
+    end
+  end
+end
+
+
+describe Kelp::Navigation, "should_have_query" do
+  before(:each) do
+    visit('/form')
+  end
+
+  context "passes when" do
+    it "actual and expected queries are empty" do
+      empty_params = {}
+      should_have_query empty_params
+    end
+  end
+
+  context "fails when" do
+    it "expected params when actual query is empty" do
+      lambda do
+        should_have_query :username => 'tony'
+      end.should raise_error(rspec_unexpected)
+    end
+  end
+end
+
+
