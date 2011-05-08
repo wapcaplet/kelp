@@ -303,7 +303,7 @@ end
 #     | Hair        | blonde  |
 #     | Has TV show | checked |
 #
-When /^#{I}fill in the following#{WITHIN}:$/ do |fields, selector|
+When /^#{I}fill in the following#{WITHIN}:$/ do |selector, fields|
   fill_in_fields(fields.rows_hash, :within => selector)
 end
 
