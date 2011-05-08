@@ -224,7 +224,11 @@ module Kelp
     def should_see_in_same_row(texts, scope={})
       in_scope(scope) do
         if Kelp.driver == :capybara
-          page.should have_xpath(xpath_row_containing(texts))
+          begin
+            page.should have_xpath(xpath_row_containing(texts))
+          rescue rspec_unexpected
+            raise Kelp::Unexpected, "Expected, but did not see: #{texts.inspect} in the same row"
+          end
         elsif Kelp.driver == :webrat
           raise NotImplementedError, "Not implemented yet"
         end
@@ -248,7 +252,11 @@ module Kelp
     def should_not_see_in_same_row(texts, scope={})
       in_scope(scope) do
         if Kelp.driver == :capybara
-          page.should have_no_xpath(xpath_row_containing(texts))
+          begin
+            page.should have_no_xpath(xpath_row_containing(texts))
+          rescue rspec_unexpected
+            raise Kelp::Unexpected, "Did not expect, but did see: #{texts.inspect} in the same row"
+          end
         elsif Kelp.driver == :webrat
           raise NotImplementedError, "Not implemented yet"
         end

@@ -50,5 +50,39 @@ Feature: Kelp Step Definitions
       Expected not to see: ["First", "Missing", "Second", "Uh-oh", "Third", "Not there"]
       Did see: ["First", "Second", "Third"] (Kelp::Unexpected)
       """
-
-
+    And the results should include:
+      """
+      Then I should see "Goodbye world" within "#greeting"
+        Expected to see: ["Goodbye world"]
+        Did not see: ["Goodbye world"] (Kelp::Unexpected)
+      """
+    And the results should include:
+      """
+      Then I should not see "Hello world" within "#greeting"
+        Expected not to see: ["Hello world"]
+        Did see: ["Hello world"] (Kelp::Unexpected)
+      """
+    And the results should include:
+      """
+      Then I should see /(Waffle|Pancake) world/
+        Expected to see: [/(Waffle|Pancake) world/]
+        Did not see: [/(Waffle|Pancake) world/] (Kelp::Unexpected)
+      """
+    And the results should include:
+      """
+      Then I should not see /(Hello|Goodbye) world/
+        Expected not to see: [/(Hello|Goodbye) world/]
+        Did see: [/(Hello|Goodbye) world/]
+      """
+    And the results should include:
+      """
+      Then I should see a table row containing:
+        | Eric | Delete |
+        Expected, but did not see: ["Eric", "Delete"] in the same row (Kelp::Unexpected)
+      """
+    And the results should include:
+      """
+      Then I should not see a table row containing:
+        | Eric | Edit |
+        Did not expect, but did see: ["Eric", "Edit"] in the same row (Kelp::Unexpected)
+      """
