@@ -26,16 +26,16 @@ Feature: Kelp Step Definitions
     When I run cucumber on "field.feature"
     Then the results should include:
       """
-      2 scenarios (2 passed)
-      7 steps (7 passed)
+      7 scenarios (7 passed)
+      30 steps (30 passed)
       """
 
   Scenario: Visibility test
     When I run cucumber on "visibility.feature"
     Then the results should include:
       """
-      3 scenarios (3 passed)
-      12 steps (12 passed)
+      10 scenarios (10 passed)
+      46 steps (46 passed)
       """
 
   Scenario: Visibility failure test

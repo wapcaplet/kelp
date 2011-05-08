@@ -1,6 +1,13 @@
 Kelp History
 ============
 
+0.2.0
+-----
+
+- Fixed a 'within' clause quoted identifier glitch in cucumber output
+- Fixed bug in "fill in the following" step definition
+
+
 0.1.9
 -----
 
