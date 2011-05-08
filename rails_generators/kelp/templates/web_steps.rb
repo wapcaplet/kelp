@@ -28,7 +28,7 @@ World(Kelp::Visibility)
 I = /(?:|I )/
 TEXT = /"([^\"]+)"/
 REGEX = /\/([^\/]*)\//
-WITHIN = /(?: within (.+))?/
+WITHIN = /(?: within "?([^\"]+)"?)?/
 ELEMENT = /(?:field|checkbox|dropdown|button)/
 
 
