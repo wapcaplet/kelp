@@ -10,12 +10,12 @@ Feature: Dropdowns
     Then the "Height" dropdown should include "Tall"
     And the "Quotes" dropdown should include "Single 'quotes'"
     And the "Height" dropdown should include:
-      | Short |
+      | Short   |
       | Average |
-      | Tall |
+      | Tall    |
     And the "Quotes" dropdown should include:
-      | Single 'quotes' |
-      | "Double" quotes |
+      | Single 'quotes'              |
+      | "Double" quotes              |
       | 'Single' and "Double" quotes |
     And the "Favorite Colors" dropdown should include:
       """

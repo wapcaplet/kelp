@@ -27,20 +27,20 @@ describe Kelp::Dropdown, "dropdown_should_equal" do
     it "the option does not have the 'selected' attribute" do
       lambda do
         dropdown_should_equal "Height", "Tall"
-      end.should raise_error(rspec_unexpected)
+      end.should raise_error(Kelp::Unexpected)
     end
 
     it "the option is not the first one selected by default" do
       lambda do
         dropdown_should_equal "Weight", "Medium"
-      end.should raise_error(rspec_unexpected)
+      end.should raise_error(Kelp::Unexpected)
     end
 
     it "the option was not the one chosen programmatically" do
       select "Tall", :from => "Height"
       lambda do
         dropdown_should_equal "Height", "Average"
-      end.should raise_error(rspec_unexpected)
+      end.should raise_error(Kelp::Unexpected)
     end
   end
 
@@ -78,7 +78,7 @@ describe Kelp::Dropdown, "dropdown_should_include" do
     it "a single option does not exist in the dropdown" do
       lambda do
         dropdown_should_include "Height", "Midget"
-      end.should raise_error(rspec_unexpected)
+      end.should raise_error(Kelp::Unexpected)
     end
 
     it "any of several options do not exist in the dropdown" do
@@ -89,7 +89,7 @@ describe Kelp::Dropdown, "dropdown_should_include" do
           "Tall",
           "Giant",
         ]
-      end.should raise_error(rspec_unexpected)
+      end.should raise_error(Kelp::Unexpected)
     end
   end
 end
@@ -120,7 +120,7 @@ describe Kelp::Dropdown, "dropdown_should_not_include" do
     it "a single option exists in the dropdown" do
       lambda do
         dropdown_should_not_include "Height", "Short"
-      end.should raise_error(rspec_unexpected)
+      end.should raise_error(Kelp::Unexpected)
     end
 
     it "any of several options exist in the dropdown" do
@@ -131,7 +131,7 @@ describe Kelp::Dropdown, "dropdown_should_not_include" do
           "Behemoth",
           "Tall",
         ]
-      end.should raise_error(rspec_unexpected)
+      end.should raise_error(Kelp::Unexpected)
     end
   end
 end

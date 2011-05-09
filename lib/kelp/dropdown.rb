@@ -37,7 +37,10 @@ module Kelp
           field_value = xpath_sanitize(field.value)
           selected = field.find(:xpath, ".//option[@value=#{field_value}]")
         end
-        selected.text.should =~ /#{value}/
+        if selected.text != value
+          raise Kelp::Unexpected,
+            "Expected '#{dropdown}' dropdown to equal '#{value}'\nGot '#{selected.text}' instead"
+        end
       end
     end
 
@@ -59,13 +62,22 @@ module Kelp
     #
     def dropdown_should_include(dropdown, values, scope={})
       in_scope(scope) do
+        unexpected = []
         # If values is a String, convert it to an Array
         values = [values] if values.class == String
-
         field = nice_find_field(dropdown)
         # Look for each value
         values.each do |value|
-          page.should have_xpath(".//option[text()=#{xpath_sanitize(value)}]")
+          begin
+            page.should have_xpath(".//option[text()=#{xpath_sanitize(value)}]")
+          rescue rspec_unexpected
+            unexpected << value
+          end
+        end
+        if !unexpected.empty?
+          raise Kelp::Unexpected,
+            "Expected '#{dropdown}' dropdown to include: #{values.inspect}" + \
+            "\nMissing: #{unexpected.inspect}"
         end
       end
     end
@@ -86,13 +98,22 @@ module Kelp
     #
     def dropdown_should_not_include(dropdown, values, scope={})
       in_scope(scope) do
+        unexpected = []
         # If values is a String, convert it to an Array
         values = [values] if values.class == String
-
         field = nice_find_field(dropdown)
         # Look for each value
         values.each do |value|
-          page.should have_no_xpath(".//option[text()=#{xpath_sanitize(value)}]")
+          begin
+            page.should have_no_xpath(".//option[text()=#{xpath_sanitize(value)}]")
+          rescue rspec_unexpected
+            unexpected << value
+          end
+        end
+        if !unexpected.empty?
+          raise Kelp::Unexpected,
+            "Expected '#{dropdown}' dropdown to not include: #{values.inspect}" + \
+            "\nDid include: #{unexpected.inspect}"
         end
       end
     end
