@@ -6,7 +6,8 @@ Kelp History
 
 - Fixed a 'within' clause quoted identifier glitch in cucumber output
 - Fixed bug in "fill in the following" step definition
-- Raise Kelp::Unexpected instead of RSpec exception in some cases
+- Raise Kelp::Unexpected instead of RSpec exception in most cases
+- Dropdown inclusion steps now accumulate unexpected values instead of failing on the first one
 
 
 0.1.9
