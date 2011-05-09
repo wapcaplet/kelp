@@ -42,47 +42,39 @@ Feature: Kelp Step Definitions
     When I run cucumber on "visibility_fail.feature"
     Then the results should include:
       """
-      Expected to see: ["First", "Missing", "Second", "Uh-oh", "Third", "Not there"]
-      Did not see: ["Missing", "Uh-oh", "Not there"] (Kelp::Unexpected)
-      """
-    And the results should include:
-      """
-      Expected not to see: ["First", "Missing", "Second", "Uh-oh", "Third", "Not there"]
-      Did see: ["First", "Second", "Third"] (Kelp::Unexpected)
-      """
-    And the results should include:
-      """
-      Then I should see "Goodbye world" within "#greeting"
+      Scenario: Should see text (FAIL)
+        Expected to see: ["First", "Missing", "Second", "Uh-oh", "Third", "Not there"]
+        Did not see: ["Missing", "Uh-oh", "Not there"] (Kelp::Unexpected)
+
+      Scenario: Should not see text (FAIL)
+        Expected not to see: ["First", "Missing", "Second", "Uh-oh", "Third", "Not there"]
+        Did see: ["First", "Second", "Third"] (Kelp::Unexpected)
+
+      Scenario: Should see text within a scope (FAIL)
         Expected to see: ["Goodbye world"]
         Did not see: ["Goodbye world"] (Kelp::Unexpected)
-      """
-    And the results should include:
-      """
-      Then I should not see "Hello world" within "#greeting"
+
+      Scenario: Should not see text within a scope (FAIL)
         Expected not to see: ["Hello world"]
         Did see: ["Hello world"] (Kelp::Unexpected)
-      """
-    And the results should include:
-      """
-      Then I should see /(Waffle|Pancake) world/
+
+      Scenario: Should see regexp (FAIL)
         Expected to see: [/(Waffle|Pancake) world/]
         Did not see: [/(Waffle|Pancake) world/] (Kelp::Unexpected)
-      """
-    And the results should include:
-      """
-      Then I should not see /(Hello|Goodbye) world/
+
+      Scenario: Should not see regexp (FAIL)
         Expected not to see: [/(Hello|Goodbye) world/]
-        Did see: [/(Hello|Goodbye) world/]
-      """
-    And the results should include:
-      """
-      Then I should see a table row containing:
+        Did see: [/(Hello|Goodbye) world/] (Kelp::Unexpected)
+
+      Scenario: Should see text in table rows (FAIL)
         | Eric | Delete |
         Expected, but did not see: ["Eric", "Delete"] in the same row (Kelp::Unexpected)
-      """
-    And the results should include:
-      """
-      Then I should not see a table row containing:
+
+      Scenario: Should not see text in table rows (FAIL)
         | Eric | Edit |
         Did not expect, but did see: ["Eric", "Edit"] in the same row (Kelp::Unexpected)
+
+      8 scenarios (8 failed)
+      16 steps (8 failed, 8 passed)
       """
+

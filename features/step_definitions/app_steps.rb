@@ -24,14 +24,30 @@ When /^I run cucumber on "(.+)"$/ do |feature|
 end
 
 
-Then /^the results should include:$/ do |expected_results|
-  # Remove leading whitespace before comparison
-  got = @output.gsub(/^\s*/, '')
-  want = expected_results.gsub(/^\s*/, '')
-  if !got.include?(want)
-    got = @output.collect {|line| "  #{line}"}.join
-    want = expected_results.collect {|line| "  #{line}"}.join
-    raise("Expected:\n#{want}\nGot:\n#{got}")
+# Ensure that the results include the expected lines, in the same order.
+# Extra lines in the results are ignored.
+Then /^the results should include:$/ do |expected_lines|
+  # Full actual output, for error reporting
+  got = @output.collect {|line| "  #{line}"}.join
+  # Remove leading whitespace and split into lines
+  got_lines = @output.gsub(/^\s*/, '').split("\n")
+  want_lines = expected_lines.gsub(/^\s*/, '').split("\n")
+  last_index = -1
+  # Ensure that each wanted line is present in the output,
+  # and that it comes after any preceding expected lines.
+  want_lines.each do |want|
+    if !want.empty?
+      index = got_lines.index(want)
+      # Not found?
+      if index.nil?
+        raise("Got:\n#{got}\nExpected line not found:\n  #{want}")
+      # Not in order?
+      elsif index < last_index
+        raise("Got:\n#{got}\nExpected line found, but out of order:\n  #{want}")
+      else
+        last_index = index
+      end
+    end
   end
 end
 
