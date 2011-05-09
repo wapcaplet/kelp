@@ -116,20 +116,10 @@ module Kelp
     #   Content you expect to be on the page
     #
     def page_should_contain_text(text)
-      if Kelp.driver == :capybara
-        if page.respond_to? :should
-          page.should have_content(text)
-        else
-          assert page.has_content?(text)
-        end
-      elsif Kelp.driver == :webrat
-        if defined?(Spec::Rails::Matchers)
-          response.should contain(text)
-        else
-          assert_contain text
-        end
+      if page.respond_to? :should
+        page.should have_content(text)
       else
-        raise NotImplementedError, "Unsupported driver: #{Kelp.driver}"
+        assert page.has_content?(text)
       end
     end
 
@@ -140,20 +130,10 @@ module Kelp
     #   Content you expect to match
     #
     def page_should_contain_regexp(regexp)
-      if Kelp.driver == :capybara
-        if page.respond_to? :should
-          page.should have_xpath('.//*', :text => regexp)
-        else
-          assert page.has_xpath?('.//*', :text => regexp)
-        end
-      elsif Kelp.driver == :webrat
-        if defined?(Spec::Rails::Matchers)
-          response.should contain(regexp)
-        else
-          assert_match(regexp, response_body)
-        end
+      if page.respond_to? :should
+        page.should have_xpath('.//*', :text => regexp)
       else
-        raise NotImplementedError, "Unsupported driver: #{Kelp.driver}"
+        assert page.has_xpath?('.//*', :text => regexp)
       end
     end
 
@@ -164,21 +144,10 @@ module Kelp
     #   Content you expect to be missing from the page
     #
     def page_should_not_contain_text(text)
-      if Kelp.driver == :capybara
-        if page.respond_to? :should
-          page.should have_no_content(text)
-        else
-          assert page.has_no_content?(text)
-        end
-      elsif Kelp.driver == :webrat
-        if defined?(Spec::Rails::Matchers)
-          response.should_not contain(text)
-        else
-          hc = Webrat::Matchers::HasContent.new(text)
-          assert !hc.matches?(content), hc.negative_failure_message
-        end
+      if page.respond_to? :should
+        page.should have_no_content(text)
       else
-        raise NotImplementedError, "Unsupported driver: #{Kelp.driver}"
+        assert page.has_no_content?(text)
       end
     end
 
@@ -189,20 +158,10 @@ module Kelp
     #   Content you expect to fail matching
     #
     def page_should_not_contain_regexp(regexp)
-      if Kelp.driver == :capybara
-        if page.respond_to? :should
-          page.should have_no_xpath('.//*', :text => regexp)
-        else
-          assert page.has_no_xpath?('.//*', :text => regexp)
-        end
-      elsif Kelp.driver == :webrat
-        if defined?(Spec::Rails::Matchers)
-          response.should_not contain(regexp)
-        else
-          assert_not_contain(regexp)
-        end
+      if page.respond_to? :should
+        page.should have_no_xpath('.//*', :text => regexp)
       else
-        raise NotImplementedError, "Unsupported driver: #{Kelp.driver}"
+        assert page.has_no_xpath?('.//*', :text => regexp)
       end
     end
 
@@ -223,14 +182,10 @@ module Kelp
     #
     def should_see_in_same_row(texts, scope={})
       in_scope(scope) do
-        if Kelp.driver == :capybara
-          begin
-            page.should have_xpath(xpath_row_containing(texts))
-          rescue rspec_unexpected
-            raise Kelp::Unexpected, "Expected, but did not see: #{texts.inspect} in the same row"
-          end
-        elsif Kelp.driver == :webrat
-          raise NotImplementedError, "Not implemented yet"
+        begin
+          page.should have_xpath(xpath_row_containing(texts))
+        rescue rspec_unexpected
+          raise Kelp::Unexpected, "Expected, but did not see: #{texts.inspect} in the same row"
         end
       end
     end
@@ -251,14 +206,10 @@ module Kelp
     #
     def should_not_see_in_same_row(texts, scope={})
       in_scope(scope) do
-        if Kelp.driver == :capybara
-          begin
-            page.should have_no_xpath(xpath_row_containing(texts))
-          rescue rspec_unexpected
-            raise Kelp::Unexpected, "Did not expect, but did see: #{texts.inspect} in the same row"
-          end
-        elsif Kelp.driver == :webrat
-          raise NotImplementedError, "Not implemented yet"
+        begin
+          page.should have_no_xpath(xpath_row_containing(texts))
+        rescue rspec_unexpected
+          raise Kelp::Unexpected, "Did not expect, but did see: #{texts.inspect} in the same row"
         end
       end
     end
@@ -284,9 +235,7 @@ module Kelp
     def should_see_button(button_text, scope={})
       in_scope(scope) do
         xpath = XPath::HTML.button(button_text)
-        begin
-          page.should have_xpath(xpath)
-        rescue rspec_unexpected
+        if !page.has_xpath?(xpath)
           raise Kelp::Unexpected, "Expected to see button '#{button_text}', but button does not exist."
         end
       end
@@ -313,9 +262,7 @@ module Kelp
     def should_not_see_button(button_text, scope={})
       in_scope(scope) do
         xpath = XPath::HTML.button(button_text)
-        begin
-          page.should have_no_xpath(xpath)
-        rescue rspec_unexpected
+        if page.has_xpath?(xpath)
           raise Kelp::Unexpected, "Did not expect to see button '#{button_text}', but button exists."
         end
       end
