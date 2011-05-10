@@ -30,20 +30,16 @@ module Kelp
     #   If any of the expected text strings are not seen in the given scope
     #
     def should_see(texts, scope={})
-      texts = [texts] if (texts.class == String || texts.class == Regexp)
-      unexpected = []
       in_scope(scope) do
-        texts.each do |text|
-          begin
-            page_should_contain text
-          rescue rspec_unexpected
-            unexpected << text
-          end
+        texts = [texts] if (texts.class == String || texts.class == Regexp)
+        # Select all expected values that don't appear on the page
+        unexpected = texts.select do |text|
+          !page_contains?(text)
         end
-      end
-      if !unexpected.empty?
-        raise Kelp::Unexpected,
-          "Expected to see: #{texts.inspect}\nDid not see: #{unexpected.inspect}"
+        if !unexpected.empty?
+          raise Kelp::Unexpected,
+            "Expected to see: #{texts.inspect}\nDid not see: #{unexpected.inspect}"
+        end
       end
     end
 
@@ -52,7 +48,7 @@ module Kelp
     # items are found on the page, and fails if any of them are found.
     #
     # @param [String, Regexp, Array] texts
-    #   Text(s) or regexp(s) to look for
+    #   Text(s) or Regexp(s) to look for
     # @param [Hash] scope
     #   Scoping keywords as understood by {#in_scope}
     #
@@ -60,108 +56,36 @@ module Kelp
     #   If any of the expected text strings are seen in the given scope
     #
     def should_not_see(texts, scope={})
-      texts = [texts] if (texts.class == String || texts.class == Regexp)
-      unexpected = []
       in_scope(scope) do
-        texts.each do |text|
-          begin
-            page_should_not_contain text
-          rescue rspec_unexpected
-            unexpected << text
-          end
+        texts = [texts] if (texts.class == String || texts.class == Regexp)
+        # Select all unexpected values that do appear on the page
+        unexpected = texts.select do |text|
+          page_contains?(text)
+        end
+        if !unexpected.empty?
+          raise Kelp::Unexpected,
+            "Expected not to see: #{texts.inspect}\nDid see: #{unexpected.inspect}"
         end
       end
-      if !unexpected.empty?
-        raise Kelp::Unexpected,
-          "Expected not to see: #{texts.inspect}\nDid see: #{unexpected.inspect}"
-      end
     end
 
 
-    # Ensure that the current page content includes a String or Regexp.
+    # Return `true` if the current page contains the given text or regular expression,
+    # or `false` if it does not.
     #
     # @param [String, Regexp] text_or_regexp
-    #   Content you expect to be on the page
+    #   Text or regular expression to look for
     #
-    def page_should_contain(text_or_regexp)
+    # @raise [ArgumentError]
+    #   If the given argument isn't a String or Regexp
+    #
+    def page_contains?(text_or_regexp)
       if text_or_regexp.class == String
-        page_should_contain_text(text_or_regexp)
+        page.has_content?(text_or_regexp)
       elsif text_or_regexp.class == Regexp
-        page_should_contain_regexp(text_or_regexp)
+        page.has_xpath?('.//*', :text => text_or_regexp)
       else
         raise ArgumentError, "Expected String or Regexp, got #{text_or_regexp.class}"
-      end
-    end
-
-
-    # Ensure that the current page content does not include a String or Regexp.
-    #
-    # @param [String, Regexp] text_or_regexp
-    #   Content you expect to be missing from the page
-    #
-    def page_should_not_contain(text_or_regexp)
-      if text_or_regexp.class == String
-        page_should_not_contain_text(text_or_regexp)
-      elsif text_or_regexp.class == Regexp
-        page_should_not_contain_regexp(text_or_regexp)
-      else
-        raise ArgumentError, "Expected String or Regexp, got #{text_or_regexp.class}"
-      end
-    end
-
-
-    # Ensure that the current page content includes a String.
-    #
-    # @param [String] text
-    #   Content you expect to be on the page
-    #
-    def page_should_contain_text(text)
-      if page.respond_to? :should
-        page.should have_content(text)
-      else
-        assert page.has_content?(text)
-      end
-    end
-
-
-    # Ensure that the current page content matches a Regexp.
-    #
-    # @param [Regexp] regexp
-    #   Content you expect to match
-    #
-    def page_should_contain_regexp(regexp)
-      if page.respond_to? :should
-        page.should have_xpath('.//*', :text => regexp)
-      else
-        assert page.has_xpath?('.//*', :text => regexp)
-      end
-    end
-
-
-    # Ensure that the current page content does not include a String.
-    #
-    # @param [String] text
-    #   Content you expect to be missing from the page
-    #
-    def page_should_not_contain_text(text)
-      if page.respond_to? :should
-        page.should have_no_content(text)
-      else
-        assert page.has_no_content?(text)
-      end
-    end
-
-
-    # Ensure that the current page content does not match a Regexp.
-    #
-    # @param [Regexp] regexp
-    #   Content you expect to fail matching
-    #
-    def page_should_not_contain_regexp(regexp)
-      if page.respond_to? :should
-        page.should have_no_xpath('.//*', :text => regexp)
-      else
-        assert page.has_no_xpath?('.//*', :text => regexp)
       end
     end
 
@@ -265,6 +189,90 @@ module Kelp
         if page.has_xpath?(xpath)
           raise Kelp::Unexpected, "Did not expect to see button '#{button_text}', but button exists."
         end
+      end
+    end
+
+
+    # -------------------------------------------------------------------
+    # DEPRECATED METHODS
+    # These will be removed in a future release of Kelp. Do not use them.
+    # -------------------------------------------------------------------
+
+
+    # Ensure that the current page content includes a String or Regexp.
+    #
+    # @param [String, Regexp] text_or_regexp
+    #   Content you expect to be on the page
+    #
+    def page_should_contain(text_or_regexp)
+      warn "WARNING: page_should_contain is deprecated. Use should_see instead."
+      if !page_contains?(text_or_regexp)
+        raise Kelp::Unexpected
+      end
+    end
+
+
+    # Ensure that the current page content does not include a String or Regexp.
+    #
+    # @param [String, Regexp] text_or_regexp
+    #   Content you expect to be missing from the page
+    #
+    def page_should_not_contain(text_or_regexp)
+      warn "WARNING: page_should_not_contain is deprecated. Use should_not_see instead."
+      if page_contains?(text_or_regexp)
+        raise Kelp::Unexpected
+      end
+    end
+
+
+    # Ensure that the current page content includes a String.
+    #
+    # @param [String] text
+    #   Content you expect to be on the page
+    #
+    def page_should_contain_text(text)
+      warn "WARNING: page_should_contain_text is deprecated. Use should_see instead."
+      if !page.has_content?(text)
+        raise rspec_unexpected
+      end
+    end
+
+
+    # Ensure that the current page content matches a Regexp.
+    #
+    # @param [Regexp] regexp
+    #   Content you expect to match
+    #
+    def page_should_contain_regexp(regexp)
+      warn "WARNING: page_should_contain_regexp is deprecated. Use should_see instead."
+      if !page.has_xpath?('.//*', :text => regexp)
+        raise rspec_unexpected
+      end
+    end
+
+
+    # Ensure that the current page content does not include a String.
+    #
+    # @param [String] text
+    #   Content you expect to be missing from the page
+    #
+    def page_should_not_contain_text(text)
+      warn "WARNING: page_should_not_contain_text is deprecated. Use should_not_see instead."
+      if page.has_content?(text)
+        raise rspec_unexpected
+      end
+    end
+
+
+    # Ensure that the current page content does not match a Regexp.
+    #
+    # @param [Regexp] regexp
+    #   Content you expect to fail matching
+    #
+    def page_should_not_contain_regexp(regexp)
+      warn "WARNING: page_should_not_contain_regexp is deprecated. Use should_not_see instead."
+      if page.has_xpath?('.//*', :text => regexp)
+        raise rspec_unexpected
       end
     end
 
