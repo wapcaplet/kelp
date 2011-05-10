@@ -79,6 +79,8 @@ module Kelp
     # @raise [ArgumentError]
     #   If the given argument isn't a String or Regexp
     #
+    # @since 0.2.0
+    #
     def page_contains?(text_or_regexp)
       if text_or_regexp.class == String
         page.has_content?(text_or_regexp)
@@ -106,9 +108,7 @@ module Kelp
     #
     def should_see_in_same_row(texts, scope={})
       in_scope(scope) do
-        begin
-          page.should have_xpath(xpath_row_containing(texts))
-        rescue rspec_unexpected
+        if !page.has_xpath?(xpath_row_containing(texts))
           raise Kelp::Unexpected, "Expected, but did not see: #{texts.inspect} in the same row"
         end
       end
@@ -130,9 +130,7 @@ module Kelp
     #
     def should_not_see_in_same_row(texts, scope={})
       in_scope(scope) do
-        begin
-          page.should have_no_xpath(xpath_row_containing(texts))
-        rescue rspec_unexpected
+        if page.has_xpath?(xpath_row_containing(texts))
           raise Kelp::Unexpected, "Did not expect, but did see: #{texts.inspect} in the same row"
         end
       end
@@ -242,7 +240,7 @@ module Kelp
     def page_should_contain_text(text)
       warn "WARNING: page_should_contain_text is deprecated. Use should_see instead."
       if !page.has_content?(text)
-        raise rspec_unexpected
+        raise Kelp::Unexpected
       end
     end
 
@@ -258,7 +256,7 @@ module Kelp
     def page_should_contain_regexp(regexp)
       warn "WARNING: page_should_contain_regexp is deprecated. Use should_see instead."
       if !page.has_xpath?('.//*', :text => regexp)
-        raise rspec_unexpected
+        raise Kelp::Unexpected
       end
     end
 
@@ -274,7 +272,7 @@ module Kelp
     def page_should_not_contain_text(text)
       warn "WARNING: page_should_not_contain_text is deprecated. Use should_not_see instead."
       if page.has_content?(text)
-        raise rspec_unexpected
+        raise Kelp::Unexpected
       end
     end
 
@@ -290,7 +288,7 @@ module Kelp
     def page_should_not_contain_regexp(regexp)
       warn "WARNING: page_should_not_contain_regexp is deprecated. Use should_not_see instead."
       if page.has_xpath?('.//*', :text => regexp)
-        raise rspec_unexpected
+        raise Kelp::Unexpected
       end
     end
 
