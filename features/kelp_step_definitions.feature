@@ -69,6 +69,24 @@ Feature: Kelp Step Definitions
       30 steps (30 passed)
       """
 
+  Scenario: Field failure test
+    When I run cucumber on "field_fail.feature"
+    Then the results should include:
+      """
+      Scenario: Field should be empty (FAIL)
+        Expected field 'First name' to be empty, but value is 'Ivan' (Kelp::Unexpected)
+
+      Scenario: Field should be empty within a scope (FAIL)
+        Expected field 'Last name' to be empty, but value is 'Karamazov' (Kelp::Unexpected)
+
+      Scenario: Field should contain (FAIL)
+        Expected 'First name' to contain 'Alexy'
+        Got 'Dmitry' (Kelp::Unexpected)
+
+      3 scenarios (3 failed)
+      9 steps (3 failed, 6 passed)
+      """
+
   Scenario: Visibility test
     When I run cucumber on "visibility.feature"
     Then the results should include:
