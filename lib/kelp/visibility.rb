@@ -202,7 +202,7 @@ module Kelp
     # Ensure that the current page content includes a String or Regexp.
     #
     # @deprecated
-    #   Use should_see instead
+    #   Use {#should_see} instead
     #
     # @param [String, Regexp] text_or_regexp
     #   Content you expect to be on the page
@@ -218,7 +218,7 @@ module Kelp
     # Ensure that the current page content does not include a String or Regexp.
     #
     # @deprecated
-    #   Use should_not_see instead
+    #   Use {#should_not_see} instead
     #
     # @param [String, Regexp] text_or_regexp
     #   Content you expect to be missing from the page
@@ -234,7 +234,7 @@ module Kelp
     # Ensure that the current page content includes a String.
     #
     # @deprecated
-    #   Use should_see instead
+    #   Use {#should_see} instead
     #
     # @param [String] text
     #   Content you expect to be on the page
@@ -250,7 +250,7 @@ module Kelp
     # Ensure that the current page content matches a Regexp.
     #
     # @deprecated
-    #   Use should_see instead
+    #   Use {#should_see} instead
     #
     # @param [Regexp] regexp
     #   Content you expect to match
@@ -266,7 +266,7 @@ module Kelp
     # Ensure that the current page content does not include a String.
     #
     # @deprecated
-    #   Use should_not_see instead
+    #   Use {#should_not_see} instead
     #
     # @param [String] text
     #   Content you expect to be missing from the page
@@ -282,7 +282,7 @@ module Kelp
     # Ensure that the current page content does not match a Regexp.
     #
     # @deprecated
-    #   Use should_not_see instead
+    #   Use {#should_not_see} instead
     #
     # @param [Regexp] regexp
     #   Content you expect to fail matching
