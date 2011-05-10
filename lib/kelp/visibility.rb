@@ -83,9 +83,9 @@ module Kelp
     #
     def page_contains?(text_or_regexp)
       if text_or_regexp.class == String
-        page.has_content?(text_or_regexp)
+        return page.has_content?(text_or_regexp)
       elsif text_or_regexp.class == Regexp
-        page.has_xpath?('.//*', :text => text_or_regexp)
+        return page.has_xpath?('.//*', :text => text_or_regexp)
       else
         raise ArgumentError, "Expected String or Regexp, got #{text_or_regexp.class}"
       end
@@ -105,6 +105,9 @@ module Kelp
     #   Array of Strings that should appear in the same row
     # @param [Hash] scope
     #   Scoping keywords as understood by {#in_scope}
+    #
+    # @raise [Kelp::Unexpected]
+    #   If no row is found containing all strings in `texts`
     #
     def should_see_in_same_row(texts, scope={})
       in_scope(scope) do
@@ -127,6 +130,9 @@ module Kelp
     #   Array of Strings that should not appear in the same row
     # @param [Hash] scope
     #   Scoping keywords as understood by {#in_scope}
+    #
+    # @raise [Kelp::Unexpected]
+    #   If a row is found containing all strings in `texts`
     #
     def should_not_see_in_same_row(texts, scope={})
       in_scope(scope) do

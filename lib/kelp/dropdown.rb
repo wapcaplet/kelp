@@ -22,6 +22,9 @@ module Kelp
     # @param [Hash] scope
     #   Scoping keywords as understood by {#in_scope}
     #
+    # @raise [Kelp::Unexpected]
+    #   If the given dropdown does not equal `value`
+    #
     def dropdown_should_equal(dropdown, value, scope={})
       in_scope(scope) do
         field = nice_find_field(dropdown)
@@ -60,6 +63,9 @@ module Kelp
     # @param [Hash] scope
     #   Scoping keywords as understood by {#in_scope}
     #
+    # @raise [Kelp::Unexpected]
+    #   If the given dropdown does not include all `values`
+    #
     def dropdown_should_include(dropdown, values, scope={})
       in_scope(scope) do
         # If values is a String, convert it to an Array
@@ -88,6 +94,9 @@ module Kelp
     #   Visible contents you do not want to see in the dropdown
     # @param [Hash] scope
     #   Scoping keywords as understood by {#in_scope}
+    #
+    # @raise [Kelp::Unexpected]
+    #   If the given dropdown includes any value in `values`
     #
     # @since 0.1.2
     #
@@ -118,6 +127,9 @@ module Kelp
     #   Capybara locator for the dropdown (the `select` element)
     # @param [String] value
     #   Expected `value` attribute of the selected `option`
+    #
+    # @raise [Kelp::Unexpected]
+    #   If the given dropdown's 'value' attribute is not equal to `value`
     #
     def dropdown_value_should_equal(dropdown, value)
       field = find_field(dropdown)

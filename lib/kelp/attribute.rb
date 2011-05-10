@@ -9,9 +9,20 @@ module Kelp
     # @param [String] element_id
     #   HTML `id` attribute of the element that should be disabled
     #
+    # @raise [Kelp::Unexpected]
+    #   If the given element id is not found, or the element is not disabled
+    #
     def should_be_disabled(element_id)
-      page.should have_xpath("//*[@id='#{element_id}']")
-      page.should have_xpath("//*[@id='#{element_id}' and @disabled]")
+      if page.has_xpath?("//*[@id='#{element_id}']")
+        if !page.has_xpath?("//*[@id='#{element_id}' and @disabled]")
+          raise Kelp::Unexpected,
+            "Expected element with id='#{element_id}' to be disabled," + \
+            " but the 'disabled' attribute is not present."
+        end
+      else
+        raise Kelp::Unexpected,
+          "Element with id='#{element_id}' not found."
+      end
     end
 
 
@@ -21,9 +32,20 @@ module Kelp
     # @param [String] element_id
     #   HTML `id` attribute of the element that should be enabled
     #
+    # @raise [Kelp::Unexpected]
+    #   If the given element id is not found, or the element is not enabled
+    #
     def should_be_enabled(element_id)
-      page.should have_xpath("//*[@id='#{element_id}']")
-      page.should have_no_xpath("//*[@id='#{element_id}' and @disabled]")
+      if page.has_xpath?("//*[@id='#{element_id}']")
+        if page.has_xpath?("//*[@id='#{element_id}' and @disabled]")
+          raise Kelp::Unexpected,
+            "Expected element with id='#{element_id}' to be enabled," + \
+            " but the 'disabled' attribute is present."
+        end
+      else
+        raise Kelp::Unexpected,
+          "Element with id='#{element_id}' not found."
+      end
     end
 
   end

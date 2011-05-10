@@ -135,11 +135,15 @@ module Kelp
     # @param [Hash] scope
     #   Scoping keywords as understood by {#in_scope}
     #
+    # @raise [Kelp::Unexpected]
+    #   If the given field is not empty or nil
+    #
     def field_should_be_empty(field, scope={})
       in_scope(scope) do
         _field = nice_find_field(field)
         if !(_field.nil? || _field.value.nil? || _field.value == '')
-          raise RuntimeError, "Expected field '#{field}' to be empty, but value is '#{_field.value}'"
+          raise Kelp::Unexpected,
+            "Expected field '#{field}' to be empty, but value is '#{_field.value}'"
         end
       end
     end
@@ -154,12 +158,15 @@ module Kelp
     # @param [Hash] scope
     #   Scoping keywords as understood by {#in_scope}
     #
+    # @raise [Kelp::Unexpected]
+    #   If the given field does not contain `value`
+    #
     def field_should_contain(field, value, scope={})
       in_scope(scope) do
         # TODO: Make this work equally well with any kind of field
         # (text, single-select, multi-select)
-        field = find_field(field)
-        field_value = (field.tag_name == 'textarea') ? field.text : field.value
+        element = find_field(field)
+        field_value = (element.tag_name == 'textarea') ? element.text : element.value
         # If field value is an Array, take the first item
         if field_value.class == Array
           field_value = field_value.first
@@ -167,10 +174,10 @@ module Kelp
         # Escape any problematic characters in the expected value
         value = Regexp.escape(value)
         # Match actual to expected
-        if field_value.respond_to? :should
-          field_value.should =~ /#{value}/
-        else
-          assert_match(/#{value}/, field_value)
+        if !(field_value =~ /#{value}/)
+          raise Kelp::Unexpected,
+            "Expected '#{field}' to contain '#{value}'" + \
+            "\nGot '#{field_value}'"
         end
       end
     end
@@ -196,6 +203,9 @@ module Kelp
     #   "field" => "value" for each field you want to verify
     # @param [Hash] scope
     #   Scoping keywords as understood by {#in_scope}
+    #
+    # @raise [Kelp::Unexpected]
+    #   If any field does not contain the expected value
     #
     def fields_should_contain(field_values, scope={})
       in_scope(scope) do

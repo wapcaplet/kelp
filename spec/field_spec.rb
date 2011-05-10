@@ -29,7 +29,7 @@ describe Kelp::Field, "field_should_be_empty" do
         fill_in "first_name", :with => "Brian"
         lambda do
           field_should_be_empty "first_name"
-        end.should raise_error(RuntimeError)
+        end.should raise_error(Kelp::Unexpected)
       end
     end
 
@@ -38,7 +38,7 @@ describe Kelp::Field, "field_should_be_empty" do
         fill_in "First name", :with => "Brian"
         lambda do
           field_should_be_empty "First name"
-        end.should raise_error(RuntimeError)
+        end.should raise_error(Kelp::Unexpected)
       end
     end
   end
@@ -71,14 +71,14 @@ describe Kelp::Field, "field_should_contain" do
       it "is empty" do
         lambda do
           field_should_contain "first_name", "Brian"
-        end.should raise_error(rspec_unexpected)
+        end.should raise_error(Kelp::Unexpected)
       end
 
       it "has a different value" do
         fill_in "first_name", :with => "Judith"
         lambda do
           field_should_contain "first_name", "Brian"
-        end.should raise_error(rspec_unexpected)
+        end.should raise_error(Kelp::Unexpected)
       end
     end
 
@@ -86,14 +86,14 @@ describe Kelp::Field, "field_should_contain" do
       it "is empty" do
         lambda do
           field_should_contain "First name", "Brian"
-        end.should raise_error(rspec_unexpected)
+        end.should raise_error(Kelp::Unexpected)
       end
 
       it "has a different value" do
         fill_in "First name", :with => "Judith"
         lambda do
           field_should_contain "First name", "Brian"
-        end.should raise_error(rspec_unexpected)
+        end.should raise_error(Kelp::Unexpected)
       end
     end
 
@@ -154,7 +154,7 @@ describe Kelp::Field, "fields_should_contain" do
       it "are empty" do
         lambda do
           fields_should_contain "first_name" => "Terry", "last_name" => "Jones"
-        end.should raise_error(rspec_unexpected)
+        end.should raise_error(Kelp::Unexpected)
       end
 
       it "do not all match" do
@@ -162,7 +162,7 @@ describe Kelp::Field, "fields_should_contain" do
         fill_in "last_name", :with => "Gilliam"
         lambda do
           fields_should_contain "first_name" => "Terry", "last_name" => "Jones"
-        end.should raise_error(rspec_unexpected)
+        end.should raise_error(Kelp::Unexpected)
       end
     end
 
@@ -170,7 +170,7 @@ describe Kelp::Field, "fields_should_contain" do
       it "are empty" do
         lambda do
           fields_should_contain "First name" => "Terry", "Last name" => "Jones"
-        end.should raise_error(rspec_unexpected)
+        end.should raise_error(Kelp::Unexpected)
       end
 
       it "do not all match" do
@@ -178,7 +178,7 @@ describe Kelp::Field, "fields_should_contain" do
         fill_in "Last name", :with => "Gilliam"
         lambda do
           fields_should_contain "First name" => "Terry", "Last name" => "Jones"
-        end.should raise_error(rspec_unexpected)
+        end.should raise_error(Kelp::Unexpected)
       end
     end
 
