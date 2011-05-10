@@ -120,9 +120,12 @@ module Kelp
     #   Expected `value` attribute of the selected `option`
     #
     def dropdown_value_should_equal(dropdown, value)
-      # FIXME: When this returns False, does that fail the step?
       field = find_field(dropdown)
-      field.value.should include(value)
+      if field.value != value
+        raise Kelp::Unexpected,
+          "Expected '#{dropdown}' dropdown's value to equal '#{value}'" + \
+          "\nGot '#{field.value}' instead"
+      end
     end
 
   end

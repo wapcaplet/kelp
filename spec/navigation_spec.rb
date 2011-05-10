@@ -102,7 +102,7 @@ describe Kelp::Navigation, "should_be_on_page" do
       visit('/home')
       lambda do
         should_be_on_page '/form'
-      end.should raise_error(rspec_unexpected)
+      end.should raise_error(Kelp::Unexpected)
     end
   end
 end
@@ -124,7 +124,7 @@ describe Kelp::Navigation, "should_have_query" do
     it "expected params when actual query is empty" do
       lambda do
         should_have_query :username => 'tony'
-      end.should raise_error(rspec_unexpected)
+      end.should raise_error(Kelp::Unexpected)
     end
   end
 end

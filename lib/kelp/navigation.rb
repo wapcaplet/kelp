@@ -76,6 +76,9 @@ module Kelp
     #   Human-readable page name (mapped to a pathname by your `path_to` function),
     #   or an absolute path beginning with `/`.
     #
+    # @raise [Kelp::Unexpected]
+    #   If actual page path doesn't match the expected path
+    #
     # @since 0.1.9
     #
     def should_be_on_page(page_name_or_path)
@@ -88,10 +91,10 @@ module Kelp
         expect_path = page_name_or_path
       end
       actual_path = URI.parse(current_url).path
-      if actual_path.respond_to? :should
-        actual_path.should == expect_path
-      else
-        assert_equal actual_path, expect_path
+      if actual_path != expect_path
+        raise Kelp::Unexpected,
+          "Expected to be on page: '#{expect_path}'" + \
+          "\nActually on page: '#{actual_path}'"
       end
     end
 
@@ -100,6 +103,9 @@ module Kelp
     #
     # @param [Hash] params
     #   Key => value parameters, as they would appear in the URL
+    #
+    # @raise [Kelp::Unexpected]
+    #   If actual query parameters don't match expected parameters
     #
     # @since 0.1.9
     #
@@ -110,10 +116,10 @@ module Kelp
       params.each_pair do |k,v|
         expected_params[k] = v.split(',')
       end
-      if actual_params.respond_to? :should
-        actual_params.should == expected_params
-      else
-        assert_equal expected_params, actual_params
+      if actual_params != expected_params
+        raise Kelp::Unexpected,
+          "Expected query params: '#{expected_params.inspect}'" + \
+          "\nActual query params: '#{actual_params.inspect}'"
       end
     end
 

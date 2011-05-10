@@ -161,20 +161,20 @@ describe Kelp::Dropdown, "dropdown_value_should_equal" do
     it "the option with the 'selected' attribute has a different value" do
       lambda do
         dropdown_value_should_equal "Height", "99"
-      end.should raise_error(rspec_unexpected)
+      end.should raise_error(Kelp::Unexpected)
     end
 
     it "the first option selected by default does not have given value" do
       lambda do
         dropdown_value_should_equal "Weight", "2"
-      end.should raise_error(rspec_unexpected)
+      end.should raise_error(Kelp::Unexpected)
     end
 
     it "the programmatically chosen option has a different value" do
       select "Tall", :from => "Height"
       lambda do
         dropdown_value_should_equal "Height", "2"
-      end.should raise_error(rspec_unexpected)
+      end.should raise_error(Kelp::Unexpected)
     end
   end
 end
