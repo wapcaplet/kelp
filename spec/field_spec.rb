@@ -229,19 +229,19 @@ describe Kelp::Field, "fill_in_field" do
     it "filling a nonexistent field" do
       lambda do
         fill_in_field "Middle name", "Kaminsky"
-      end.should raise_error(Capybara::ElementNotFound)
+      end.should raise_error(Kelp::FieldNotFound)
     end
 
     it "selecting a nonexistent value from a dropdown" do
       lambda do
         fill_in_field "Height", "Gigantic"
-      end.should raise_error(Capybara::ElementNotFound)
+      end.should raise_error(Kelp::OptionNotFound)
     end
 
     it "filling a field in the wrong scope" do
       lambda do
         fill_in_field_within "#preferences_form", "First name", "Mel"
-      end.should raise_error(Capybara::ElementNotFound)
+      end.should raise_error(Kelp::FieldNotFound)
     end
   end
 end
@@ -316,14 +316,14 @@ describe Kelp::Field, "fill_in_fields" do
     it "filling a nonexistent field" do
       lambda do
         fill_in_fields "Middle name" => "Kaminsky"
-      end.should raise_error(Capybara::ElementNotFound)
+      end.should raise_error(Kelp::FieldNotFound)
     end
 
     it "filling a field in the wrong scope" do
       lambda do
         fill_in_fields_within "#preferences_form",
           "First name" => "Mel"
-      end.should raise_error(Capybara::ElementNotFound)
+      end.should raise_error(Kelp::FieldNotFound)
     end
   end
 

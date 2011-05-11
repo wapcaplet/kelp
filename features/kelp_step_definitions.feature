@@ -69,6 +69,7 @@ Feature: Kelp Step Definitions
       30 steps (30 passed)
       """
 
+  @focus
   Scenario: Field failure test
     When I run cucumber on "field_fail.feature"
     Then the results should include:
@@ -83,8 +84,14 @@ Feature: Kelp Step Definitions
         Expected 'First name' to contain 'Alexy'
         Got 'Dmitry' (Kelp::Unexpected)
 
-      3 scenarios (3 failed)
-      9 steps (3 failed, 6 passed)
+      Scenario: Fill in a single field (FAIL)
+        No field with id, name, or label 'Middle name' found (Kelp::FieldNotFound)
+
+      Scenario: Fill in multiple fields (FAIL)
+        Field 'Height' has no option 'Diminutive' (Kelp::OptionNotFound)
+
+      5 scenarios (5 failed)
+      13 steps (5 failed, 8 passed)
       """
 
   Scenario: Visibility test

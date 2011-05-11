@@ -19,3 +19,13 @@ Feature: Field failure test
     Then the "First name" field should contain "Alexy"
 
 
+  Scenario: Fill in a single field (FAIL)
+    When I fill in "Middle name" with "Fyodorovitch"
+
+
+  Scenario: Fill in multiple fields (FAIL)
+    When I fill in the following:
+      | First name | Wallace    |
+      | Last name  | Shawn      |
+      | Height     | Diminutive |
+

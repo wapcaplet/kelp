@@ -1,5 +1,7 @@
 module Kelp
-  class Unexpected < RuntimeError
-  end
+  class KelpError < StandardError; end
+  class Unexpected < KelpError; end
+  class FieldNotFound < KelpError; end
+  class OptionNotFound < KelpError; end
 end
 

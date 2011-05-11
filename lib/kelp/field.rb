@@ -19,13 +19,35 @@ module Kelp
     # @param [String] value
     #   Text to select from a dropdown or enter in a text box
     #
+    # @raise [Kelp::FieldNotFound]
+    #   If no field matching `field` is found
+    # @raise [Kelp::OptionNotFound]
+    #   If a dropdown matching `field` is found, but it has no
+    #   option matching `value`
+    #
     # @since 0.1.9
     #
     def select_or_fill(field, value)
       begin
         select(value, :from => field)
-      rescue
-        fill_in(field, :with => value)
+      rescue Capybara::ElementNotFound => err
+        # The select method may raise ElementNotFound in two cases:
+        # (1) The given field does not exist, in which case try a text field
+        if err.message =~ /no select box with id, name, or label/
+          begin
+            fill_in(field, :with => value)
+          rescue Capybara::ElementNotFound
+            raise Kelp::FieldNotFound,
+              "No field with id, name, or label '#{field}' found"
+          end
+        # (2) The field exists, but the value does not
+        elsif err.message =~ /no option with text/
+          raise Kelp::OptionNotFound,
+            "Field '#{field}' has no option '#{value}'"
+        # And just in case...
+        else
+          raise
+        end
       end
     end
 
@@ -41,47 +63,25 @@ module Kelp
     #   Text to select from a dropdown or enter in a text box, or
     #   `checked` or `unchecked` to operate on a checkbox
     #
+    # @raise [Kelp::Nonexistent]
+    #   If no checkbox, dropdown, or text box is found with the given
+    #   identifier
+    #
     # @since 0.1.9
     #
     def check_or_select_or_fill(field, value)
       # If value is "checked" or "unchecked", assume
       # field is a checkbox
-      if value == "checked"
-        begin
+      begin
+        if value == "checked"
           check(field)
-        rescue
-          select_or_fill(field, value)
-        end
-      elsif value == "unchecked"
-        begin
+        elsif value == "unchecked"
           uncheck(field)
-        rescue
+        else
           select_or_fill(field, value)
         end
-      else
+      rescue Capybara::ElementNotFound
         select_or_fill(field, value)
-      end
-    end
-
-
-    # Fill in multiple fields according to values in a `Hash`.
-    # Fields may be text boxes, dropdowns/listboxes, or checkboxes.
-    # See {#check_or_select_or_fill} for details.
-    #
-    # @example
-    #   fill_in_fields "First name" => "Otto", "Last name" => "Scratchansniff"
-    #   fill_in_fields "phone" => "303-224-7428", :within => "#home"
-    #
-    # @param [Hash] field_values
-    #   "field" => "value" for each field to fill in, select, or check/uncheck
-    # @param [Hash] scope
-    #   Scoping keywords as understood by {#in_scope}
-    #
-    def fill_in_fields(field_values, scope={})
-      in_scope(scope) do
-        field_values.each do |field, value|
-          check_or_select_or_fill(field, value)
-        end
       end
     end
 
@@ -102,9 +102,38 @@ module Kelp
     # @param [Hash] scope
     #   Scoping keywords as understood by {#in_scope}
     #
+    # @raise [Kelp::FieldNotFound]
+    #   If no field is found matching the given identifier
+    #
     def fill_in_field(field, value, scope={})
-      fields = {field => value}
-      fill_in_fields fields, scope
+      in_scope(scope) do
+        check_or_select_or_fill(field, value)
+      end
+    end
+
+
+    # Fill in multiple fields according to values in a `Hash`.
+    # Fields may be text boxes, dropdowns/listboxes, or checkboxes.
+    # See {#check_or_select_or_fill} for details.
+    #
+    # @example
+    #   fill_in_fields "First name" => "Otto", "Last name" => "Scratchansniff"
+    #   fill_in_fields "phone" => "303-224-7428", :within => "#home"
+    #
+    # @param [Hash] field_values
+    #   "field" => "value" for each field to fill in, select, or check/uncheck
+    # @param [Hash] scope
+    #   Scoping keywords as understood by {#in_scope}
+    #
+    # @raise [Kelp::Nonexistent]
+    #   If any field could not be found
+    #
+    def fill_in_fields(field_values, scope={})
+      in_scope(scope) do
+        field_values.each do |field, value|
+          check_or_select_or_fill(field, value)
+        end
+      end
     end
 
 
