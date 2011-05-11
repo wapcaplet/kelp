@@ -26,7 +26,7 @@ World(Kelp::Visibility)
 
 # Patterns shared by step definitions
 I = /(?:|I )/
-TEXT = /"([^\"]+)"/
+TEXT = /"([^\"]*)"/
 REGEX = /\/([^\/]*)\//
 WITHIN = /(?: within "?([^\"]+)"?)?/
 ELEMENT = /(?:field|checkbox|dropdown|button)/
