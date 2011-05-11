@@ -2,6 +2,7 @@ require 'uri'
 require 'cgi'
 require 'kelp/scoping'
 require 'kelp/xpath'
+require 'kelp/exceptions'
 
 module Kelp
   # This module defines helper methods for navigating a webpage, including
@@ -25,7 +26,12 @@ module Kelp
     #
     def follow(link, scope={})
       in_scope(scope) do
-        click_link(link)
+        begin
+          click_link(link)
+        rescue Capybara::ElementNotFound
+          raise Kelp::MissingLink,
+            "No link with title, id or text '#{link}' found"
+        end
       end
     end
 
@@ -42,7 +48,12 @@ module Kelp
     #
     def press(button, scope={})
       in_scope(scope) do
-        click_button(button)
+        begin
+          click_button(button)
+        rescue Capybara::ElementNotFound
+          raise Kelp::MissingButton,
+            "No button with value, id or text '#{button}' found"
+        end
       end
     end
 
@@ -58,8 +69,18 @@ module Kelp
     #   Other content that must be in the same row
     #
     def click_link_in_row(link, text)
-      row = find(:xpath, xpath_row_containing([link, text]))
-      row.click_link(link)
+      begin
+        row = find(:xpath, xpath_row_containing([link, text]))
+      rescue Capybara::ElementNotFound
+        raise Kelp::MissingRow,
+          "No table row found containing '#{link}' and '#{text}'"
+      end
+      begin
+        row.click_link(link)
+      rescue Capybara::ElementNotFound
+        raise Kelp::MissingLink,
+          "No link with title, id or text '#{link}' found in the same row as '#{text}'"
+      end
     end
 
 

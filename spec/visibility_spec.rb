@@ -113,7 +113,7 @@ describe Kelp::Visibility, "should_see" do
       it "is given a nonexistent XPath scope" do
         lambda do
           should_see "Goodbye world", :within => "//div[@id='nonexistent']"
-        end.should raise_error(Capybara::ElementNotFound)
+        end.should raise_error(Kelp::InvalidScope)
       end
     end
 

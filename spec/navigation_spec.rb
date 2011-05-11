@@ -21,13 +21,13 @@ describe Kelp::Navigation, "follow" do
     it "link does not exist" do
       lambda do
         follow "About Them"
-      end.should raise_error(Capybara::ElementNotFound)
+      end.should raise_error(Kelp::MissingLink)
     end
 
     it "link is not within the scope" do
       lambda do
         follow "About Us", :within => "#invalid_scope"
-      end.should raise_error(Capybara::ElementNotFound)
+      end.should raise_error(Kelp::InvalidScope)
     end
   end
 
@@ -53,13 +53,13 @@ describe Kelp::Navigation, "press" do
     it "button does not exist" do
       lambda do
         press "Poke"
-      end.should raise_error(Capybara::ElementNotFound)
+      end.should raise_error(Kelp::MissingButton)
     end
 
     it "button exists but is not within the scope" do
       lambda do
         press "Submit message", :within => "#greeting"
-      end.should raise_error(Capybara::ElementNotFound)
+      end.should raise_error(Kelp::MissingButton)
     end
   end
 end
@@ -81,7 +81,7 @@ describe Kelp::Navigation, "click_link_in_row" do
     it "link does not exist in the row" do
       lambda do
         click_link_in_row "Frob", "Eric"
-      end.should raise_error(Capybara::ElementNotFound)
+      end.should raise_error(Kelp::MissingRow)
     end
   end
 end

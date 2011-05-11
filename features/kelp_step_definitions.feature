@@ -145,7 +145,30 @@ Feature: Kelp Step Definitions
     When I run cucumber on "navigation.feature"
     Then the results should include:
       """
-      1 scenario (1 passed)
-      3 steps (3 passed)
+      6 scenarios (6 passed)
+      20 steps (20 passed)
       """
 
+  Scenario: Navigation failure test
+    When I run cucumber on "navigation_fail.feature"
+    Then the results should include:
+      """
+      Scenario: Should be on page (FAIL)
+        Expected to be on page: 'home'
+        Actually on page: '/form' (Kelp::Unexpected)
+
+      Scenario: Follow a link (FAIL)
+        No link with title, id or text 'Bogus link' found (Kelp::MissingLink)
+
+      Scenario: Follow a bad link next to existing text (FAIL)
+        No link with title, id or text '555' found in the same row as 'Eric' (Kelp::MissingLink)
+
+      Scenario: Follow a link next to nonexistent text (FAIL)
+        No table row found containing 'Edit' and 'Ramses' (Kelp::MissingRow)
+
+      Scenario: Press a button (FAIL)
+        No button with value, id or text 'Big red button' found (Kelp::MissingButton)
+
+      5 scenarios (5 failed)
+      11 steps (5 failed, 6 passed)
+      """
