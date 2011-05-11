@@ -69,7 +69,6 @@ Feature: Kelp Step Definitions
       30 steps (30 passed)
       """
 
-  @focus
   Scenario: Field failure test
     When I run cucumber on "field_fail.feature"
     Then the results should include:

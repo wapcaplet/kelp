@@ -1,5 +1,40 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
+describe Kelp::Visibility, "page_contains?" do
+  before(:each) do
+    visit('/home')
+  end
+
+  context "returns true when" do
+    it "String exists" do
+      page_contains?("Hello world").should be_true
+    end
+
+    it "Regexp matches" do
+      page_contains?(/(Hello|Goodbye) world/).should be_true
+    end
+  end
+
+  context "returns false when" do
+    it "String does not exist" do
+      page_contains?("Jimmy eat world").should be_false
+    end
+
+    it "Regexp does not match" do
+      page_contains?(/(Ni-hao|Konnichiwa) world/).should be_false
+    end
+  end
+
+  context "raises exception when" do
+    it "invalid argument type is given" do
+      lambda do
+        page_contains?(1234)
+      end.should raise_error(ArgumentError)
+    end
+  end
+end
+
+
 describe Kelp::Visibility, "should_see" do
   before(:each) do
     visit('/home')

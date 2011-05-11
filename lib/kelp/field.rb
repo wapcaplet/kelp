@@ -213,7 +213,7 @@ module Kelp
 
 
     def field_should_not_contain(field, value, scope={})
-      raise "Not implemented yet"
+      raise NotImplementedError, "Not implemented yet"
       #with_scope(parent) do
         #field = find_field(field)
         #field_value = (field.tag_name == 'textarea') ? field.text : field.value

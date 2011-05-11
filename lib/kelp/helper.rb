@@ -1,3 +1,5 @@
+require 'kelp/exceptions'
+
 module Kelp
   module Helper
     # Convert a Cucumber::Ast::Table or multiline string into
@@ -14,11 +16,16 @@ module Kelp
     # A slightly friendlier version of Capybara's `find_field`, which actually
     # tells you which locator failed to match (instead of giving a useless
     # Unable to find '#<XPath::Union:0xXXXXXXX>' message).
+    #
+    # @raise [Kelp::FieldNotFound]
+    #   If no field with the given locator could be found
+    #
     def nice_find_field(locator)
       begin
         field = find_field(locator)
       rescue Capybara::ElementNotFound
-        raise "Could not find field with locator: '#{locator}'"
+        raise Kelp::FieldNotFound,
+          "Could not find field: '#{locator}'"
       end
     end
 

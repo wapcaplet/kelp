@@ -12,6 +12,28 @@ module Kelp
     include Scoping
     include XPaths
 
+    # Return `true` if the current page contains the given text or regular expression,
+    # or `false` if it does not.
+    #
+    # @param [String, Regexp] text_or_regexp
+    #   Text or regular expression to look for
+    #
+    # @raise [ArgumentError]
+    #   If the given argument isn't a String or Regexp
+    #
+    # @since 0.2.0
+    #
+    def page_contains?(text_or_regexp)
+      if text_or_regexp.class == String
+        return page.has_content?(text_or_regexp)
+      elsif text_or_regexp.class == Regexp
+        return page.has_xpath?('.//*', :text => text_or_regexp)
+      else
+        raise ArgumentError, "Expected String or Regexp, got #{text_or_regexp.class}"
+      end
+    end
+
+
     # Verify the presence of content on the page. Passes when all the given items
     # are found on the page, and fails if any of them are not found.
     #
@@ -66,28 +88,6 @@ module Kelp
           raise Kelp::Unexpected,
             "Expected not to see: #{texts.inspect}\nDid see: #{unexpected.inspect}"
         end
-      end
-    end
-
-
-    # Return `true` if the current page contains the given text or regular expression,
-    # or `false` if it does not.
-    #
-    # @param [String, Regexp] text_or_regexp
-    #   Text or regular expression to look for
-    #
-    # @raise [ArgumentError]
-    #   If the given argument isn't a String or Regexp
-    #
-    # @since 0.2.0
-    #
-    def page_contains?(text_or_regexp)
-      if text_or_regexp.class == String
-        return page.has_content?(text_or_regexp)
-      elsif text_or_regexp.class == Regexp
-        return page.has_xpath?('.//*', :text => text_or_regexp)
-      else
-        raise ArgumentError, "Expected String or Regexp, got #{text_or_regexp.class}"
       end
     end
 
