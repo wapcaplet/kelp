@@ -256,11 +256,11 @@ end
 #   Then I should see a "Save" button
 #   But I should not see a "Delete" button
 #
-Then /^#{I}should see a #{TEXT} button#{WITHIN}$/ do |button, selector|
+Then /^#{I}should see an? #{TEXT} button#{WITHIN}$/ do |button, selector|
   should_see_button(button, :within => selector)
 end
 
-Then /^#{I}should not see a #{TEXT} button#{WITHIN}$/ do |button, selector|
+Then /^#{I}should not see an? #{TEXT} button#{WITHIN}$/ do |button, selector|
   should_not_see_button(button, :within => selector)
 end
 

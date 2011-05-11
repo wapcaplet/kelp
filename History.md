@@ -1,6 +1,13 @@
 Kelp History
 ============
 
+0.2.1
+-----
+
+- Fixed arity mismatch bug in "I am on / I go to" step definition
+- Allow "an" in "should see ... button" step definitions
+
+
 0.2.0
 -----
 
