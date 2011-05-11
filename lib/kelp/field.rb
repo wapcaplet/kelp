@@ -178,6 +178,22 @@ module Kelp
     end
 
 
+    # Return the value found in the given field.
+    #
+    # @param [String] field
+    #   Capybara locator for the field (name, id, or label text)
+    #
+    def field_value(field)
+      element = find_field(field)
+      value = (element.tag_name == 'textarea') ? element.text : element.value
+      # If field value is an Array, take the first item
+      if value.class == Array
+        value = value.first
+      end
+      return value
+    end
+
+
     # Verify that the given field contains the given value.
     #
     # @param [String] field
@@ -192,37 +208,43 @@ module Kelp
     #
     def field_should_contain(field, value, scope={})
       in_scope(scope) do
-        # TODO: Make this work equally well with any kind of field
-        # (text, single-select, multi-select)
-        element = find_field(field)
-        field_value = (element.tag_name == 'textarea') ? element.text : element.value
-        # If field value is an Array, take the first item
-        if field_value.class == Array
-          field_value = field_value.first
-        end
+        actual = field_value(field)
         # Escape any problematic characters in the expected value
-        value = Regexp.escape(value)
+        expect = Regexp.escape(value)
         # Match actual to expected
-        if !(field_value =~ /#{value}/)
+        if !(actual =~ /#{expect}/)
           raise Kelp::Unexpected,
-            "Expected '#{field}' to contain '#{value}'" + \
-            "\nGot '#{field_value}'"
+            "Expected '#{field}' to contain '#{expect}'" + \
+            "\nGot '#{actual}'"
         end
       end
     end
 
 
+    # Verify that the given field does not contain the given value.
+    #
+    # @param [String] field
+    #   Capybara locator for the field (name, id, or label text)
+    # @param [String] value
+    #   Value you expect to not see in the text field
+    # @param [Hash] scope
+    #   Scoping keywords as understood by {#in_scope}
+    #
+    # @raise [Kelp::Unexpected]
+    #   If the given field contains `value`
+    #
     def field_should_not_contain(field, value, scope={})
-      raise NotImplementedError, "Not implemented yet"
-      #with_scope(parent) do
-        #field = find_field(field)
-        #field_value = (field.tag_name == 'textarea') ? field.text : field.value
-        #if field_value.respond_to? :should_not
-          #field_value.should_not =~ /#{value}/
-        #else
-          #assert_no_match(/#{value}/, field_value)
-        #end
-      #end
+      in_scope(scope) do
+        actual = field_value(field)
+        # Escape any problematic characters in the expected value
+        expect_not = Regexp.escape(value)
+        # Match actual to expected
+        if (actual =~ /#{expect_not}/)
+          raise Kelp::Unexpected,
+            "Did not expect '#{field}' to contain '#{expect_not}'" + \
+            "\nGot '#{actual}'"
+        end
+      end
     end
 
 
