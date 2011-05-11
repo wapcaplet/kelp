@@ -8,6 +8,7 @@ Kelp History
 - Fixed bug in "fill in the following" step definition
 - Raise Kelp::Unexpected instead of RSpec exception
 - Dropdown inclusion steps now accumulate unexpected values instead of failing on the first one
+- More cucumber self-tests to prevent breakages
 
 
 0.1.9
