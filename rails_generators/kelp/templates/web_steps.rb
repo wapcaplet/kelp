@@ -46,7 +46,7 @@ ELEMENT = /(?:field|checkbox|dropdown|button)/
 #   When I go to my account page
 #   And I go to "/logout"
 #
-Given /^#{I}(am on|go to) (.+)$/ do |page_name|
+Given /^#{I}(?:am on|go to) (.+)$/ do |page_name|
   visit path_to(page_name)
 end
 
