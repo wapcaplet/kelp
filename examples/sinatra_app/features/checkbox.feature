@@ -1,7 +1,7 @@
 Feature: Checkboxes
 
   Background:
-    Given I visit "/form"
+    Given I am on "/form"
 
   Scenario: Checkbox should be checked
     Then the "Like" checkbox next to "Apple" should be checked

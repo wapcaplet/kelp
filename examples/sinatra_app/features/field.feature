@@ -1,7 +1,7 @@
 Feature: Fields
 
   Background:
-    Given I visit "/form"
+    Given I am on "/form"
 
 
   Scenario: Field should be empty

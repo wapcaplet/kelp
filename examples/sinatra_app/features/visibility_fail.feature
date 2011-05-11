@@ -1,7 +1,7 @@
 Feature: Visibility failures
 
   Background:
-    Given I visit "/home"
+    Given I am on "/home"
 
 
   Scenario: Should see text (FAIL)

@@ -1,7 +1,7 @@
 Feature: Dropdown failures
 
   Background:
-    Given I visit "/form"
+    Given I am on "/form"
 
   Scenario: Dropdown should equal (FAIL)
     Then the "Height" dropdown should equal "Tall"

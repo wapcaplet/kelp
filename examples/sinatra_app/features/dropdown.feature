@@ -1,7 +1,7 @@
 Feature: Dropdowns
 
   Background:
-    Given I visit "/form"
+    Given I am on "/form"
 
   Scenario: Dropdown should equal
     Then the "Height" dropdown should equal "Average"

@@ -1,7 +1,7 @@
 Feature: Visibility
 
   Background:
-    Given I visit "/home"
+    Given I am on "/home"
 
 
   Scenario: Should or shouldn't see text
@@ -122,13 +122,13 @@ Feature: Visibility
 
 
   Scenario: Should or shouldn't see button
-    When I visit "/form"
+    When I go to "/form"
     Then I should see a "Submit person form" button
     But I should not see a "Submit animal form" button
 
 
   Scenario: Should or shouldn't see button within a scope
-    When I visit "/form"
+    When I go to "/form"
     Then I should see a "Submit person form" button within "#person_form"
     But I should not see a "Submit person form" button within "#preferences_form"
 

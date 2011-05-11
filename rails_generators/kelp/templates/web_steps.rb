@@ -27,6 +27,7 @@ World(Kelp::Visibility)
 # Patterns shared by step definitions
 I = /(?:|I )/
 TEXT = /"([^\"]*)"/
+PAGE = /"?([^\"]+)"?/
 REGEX = /\/([^\/]*)\//
 WITHIN = /(?: within "?([^\"]+)"?)?/
 ELEMENT = /(?:field|checkbox|dropdown|button)/
@@ -46,8 +47,8 @@ ELEMENT = /(?:field|checkbox|dropdown|button)/
 #   When I go to my account page
 #   And I go to "/logout"
 #
-Given /^#{I}(?:am on|go to) (.+)$/ do |page_name|
-  visit path_to(page_name)
+Given /^#{I}(?:am on|go to) #{PAGE}$/ do |page_name|
+  go_to_page(page_name)
 end
 
 
@@ -89,7 +90,7 @@ end
 
 # Verify that the current path name matches that of the given page.
 #
-Then /^#{I}should be on (.+)$/ do |page_name|
+Then /^#{I}should be on #{PAGE}$/ do |page_name|
   should_be_on_page(page_name)
 end
 

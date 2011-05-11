@@ -63,6 +63,15 @@ module Kelp
     end
 
 
+    def go_to_page(page_name_or_path)
+      if defined? path_to
+        visit path_to(page_name_or_path)
+      else
+        visit page_name_or_path
+      end
+    end
+
+
     # Verify that the current page matches the path of `page_name_or_path`. The
     # cucumber-generated `path_to` function will be used, if it's defined, to
     # translate human-readable names into URL paths. Otherwise, assume a raw,

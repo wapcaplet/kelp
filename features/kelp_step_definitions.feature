@@ -141,3 +141,11 @@ Feature: Kelp Step Definitions
       16 steps (8 failed, 8 passed)
       """
 
+  Scenario: Navigation test
+    When I run cucumber on "navigation.feature"
+    Then the results should include:
+      """
+      1 scenario (1 passed)
+      3 steps (3 passed)
+      """
+

@@ -1,7 +1,7 @@
 Feature: Checkbox failures
 
   Background:
-    Given I visit "/form"
+    Given I am on "/form"
 
   Scenario: Checkbox should be checked (FAIL)
     Then the "Like" checkbox next to "Banana" should be checked
