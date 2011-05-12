@@ -20,6 +20,16 @@ Feature: Fields
       | Message    | Your message goes here |
 
 
+  Scenario: Field should contain
+    Then the "First name" field should contain ""
+    And the "Message" field should contain "Your message goes here"
+
+
+  Scenario: Field should not contain
+    When I fill in "First name" with "Adam"
+    Then the "First name" field should not contain "Jamie"
+
+
   Scenario: Fill in single fields by label
     When I fill in "First name" with "Adam"
     And I fill in "Savage" for "Last name"

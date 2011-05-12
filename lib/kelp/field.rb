@@ -178,7 +178,8 @@ module Kelp
     end
 
 
-    # Return the value found in the given field.
+    # Return the string value found in the given field.
+    # If the field is `nil`, return the empty string.
     #
     # @param [String] field
     #   Capybara locator for the field (name, id, or label text)
@@ -195,7 +196,7 @@ module Kelp
       if value.class == Array
         value = value.first
       end
-      return value
+      return value.to_s
     end
 
 

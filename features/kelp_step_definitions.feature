@@ -68,8 +68,8 @@ Feature: Kelp Step Definitions
     When I run cucumber on "field.feature"
     Then the results should include:
       """
-      7 scenarios (7 passed)
-      30 steps (30 passed)
+      9 scenarios (9 passed)
+      36 steps (36 passed)
       """
 
   Scenario: Field failure test
