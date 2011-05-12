@@ -30,4 +30,7 @@ Feature: Dropdowns
       | Dwarf |
       | Behemoth |
 
+  Scenario: Select a value from a dropdown
+    When I select "Tall" from "Height"
+    Then the "Height" dropdown should equal "Tall"
 

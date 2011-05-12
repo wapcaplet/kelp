@@ -10,8 +10,8 @@ Feature: Kelp Step Definitions
     When I run cucumber on "checkbox.feature"
     Then the results should include:
       """
-      2 scenarios (2 passed)
-      6 steps (6 passed)
+      4 scenarios (4 passed)
+      12 steps (12 passed)
       """
 
   Scenario: Checkbox failure test
@@ -32,8 +32,8 @@ Feature: Kelp Step Definitions
     When I run cucumber on "dropdown.feature"
     Then the results should include:
       """
-      3 scenarios (3 passed)
-      11 steps (11 passed)
+      4 scenarios (4 passed)
+      14 steps (14 passed)
       """
 
   Scenario: Dropdown failure test
@@ -59,6 +59,9 @@ Feature: Kelp Step Definitions
       Scenario: Dropdown should not include multiple values (FAIL)
         Expected 'Height' dropdown to not include: ["Tiny", "Average", "Tall", "Enormous"]
         Did include: ["Average", "Tall"] (Kelp::Unexpected)
+
+      5 scenarios (5 failed)
+      10 steps (5 failed, 5 passed)
       """
 
   Scenario: Field test
@@ -172,3 +175,4 @@ Feature: Kelp Step Definitions
       5 scenarios (5 failed)
       11 steps (5 failed, 6 passed)
       """
+
