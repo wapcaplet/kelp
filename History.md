@@ -6,6 +6,7 @@ Kelp History
 
 - Fixed arity mismatch bug in "I am on / I go to" step definition
 - Allow "an" in "should see ... button" step definitions
+- Allow empty strings in some stepdefs
 
 
 0.2.0
