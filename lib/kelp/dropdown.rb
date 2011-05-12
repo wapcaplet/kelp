@@ -35,7 +35,7 @@ module Kelp
         rescue Capybara::ElementNotFound
           # FIXME: Find a way to support multiple-selection dropdowns
           if field.value.class == Array
-            raise Exception, "Multiple-selection dropdowns are not supported"
+            raise NotImplementedError, "Multiple-selection dropdowns are not supported"
           end
           field_value = xpath_sanitize(field.value)
           selected = field.find(:xpath, ".//option[@value=#{field_value}]")

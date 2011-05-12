@@ -31,7 +31,7 @@ module Kelp
       begin
         select(value, :from => field)
       rescue Capybara::ElementNotFound => err
-        # The select method may raise ElementNotFound in two cases:
+        # The `select` method may raise ElementNotFound in two cases:
         # (1) The given field does not exist, in which case try a text field
         if err.message =~ /no select box with id, name, or label/
           begin
@@ -182,6 +182,11 @@ module Kelp
     #
     # @param [String] field
     #   Capybara locator for the field (name, id, or label text)
+    #
+    # @return [String]
+    #   The value found in the given field
+    #
+    # @since 0.2.1
     #
     def field_value(field)
       element = find_field(field)
