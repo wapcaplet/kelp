@@ -86,14 +86,18 @@ Feature: Kelp Step Definitions
         Expected 'First name' to contain 'Alexy'
         Got 'Dmitry' (Kelp::Unexpected)
 
+      Scenario: Field should not contain (FAIL)
+        Did not expect 'First name' to contain 'Ivan'
+        Got 'Ivan' (Kelp::Unexpected)
+
       Scenario: Fill in a single field (FAIL)
         No field with id, name, or label 'Middle name' found (Kelp::FieldNotFound)
 
       Scenario: Fill in multiple fields (FAIL)
         Field 'Height' has no option 'Diminutive' (Kelp::OptionNotFound)
 
-      5 scenarios (5 failed)
-      13 steps (5 failed, 8 passed)
+      6 scenarios (6 failed)
+      16 steps (6 failed, 10 passed)
       """
 
   Scenario: Visibility test

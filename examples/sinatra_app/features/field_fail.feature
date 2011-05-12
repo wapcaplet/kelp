@@ -19,6 +19,11 @@ Feature: Field failure test
     Then the "First name" field should contain "Alexy"
 
 
+  Scenario: Field should not contain (FAIL)
+    When I fill in "First name" with "Ivan"
+    Then the "First name" field should not contain "Ivan"
+
+
   Scenario: Fill in a single field (FAIL)
     When I fill in "Middle name" with "Fyodorovitch"
 

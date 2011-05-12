@@ -102,6 +102,58 @@ describe Kelp::Field, "field_should_contain" do
 end
 
 
+describe Kelp::Field, "field_should_not_contain" do
+  before(:each) do
+    visit('/form')
+  end
+
+  context "passes when" do
+    context "field with id" do
+      it "has a different value" do
+        fill_in "first_name", :with => "Brian"
+        field_should_not_contain "first_name", "Stewie"
+      end
+
+      it "is empty" do
+        field_should_not_contain "first_name", "Stewie"
+      end
+    end
+
+    context "field with label" do
+      it "has a different value" do
+        fill_in "First name", :with => "Brian"
+        field_should_not_contain "First name", "Stewie"
+      end
+
+      it "is empty" do
+        field_should_not_contain "First name", "Stewie"
+      end
+    end
+  end
+
+  context "fails when" do
+    context "field with id" do
+      it "has the given value" do
+        fill_in "first_name", :with => "Judith"
+        lambda do
+          field_should_not_contain "first_name", "Judith"
+        end.should raise_error(Kelp::Unexpected)
+      end
+    end
+
+    context "field with label" do
+      it "has the given value" do
+        fill_in "First name", :with => "Judith"
+        lambda do
+          field_should_not_contain "First name", "Judith"
+        end.should raise_error(Kelp::Unexpected)
+      end
+    end
+
+  end
+end
+
+
 describe Kelp::Field, "fields_should_contain" do
   before(:each) do
     visit('/form')
