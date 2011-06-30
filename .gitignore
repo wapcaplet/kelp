@@ -8,3 +8,4 @@ doc
 .yardoc
 examples/sinatra_app/features/step_definitions
 pkg
+Gemfile.lock
