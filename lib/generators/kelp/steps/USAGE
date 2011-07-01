@@ -1,0 +1,7 @@
+Description:
+    Create features/step_definitions/web_steps.rb, replacing step definitions
+    provided by cucumber-rails with enhanced Kelp-based steps
+
+Examples:
+    `rails generate kelp:steps`
+
