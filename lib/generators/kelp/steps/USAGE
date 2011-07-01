@@ -3,5 +3,5 @@ Description:
     provided by cucumber-rails with enhanced Kelp-based steps
 
 Examples:
-    `rails generate kelp:steps`
+    rails generate kelp:steps
 
