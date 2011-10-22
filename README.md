@@ -164,7 +164,6 @@ definitions perform as expected.
 Future plans
 ------------
 
-* Generator for Rails 3
 * Support Webrat
 
 
