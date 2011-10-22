@@ -1,6 +1,18 @@
 Kelp History
 ============
 
+0.2.3
+-----
+
+- Rails 3 generator tested and working
+
+
+0.2.2
+-----
+
+- Added Rails 3 generator
+
+
 0.2.1
 -----
 
