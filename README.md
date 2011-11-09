@@ -20,6 +20,31 @@ to report any bugs or feature requests. Visit the `#kelp` channel on
 `irc.freenode.net` to chat.
 
 
+Motivation
+----------
+
+Kelp was developed as an attempt to get away from the bad habit of nesting
+steps inside one another. While Cucumber does allow this behavior, it is
+frowned upon by much of the Cucumber community. It was also partly motivated by
+a desire to move away from imperative steps, toward a more declarative style.
+Some of Capybara's methods were perceived as being too low-level, especially
+when it comes to filling in or verifying several different fields in a form, or
+checking the presence or absence of multiple strings or regular expressions.
+
+As of version 1.1.0, cucumber-rails no longer provides a generator for
+`web_steps.rb`; since Kelp does provide such a generator, it may serve the
+niche market of cucumber-rails users who preferred to use the imperative step
+definitions that it provided. Kelp's intent is not to encourage this behavior;
+nearly all of the imperative steps it provides are one-liners, which in many
+cases are more succinct and readable than the step definition that wraps them.
+
+It is this developer's opinion that imperative `web_steps.rb`-style steps can
+be the easiest route to a working Cucumber scenario, but that they can also
+be a fast track to unmaintainability. Consider them a starting point; the baby
+steps you might take when writing your first few scenarios, before you discover
+the higher-level declarative steps that need to be reusably encapsulated.
+
+
 Usage
 -----
 
@@ -99,7 +124,7 @@ Rails generator
 
 Kelp provides a generator for Rails projects, which writes step definitions
 to `features/step_definitions/web_steps.rb`. This file provides all of the same
-step definitions normally provided by
+step definitions formerly provided by
 [cucumber-rails](http://github.com/aslakhellesoy/cucumber-rails), with several
 enhancements. If you have made customizations to your `web_steps.rb`, they will
 be overwritten! Consider yourself warned.
