@@ -7,6 +7,8 @@ module Kelp
     def listify(items)
       if items.class == Cucumber::Ast::Table
         strings = items.raw.flatten
+      elsif items.class == Cucumber::Ast::DocString
+        strings = items.to_s.split(/[\r\n]+/)
       else
         strings = items.split(/[\r\n]+/)
       end

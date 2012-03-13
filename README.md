@@ -26,17 +26,20 @@ Motivation
 Kelp was developed as an attempt to get away from the bad habit of nesting
 steps inside one another. While Cucumber does allow this behavior, it is
 frowned upon by much of the Cucumber community. It was also partly motivated by
-a desire to move away from imperative steps, toward a more declarative style.
+a desire to move away from imperative steps, toward a
+[more declarative style](http://automation-excellence.com/blog/declare-or-impair).
 Some of Capybara's methods were perceived as being too low-level, especially
 when it comes to filling in or verifying several different fields in a form, or
 checking the presence or absence of multiple strings or regular expressions.
 
-As of version 1.1.0, cucumber-rails no longer provides a generator for
-`web_steps.rb`; since Kelp does provide such a generator, it may serve the
-niche market of cucumber-rails users who preferred to use the imperative step
-definitions that it provided. Kelp's intent is not to encourage this behavior;
-nearly all of the imperative steps it provides are one-liners, which in many
-cases are more succinct and readable than the step definition that wraps them.
+As of version 1.1.0, cucumber-rails
+[no longer provides](http://aslakhellesoy.com/post/11055981222/the-training-wheels-came-off)
+a generator for `web_steps.rb`; since Kelp does provide such a generator, it
+may serve the niche market of cucumber-rails users who preferred to use the
+imperative step definitions that it provided. Kelp's intent is not to encourage
+this behavior; nearly all of the imperative steps it provides are one-liners,
+which in many cases are more succinct and readable than the step definition
+that wraps them.
 
 It is this developer's opinion that imperative `web_steps.rb`-style steps can
 be the easiest route to a working Cucumber scenario, but that they can also
@@ -86,10 +89,8 @@ Or even this:
       ]
     end
 
-Many of the provided methods are similar to their counterparts in the
-Cucumber-Rails generated step definitions. Following links, filling in fields,
-and pressing buttons can all be easily done with Ruby code instead of nested
-steps. Thus this:
+Following links, filling in fields, and pressing buttons can all be easily done
+with Ruby code instead of nested steps. Thus this:
 
     When %{I follow "Login"}
     And %{I fill in "Username" with "skroob"}

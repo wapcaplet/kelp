@@ -6,7 +6,7 @@ require 'kelp'
 require File.expand_path(File.join(File.dirname(__FILE__), '..', 'examples', 'sinatra_app', 'app'))
 
 RSpec.configure do |config|
-  config.include Capybara
+  config.include Capybara::DSL
 
   config.include Kelp::Attribute
   config.include Kelp::Checkbox

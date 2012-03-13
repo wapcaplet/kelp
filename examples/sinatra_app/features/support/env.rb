@@ -11,7 +11,7 @@ TestApp.set(:environment, :test)
 Capybara.app = TestApp
 
 class TestAppWorld
-  include Capybara
+  include Capybara::DSL
 end
 
 World do

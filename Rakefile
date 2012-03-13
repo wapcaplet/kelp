@@ -8,7 +8,7 @@ RSpec::Core::RakeTask.new(:spec) do |t|
   t.rspec_opts = ['--color', '--format doc']
   t.rcov = true
   t.rcov_opts = [
-    '--exclude /.gem/,/gems/,spec,features,examples',
+    '--exclude /.rvm/,/.gem/,/gems/,spec,features,examples',
     '--include lib/**/*.rb',
     '--aggregate coverage.data',
   ]
