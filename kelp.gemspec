@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'sinatra'
   s.add_development_dependency 'rspec', '>= 2.2.0'
   s.add_development_dependency 'rspec-rails'
-  s.add_development_dependency 'rcov'
+  s.add_development_dependency 'simplecov'
   s.add_development_dependency 'webrat'
   s.add_development_dependency 'cucumber'
 
