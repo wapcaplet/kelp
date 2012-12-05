@@ -337,7 +337,7 @@ describe Kelp::Visibility, "should_see_button" do
   context "passes when" do
     it "an input tag with the given value exists" do
       should_see_button "Save preferences"
-      should_see_button "Save is disabled"
+      should_not_see_button "Save is disabled"
     end
 
     it "a button tag with the given value exists" do
@@ -346,7 +346,7 @@ describe Kelp::Visibility, "should_see_button" do
 
     it "an input tag with the given value exists within a scope" do
       should_see_button "Save preferences", :within => "#preferences_form"
-      should_see_button "Save is disabled", :within => "#other_form"
+      should_not_see_button "Save is disabled", :within => "#other_form"
     end
 
     it "a button tag with the given value exists within a scope" do
