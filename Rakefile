@@ -6,12 +6,6 @@ desc "Run RSpec tests with coverage analysis"
 RSpec::Core::RakeTask.new(:spec) do |t|
   t.pattern = 'spec/**/*_spec.rb'
   t.rspec_opts = ['--color', '--format doc']
-  t.rcov = true
-  t.rcov_opts = [
-    '--exclude /.rvm/,/.gem/,/gems/,spec,features,examples',
-    '--include lib/**/*.rb',
-    '--aggregate coverage.data',
-  ]
 end
 
 desc "Run Cucumber tests with coverage analysis"
@@ -19,12 +13,6 @@ Cucumber::Rake::Task.new(:cucumber) do |t|
   t.cucumber_opts = [
     "--format pretty",
     "--tags ~@wip",
-  ]
-  t.rcov = true
-  t.rcov_opts = [
-    '--exclude /.gem/,/gems/,spec,features,examples',
-    '--include lib/**/*.rb',
-    '--aggregate coverage.data',
   ]
 end
 
