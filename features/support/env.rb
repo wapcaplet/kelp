@@ -1,4 +1,5 @@
 # env.rb
+require 'simplecov'
 
 require 'rubygems'
 

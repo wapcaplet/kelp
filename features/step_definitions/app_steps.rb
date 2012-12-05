@@ -28,7 +28,7 @@ end
 # Extra lines in the results are ignored.
 Then /^the results should include:$/ do |expected_lines|
   # Full actual output, for error reporting
-  got = @output.collect {|line| "  #{line}"}.join
+  got = @output.lines.collect {|line| "  #{line}"}.join
   # Remove leading whitespace and split into lines
   got_lines = @output.gsub(/^\s*/, '').split("\n")
   want_lines = expected_lines.gsub(/^\s*/, '').split("\n")
