@@ -19,6 +19,8 @@ module Kelp
     # tells you which locator failed to match (instead of giving a useless
     # Unable to find '#<XPath::Union:0xXXXXXXX>' message).
     #
+    # @raise [Kelp::AmbiguousField]
+    #   If more than one field with the given locator was found
     # @raise [Kelp::FieldNotFound]
     #   If no field with the given locator could be found
     #

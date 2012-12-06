@@ -68,8 +68,8 @@ Feature: Kelp Step Definitions
     When I run cucumber on "field.feature"
     Then the results should include:
       """
-      9 scenarios (9 passed)
-      36 steps (36 passed)
+      7 scenarios (7 passed)
+      26 steps (26 passed)
       """
 
   Scenario: Field failure test
@@ -98,6 +98,28 @@ Feature: Kelp Step Definitions
 
       6 scenarios (6 failed)
       16 steps (6 failed, 10 passed)
+      """
+
+  Scenario: Ambiguous field test
+    When I run cucumber on "ambiguous_field.feature"
+    Then the results should include:
+      """
+      2 scenarios (2 passed)
+      10 steps (10 passed)
+      """
+
+  Scenario: Ambiguous field failure test
+    When I run cucumber on "ambiguous_field_fail.feature"
+    Then the results should include:
+      """
+      Scenario: Fill in single ambiguous field (FAIL)
+        Field 'First name' is ambiguous (Kelp::AmbiguousField)
+
+      Scenario: Fill in multiple ambiguous fields by label (FAIL)
+        Field 'Last name' is ambiguous (Kelp::AmbiguousField)
+
+      2 scenarios (2 failed)
+      6 steps (2 failed, 2 skipped, 2 passed)
       """
 
   Scenario: Visibility test
