@@ -63,7 +63,7 @@ module Kelp
     #   Text to select from a dropdown or enter in a text box, or
     #   `checked` or `unchecked` to operate on a checkbox
     #
-    # @raise [Kelp::Nonexistent]
+    # @raise [Kelp::FieldNotFound]
     #   If no checkbox, dropdown, or text box is found with the given
     #   identifier
     #
@@ -125,7 +125,7 @@ module Kelp
     # @param [Hash] scope
     #   Scoping keywords as understood by {#in_scope}
     #
-    # @raise [Kelp::Nonexistent]
+    # @raise [Kelp::FieldNotFound]
     #   If any field could not be found
     #
     def fill_in_fields(field_values, scope={})
