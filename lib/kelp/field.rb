@@ -19,6 +19,8 @@ module Kelp
     # @param [String] value
     #   Text to select from a dropdown or enter in a text box
     #
+    # @raise [Kelp::AmbiguousField]
+    #   If more than one field matching `field` is found
     # @raise [Kelp::FieldNotFound]
     #   If no field matching `field` is found
     # @raise [Kelp::OptionNotFound]
@@ -28,26 +30,16 @@ module Kelp
     # @since 0.1.9
     #
     def select_or_fill(field, value)
-      begin
-        select(value, :from => field)
-      rescue Capybara::ElementNotFound => err
-        # The `select` method may raise ElementNotFound in two cases:
-        # (1) The given field does not exist, in which case try a text field
-        if err.message =~ /no select box with id, name, or label/
-          begin
-            fill_in(field, :with => value)
-          rescue Capybara::ElementNotFound
-            raise Kelp::FieldNotFound,
-              "No field with id, name, or label '#{field}' found"
-          end
-        # (2) The field exists, but the value does not
-        elsif err.message =~ /no option with text/
+      case field_type(field)
+      when :select
+        begin
+          select(value, :from => field)
+        rescue Capybara::ElementNotFound
           raise Kelp::OptionNotFound,
             "Field '#{field}' has no option '#{value}'"
-        # And just in case...
-        else
-          raise
         end
+      when :fillable_field
+        fill_in(field, :with => value)
       end
     end
 
@@ -63,6 +55,8 @@ module Kelp
     #   Text to select from a dropdown or enter in a text box, or
     #   `checked` or `unchecked` to operate on a checkbox
     #
+    # @raise [Kelp::AmbiguousField]
+    #   If more than one field is found matching the given identifier
     # @raise [Kelp::FieldNotFound]
     #   If no checkbox, dropdown, or text box is found with the given
     #   identifier
@@ -102,6 +96,8 @@ module Kelp
     # @param [Hash] scope
     #   Scoping keywords as understood by {#in_scope}
     #
+    # @raise [Kelp::AmbiguousField]
+    #   If more than one field is found matching the given identifier
     # @raise [Kelp::FieldNotFound]
     #   If no field is found matching the given identifier
     #
@@ -302,5 +298,36 @@ module Kelp
       fields_should_contain field_values, :within => selector
     end
 
+    private
+
+    # Figure out whether the field locator matches a single select
+    # or fillable field.
+    #
+    # @param [String] field
+    #   Capybara locator for the field (name, id, or label text)
+    #
+    # @raise [Kelp::AmbiguousField]
+    #   If more than one field matching `field` is found
+    # @raise [Kelp::FieldNotFound]
+    #   If no field matching `field` is found
+    #
+    # @return [Symbol]
+    #   `:select` or `:fillable_field` depending on the type of element
+    def field_type(field)
+      select = all(:select, field).count
+      fillable = all(:fillable_field, field).count
+      count = select + fillable
+
+      case count
+      when 0
+        raise Kelp::FieldNotFound,
+          "No field with id, name, or label '#{field}' found"
+      when 1
+        return select > 0 ? :select : :fillable_field
+      else
+        raise Kelp::AmbiguousField,
+          "Field '#{field}' is ambiguous"
+      end
+    end
   end
 end
