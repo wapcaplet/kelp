@@ -241,7 +241,7 @@ end
 
 describe Kelp::Field, "fill_in_field" do
   before(:each) do
-    visit('/form')
+    visit('/form2')
   end
 
   context "passes when" do
@@ -251,8 +251,8 @@ describe Kelp::Field, "fill_in_field" do
     end
 
     it "filling a single text field by label" do
-      fill_in_field "First name", "Mel"
-      field_should_contain "First name", "Mel"
+      fill_in_field "Life story", "I was born."
+      field_should_contain "Life story", "I was born."
     end
 
     it "checking a checkbox" do
@@ -275,6 +275,16 @@ describe Kelp::Field, "fill_in_field" do
       fill_in_field_within "#person_form", "first_name", "Mel"
       field_should_contain_within "#person_form", "first_name", "Mel"
     end
+
+    it "dropdown is ambiguous, but scoped" do
+      fill_in_field_within "#person_form", "Weight", "Light"
+      field_should_contain_within "#person_form", "Weight", "light"
+    end
+
+    it "field is ambiguous, but scoped" do
+      fill_in_field_within "#person_form", "First name", "Mel"
+      field_should_contain_within "#person_form", "First name", "Mel"
+    end
   end
 
   context "fails when" do
@@ -294,6 +304,24 @@ describe Kelp::Field, "fill_in_field" do
       lambda do
         fill_in_field_within "#preferences_form", "First name", "Mel"
       end.should raise_error(Kelp::FieldNotFound)
+    end
+
+    it "dropdown is ambiguous, and unscoped" do
+      lambda do
+        fill_in_field "Weight", "Light"
+      end.should raise_error(Kelp::AmbiguousField)
+    end
+
+    it "field is ambiguous, and unscoped" do
+      lambda do
+        fill_in_field "First name", "Mel"
+      end.should raise_error(Kelp::AmbiguousField)
+    end
+
+    it "field and dropdown have same name" do
+      lambda do
+        fill_in_field "Favorite Colors", "Red"
+      end.should raise_error(Kelp::AmbiguousField)
     end
   end
 end

@@ -6,9 +6,9 @@ Feature: Fields
 
   Scenario: Field should be empty
     Then the "First name" field should be empty
-    And the "First name" field within "#person_form" should be empty
+    And the "First name" field should be empty
     And the "Last name" field should be empty
-    And the "Last name" field within "#person_form" should be empty
+    And the "Last name" field should be empty
 
 
   Scenario: Fields should contain
@@ -44,13 +44,6 @@ Feature: Fields
     And the "last_name" field should contain "Hyneman"
 
 
-  Scenario: Fill in single fields within a scope
-    When I fill in "First name" with "Homer" within "#person_form"
-    And I fill in "First name" with "Marge" within "#spouse_form"
-    Then the "First name" field within "#person_form" should contain "Homer"
-    And the "First name" field within "#spouse_form" should contain "Marge"
-
-
   Scenario: Fill in multiple fields by label
     When I fill in the following:
       | First name | Andre                  |
@@ -65,21 +58,3 @@ Feature: Fields
       | Weight     | Heavy                  |
       | Height     | Tall                   |
       | Message    | Anybody want a peanut? |
-
-
-  Scenario: Fill in multiple fields by label within a scope
-    When I fill in the following within "#person_form":
-      | First name | Peter   |
-      | Last name  | Griffin |
-    And I fill in the following within "#spouse_form":
-      | First name | Lois    |
-      | Last name  | Griffin |
-
-    Then the fields within "#person_form" should contain:
-      | First name | Peter   |
-      | Last name  | Griffin |
-    And the fields within "#spouse_form" should contain:
-      | First name | Lois    |
-      | Last name  | Griffin |
-
-
