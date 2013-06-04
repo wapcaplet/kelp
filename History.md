@@ -1,6 +1,14 @@
 Kelp History
 ============
 
+0.2.4
+-----
+
+- Switch to Capybara 2
+- Support for ambiguous fields
+- Several fixes for Ruby 1.9 contributed by @eostrom
+
+
 0.2.3
 -----
 
