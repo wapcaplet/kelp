@@ -166,7 +166,7 @@ module Kelp
     def field_should_be_empty(field, scope={})
       in_scope(scope) do
         _field = nice_find_field(field)
-        if !(_field.nil? || _field.value.nil? || _field.value == '')
+        if !(_field.nil? || _field.value.nil? || _field.value.strip == '')
           raise Kelp::Unexpected,
             "Expected field '#{field}' to be empty, but value is '#{_field.value}'"
         end
@@ -265,7 +265,7 @@ module Kelp
         field_values.each do |field, value|
           _field = find_field(field)
           # For nil/empty, check for nil field or nil value
-          if value.nil? or value.empty?
+          if value.nil? or value.strip.empty?
             field_should_be_empty(field)
           # If field is a dropdown
           elsif _field.tag_name == 'select'
