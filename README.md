@@ -60,6 +60,24 @@ Then add the relevant modules to Cucumber's `World`:
 
     World(Kelp::Visibility)
 
+Or, to include all available helpers:
+
+    require 'kelp/attribute'
+    require 'kelp/checkbox'
+    require 'kelp/dropdown'
+    require 'kelp/field'
+    require 'kelp/navigation'
+    require 'kelp/scoping'
+    require 'kelp/visibility'
+
+    World(Kelp::Attribute)
+    World(Kelp::Checkbox)
+    World(Kelp::Dropdown)
+    World(Kelp::Field)
+    World(Kelp::Navigation)
+    World(Kelp::Scoping)
+    World(Kelp::Visibility)
+
 Many of the provided helpers are designed to make it easier to do things you
 might otherwise be tempted to do with nested step definitions. For example, if
 you need to verify the presence of several text strings on a webpage, you might
