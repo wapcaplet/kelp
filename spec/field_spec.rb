@@ -58,12 +58,20 @@ describe Kelp::Field, "field_should_contain" do
       end
     end
 
+    context "field with id == name" do
+      it "has the given value" do
+        fill_in "name_is_id", :with => "Foo"
+        field_should_contain "name_is_id", "Foo"
+      end
+    end
+
     context "field with label" do
       it "has the given value" do
         fill_in "First name", :with => "Brian"
         field_should_contain "First name", "Brian"
       end
     end
+
   end
 
   context "fails when" do
@@ -97,6 +105,13 @@ describe Kelp::Field, "field_should_contain" do
       end
     end
 
+    context "field with id == name" do
+      it "does not have the given value" do
+        lambda do
+          field_should_contain "name_is_id", "Stewie"
+        end.should raise_error(Kelp::Unexpected)
+      end
+    end
   end
 
 end
@@ -255,6 +270,11 @@ describe Kelp::Field, "fill_in_field" do
       field_should_contain "Life story", "I was born."
     end
 
+    it "filling a single field where name == id" do
+      fill_in_field "name_is_id", "Who"
+      field_should_contain "name_is_id", "Who"
+    end
+
     it "checking a checkbox" do
       fill_in_field "I like cheese", "checked"
       checkbox_should_be_checked "I like cheese"
@@ -285,6 +305,7 @@ describe Kelp::Field, "fill_in_field" do
       fill_in_field_within "#person_form", "First name", "Mel"
       field_should_contain_within "#person_form", "First name", "Mel"
     end
+
   end
 
   context "fails when" do
