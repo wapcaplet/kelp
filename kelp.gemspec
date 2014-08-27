@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/wapcaplet/kelp"
   s.platform = Gem::Platform::RUBY
 
-  s.add_dependency 'capybara', '~> 2.0.1'
+  s.add_dependency 'capybara', '~> 2.0'
 
   s.add_development_dependency 'sinatra'
   s.add_development_dependency 'rspec', '>= 2.2.0'

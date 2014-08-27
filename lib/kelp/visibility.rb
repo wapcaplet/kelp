@@ -189,7 +189,7 @@ module Kelp
     #
     def should_not_see_button(button_text, scope={})
       in_scope(scope) do
-        xpath = XPath::HTML.button(button_text)
+        xpath = XPath::HTML.button(button_text)[~ XPath.attr(:disabled)]
         if page.has_xpath?(xpath)
           raise Kelp::Unexpected, "Did not expect to see button '#{button_text}', but button exists."
         end
