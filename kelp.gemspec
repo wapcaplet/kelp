@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = "kelp"
-  s.version = "0.2.4"
+  s.version = "0.2.5"
   s.summary = "Cucumber helper methods"
   s.description = <<-EOS
     Kelp is a collection of helper methods for Cucumber to ease the process of
@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/wapcaplet/kelp"
   s.platform = Gem::Platform::RUBY
 
-  s.add_dependency 'capybara', '~> 2.0'
+  s.add_dependency 'capybara', '>= 2.0'
 
   s.add_development_dependency 'sinatra'
   s.add_development_dependency 'rspec', '>= 2.2.0'
