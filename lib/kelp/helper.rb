@@ -5,12 +5,12 @@ module Kelp
     # Convert a Cucumber::Ast::Table or multiline string into
     # a list of strings
     def listify(items)
-      if items.class == Cucumber::Ast::Table
+      if respond_to?(:raw)
         strings = items.raw.flatten
-      elsif items.class == Cucumber::Ast::DocString
-        strings = items.to_s.split(/[\r\n]+/)
-      else
+      elsif items.respond_to?(:split)
         strings = items.split(/[\r\n]+/)
+      else
+        strings = items.to_s.split(/[\r\n]+/)
       end
     end
 

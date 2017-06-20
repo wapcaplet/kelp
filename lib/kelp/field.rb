@@ -1,5 +1,6 @@
 require 'kelp/helper'
 require 'kelp/scoping'
+require 'kelp/dropdown'
 
 module Kelp
   # This module defines helper methods for filling in and verifying the content
@@ -8,6 +9,7 @@ module Kelp
   module Field
     include Scoping
     include Helper
+    include Dropdown
 
     # Select a value from a dropdown or listbox, or fill in a text field,
     # depending on what kind of form field is available. If `field` is a
